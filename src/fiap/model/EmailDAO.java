@@ -1,5 +1,9 @@
 package fiap.model;
-
+/**Classe para a CRUD dos objetos do tipo Email no Banco de Dados utilizando a classe Conexao
+ * @author Luís Felipe
+ * @version 1.0
+ * @since 07/09/2022
+ */
 import java.sql.*;
 
 public class EmailDAO implements IDAO {
