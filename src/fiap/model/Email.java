@@ -1,5 +1,9 @@
 package fiap.model;
-
+/**Classe para objetos do tipo Email
+ * @author Luís Felipe
+ * @version 1.0
+ * @since 07/09/2022
+ */
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

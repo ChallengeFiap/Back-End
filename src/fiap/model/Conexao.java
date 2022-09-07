@@ -1,7 +1,17 @@
 package fiap.model;
+/**Classe para fazer a Conexão com o Banco de Dados no SQL Developer
+ * @author Luís Felipe
+ * @version 1.0
+ * @since 07/09/2022
+ */
 import java.sql.*;
 
 public class Conexao {
+	/**Método para abrir a conexão com o Banco de dados
+	 * @author Luís Felipe
+	 * @param null
+	 * @return Connection - retorna a Conexão aberta 
+	 */
 	public static Connection abrirConexao() {
 		Connection con = null;
 		try {
@@ -23,6 +33,11 @@ public class Conexao {
 		return con;
 	}
 	
+	/**Método para fechar a conexão com o Banco de dados
+	 * @author Luís Felipe
+	 * @param con - a conexão aberta com o metodo abrirConexao()
+	 * @return null
+	 */
 	public static void fecharConexao(Connection con) {
 		try {
 			con.close();
