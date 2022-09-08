@@ -2,7 +2,6 @@ package fiap.model;
 
 /**
  * Classe para objetos do tipo Logradouro
- * 
  * @author Luís Felipe
  * @version 1.0
  * @since 07/09/2022
