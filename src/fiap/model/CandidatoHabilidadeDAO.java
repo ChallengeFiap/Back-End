@@ -1,6 +1,6 @@
 package fiap.model;
 
-/**Classe para a CRUD dos objetos do tipo Habilidade no Banco de Dados utilizando a classe Conexao
+/**Classe para a CRUD dos objetos do tipo Candidato Habilidade no Banco de Dados utilizando a classe Conexao
  * @author Luís Felipe
  * @version 1.0
  * @since 07/09/2022
