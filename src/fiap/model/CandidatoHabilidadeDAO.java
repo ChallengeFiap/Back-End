@@ -7,7 +7,7 @@ package fiap.model;
  */
 import java.sql.*;
 
-public class CandidatoHabilidadeDAO {
+public class CandidatoHabilidadeDAO implements IDAO {
 
 	private Connection con;
 	private CandidatoHabilidade candidatoHabilidade;
