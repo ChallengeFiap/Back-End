@@ -1,5 +1,5 @@
 package fiap.model;
-/**Classe para a CRUD dos objetos do tipo Favorito no Banco de Dados utilizando a classe Conexao
+/**Classe para a CRUD dos objetos do tipo Estado no Banco de Dados utilizando a classe Conexao
  * @author Luís Felipe
  * @version 1.0
  * @since 07/09/2022
@@ -7,12 +7,12 @@ package fiap.model;
 
 import java.sql.*;
 
-public class FavoritoDAO implements IDAO{
+public class EstadoDAO implements IDAO{
 	
 	private Connection con;
-	private Favorito favorito;
+	private Estado estado;
 	
-	public FavoritoDAO() {
+	public EstadoDAO() {
 		setCon(con);
 	}
 
@@ -25,13 +25,13 @@ public class FavoritoDAO implements IDAO{
 	}
 	
 	public String inserir(Object obj) {
-		favorito = (Favorito) obj;
-		String sql = "INSERT INTO T_CHALL_FAVORITO (ID_FAVORITO, ID_SELECAO, ID_REGISTRO_GERAL) VALUES (?, ?, ?)";
+		estado = (Estado) obj;
+		String sql = "INSERT INTO T_CHALL_ESTADO (ID_ESTADO, SG_ESTADO, NM_ESTADO) VALUES (?, ?, ?)";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
-			ps.setInt(1, favorito.getIdFavorito());
-			ps.setInt(2, favorito.getIdSelecao());
-			ps.setInt(3, favorito.getIdRegistroGeral());
+			ps.setInt(1, estado.getIdEstado());
+			ps.setString(2, estado.getSiglaEstado());
+			ps.setString(3, estado.getNomeEstado());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -44,13 +44,13 @@ public class FavoritoDAO implements IDAO{
 	}
 	
 	public String alterar(Object obj) {
-		favorito = (Favorito) obj;
-		String sql = "UPDATE T_CHALL_FAVORITO SET ID_SELECAO = ?, ID_REGISTRO_GERAL = ? WHERE ID_FAVORITO = ?";
+		estado = (Estado) obj;
+		String sql = "UPDATE T_CHALL_ESTADO SET SG_ESTADO = ?, NM_ESTADO = ? WHERE ID_ESTADO = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
-			ps.setInt(1, favorito.getIdSelecao());
-			ps.setInt(2, favorito.getIdRegistroGeral());
-			ps.setInt(3, favorito.getIdFavorito());
+			ps.setString(1, estado.getSiglaEstado());
+			ps.setString(2, estado.getNomeEstado());
+			ps.setInt(3, estado.getIdEstado());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -62,11 +62,11 @@ public class FavoritoDAO implements IDAO{
 	}
 	
 	public String excluir(Object obj) {
-		favorito = (Favorito) obj;
-		String sql = "DELETE FROM T_CHALL_FAVORITO WHERE ID_FAVORITO = ?";
+		estado = (Estado) obj;
+		String sql = "DELETE FROM T_CHALL_ESTADO WHERE ID_FAVORITO = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
-			ps.setInt(1, favorito.getIdFavorito());
+			ps.setInt(1, estado.getIdEstado());
 			if (ps.executeUpdate() > 0) {
 				return "Excluido com sucesso!";
 			} else {
@@ -78,18 +78,18 @@ public class FavoritoDAO implements IDAO{
 	}
 	
 	public String listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_FAVORITO";
-		String listaFavorito = "Lista das Favoritos\n\n";
+		String sql = "SELECT * FROM T_CHALL_ESTADO";
+		String listaEstados = "Lista dos Estados\n\n";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			if (rs != null) {
 				while (rs.next()) {
-					listaFavorito += "ID Favorito: " + rs.getInt(1) + "\n";
-					listaFavorito += "ID Selecao: " + rs.getInt(2) + "\n";
-					listaFavorito += "ID Registro Geral: +" + rs.getInt(3) + "\n";
+					listaEstados += "ID Estado: " + rs.getInt(1) + "\n";
+					listaEstados += "Sigla Estado: " + rs.getString(2) + "\n";
+					listaEstados += "Estado: +" + rs.getString(3) + "\n";
 				}
-				return listaFavorito;
+				return listaEstados;
 			} else {
 				return null;
 			}
