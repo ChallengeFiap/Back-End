@@ -6,6 +6,7 @@ package fiap.model;
  * @since 07/09/2022
  */
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class CandidatoHabilidadeDAO implements IDAO {
 
@@ -29,12 +30,17 @@ public class CandidatoHabilidadeDAO implements IDAO {
 		String sql = "INSERT INTO T_CHALL_CANDIDATO_HABILIDADE (ID_CAND_HABILIDADE, ID_HABILIDADE, ID_REGISTRO_GERAL, DT_INICIO, DT_TERMINO) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataInicio = candidatoHabilidade.getDataInicio().format(formatter);
+			String dataTermino = candidatoHabilidade.getDataTermino().format(formatter);
+			
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, candidatoHabilidade.getIdCandidatoHabilidade());
 			ps.setInt(2, candidatoHabilidade.getIdHabilidade());
 			ps.setInt(3, candidatoHabilidade.getIdRegistroGeral());
-			ps.setDate(4, null);
-			ps.setDate(5, null);
+			ps.setString(4, dataInicio);
+			ps.setString(5, dataTermino);
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -51,11 +57,16 @@ public class CandidatoHabilidadeDAO implements IDAO {
 		String sql = "UPDATE T_CHALL_CANDIDATO_HABILIDADE SET ID_HABILIDADE = ?, ID_REGISTRO_GERAL = ?, DT_INICIO = ?, DT_TERMINO = ? "
 				+ "WHERE ID_CAND_HABILIDADE = ?";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataInicio = candidatoHabilidade.getDataInicio().format(formatter);
+			String dataTermino = candidatoHabilidade.getDataTermino().format(formatter);
+			
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, candidatoHabilidade.getIdHabilidade());
 			ps.setInt(2, candidatoHabilidade.getIdRegistroGeral());
-			ps.setDate(3, null);
-			ps.setDate(4, null);
+			ps.setString(3, dataInicio);
+			ps.setString(4, dataTermino);
 			ps.setInt(5, candidatoHabilidade.getIdCandidatoHabilidade());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
@@ -94,8 +105,8 @@ public class CandidatoHabilidadeDAO implements IDAO {
 					listaCandidatoHabilidade += "ID Candidato Habilidade: " + rs.getInt(1) + "\n";
 					listaCandidatoHabilidade += "ID Habilidade: " + rs.getInt(2) + "\n";
 					listaCandidatoHabilidade += "ID Registro Geral: +" + rs.getInt(3) + "\n";
-					listaCandidatoHabilidade += "Data Inicio: +" + rs.getDate(4) + "\n";
-					listaCandidatoHabilidade += "Data Termino: +" + rs.getDate(5) + "\n";
+					listaCandidatoHabilidade += "Data Inicio: +" + rs.getString(4) + "\n";
+					listaCandidatoHabilidade += "Data Termino: +" + rs.getString(5) + "\n";
 				}
 				return listaCandidatoHabilidade;
 			} else {

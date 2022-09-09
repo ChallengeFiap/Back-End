@@ -7,6 +7,7 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class FormacaoAcademicaDAO implements IDAO{
 
@@ -31,13 +32,18 @@ public class FormacaoAcademicaDAO implements IDAO{
 				+ "DS_ATIVIDADE_EXTRA_CURRICULARES, DT_INICIO, DT_TERMINO, NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, FL_CURSO) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataInicio = formacaoAcademica.getDataInicio().format(formatter);
+			String dataTermino = formacaoAcademica.getDataTermino().format(formatter);
+			
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, formacaoAcademica.getIdFormacaoAcademica());
 			ps.setInt(2, formacaoAcademica.getIdRegistroGeral());
 			ps.setString(3, formacaoAcademica.getNomeInstituicao());
 			ps.setString(4, formacaoAcademica.getAtividadeExtraCurricular());
-			ps.setDate(5, null);
-			ps.setDate(6, null);
+			ps.setString(5, dataInicio);
+			ps.setString(6, dataTermino);
 			ps.setString(7, formacaoAcademica.getNomeCurso());
 			ps.setString(8, formacaoAcademica.getStatusCurso());
 			ps.setString(9, formacaoAcademica.getEscolaridade());
@@ -59,12 +65,17 @@ public class FormacaoAcademicaDAO implements IDAO{
 				+ "DT_INICIO = ?, DT_TERMINO = ?, NM_CURSO = ?, DS_STATUS_CURSO = ?, DS_ESCOLARIDADE = ?, FL_CURSO = ? WHERE "
 				+ "ID_FORMACAO_ACADEMICA = ?";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataInicio = formacaoAcademica.getDataInicio().format(formatter);
+			String dataTermino = formacaoAcademica.getDataTermino().format(formatter);
+			
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, formacaoAcademica.getIdRegistroGeral());
 			ps.setString(2, formacaoAcademica.getNomeInstituicao());
 			ps.setString(3, formacaoAcademica.getAtividadeExtraCurricular());
-			ps.setDate(4, null);
-			ps.setDate(5, null);
+			ps.setString(4, dataInicio);
+			ps.setString(5, dataTermino);
 			ps.setString(6, formacaoAcademica.getNomeCurso());
 			ps.setString(7, formacaoAcademica.getStatusCurso());
 			ps.setString(8, formacaoAcademica.getEscolaridade());
@@ -108,8 +119,8 @@ public class FormacaoAcademicaDAO implements IDAO{
 					listaFormacaoAcademica += "ID Registro Geral: " + rs.getInt(2) + "\n";
 					listaFormacaoAcademica += "Nome Instituicao: +" + rs.getString(3) + "\n";
 					listaFormacaoAcademica += "Atividade Extra Curricular: +" + rs.getString(4) + "\n";
-					listaFormacaoAcademica += "Data Inicio: +" + rs.getDate(5) + "\n";
-					listaFormacaoAcademica += "Data Termino: +" + rs.getDate(6) + "\n";
+					listaFormacaoAcademica += "Data Inicio: +" + rs.getString(5) + "\n";
+					listaFormacaoAcademica += "Data Termino: +" + rs.getString(6) + "\n";
 					listaFormacaoAcademica += "Nome Curso: +" + rs.getString(7) + "\n";
 					listaFormacaoAcademica += "Status Curso: +" + rs.getString(8) + "\n";
 					listaFormacaoAcademica += "Escolaridade: +" + rs.getString(9) + "\n";

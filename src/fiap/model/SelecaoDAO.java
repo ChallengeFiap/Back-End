@@ -7,6 +7,7 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class SelecaoDAO implements IDAO {
 	
@@ -29,10 +30,14 @@ public class SelecaoDAO implements IDAO {
 		selecao = (Selecao) obj;
 		String sql = "INSERT INTO T_CHALL_SELECAO (ID_SELECAO, ST_APROVACAO, DT_ENTREVISTA) VALUES (?, ?, ?)";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataEntrevista = selecao.getDataSelecao().format(formatter);
+			
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, selecao.getIdSelecao());
 			ps.setString(2, selecao.getStatusAprovacao());
-			ps.setDate(3, null);
+			ps.setString(3, dataEntrevista);
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -48,9 +53,13 @@ public class SelecaoDAO implements IDAO {
 		selecao = (Selecao) obj;
 		String sql = "UPDATE T_CHALL_SELECAO SET ST_APROVACAO = ?, DT_ENTREVISTA = ? WHERE ID_SELECAO = ?";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataEntrevista = selecao.getDataSelecao().format(formatter);
+			
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setString(1, selecao.getStatusAprovacao());
-			ps.setDate(2, null);
+			ps.setString(2, dataEntrevista);
 			ps.setInt(3, selecao.getIdSelecao());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
@@ -88,7 +97,7 @@ public class SelecaoDAO implements IDAO {
 				while (rs.next()) {
 					listaSelecao += "ID Selecao: " + rs.getInt(1) + "\n";
 					listaSelecao += "Status Aprovacao: " + rs.getString(2) + "\n";
-					listaSelecao += "Data Entrevista: +" + rs.getDate(3) + "\n";
+					listaSelecao += "Data Entrevista: +" + rs.getString(3) + "\n";
 				}
 				return listaSelecao;
 			} else {

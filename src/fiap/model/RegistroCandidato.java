@@ -16,6 +16,7 @@ public class RegistroCandidato extends UsuarioRegistroGeral {
 	private String sexo;
 	private String escolaridade;
 	private String estadoCivil;
+	private String origem;
 
 	public int getNumeroCPF() {
 		return numeroCPF;
@@ -85,5 +86,15 @@ public class RegistroCandidato extends UsuarioRegistroGeral {
 	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
+
+	public String getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(String origem) {
+		this.origem = origem;
+	}
+	
+	
 
 }
