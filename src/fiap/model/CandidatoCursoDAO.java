@@ -7,6 +7,7 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class CandidatoCursoDAO implements IDAO {
 
@@ -30,12 +31,17 @@ public class CandidatoCursoDAO implements IDAO {
 		String sql = "INSERT INTO T_CHALL_CANDIDATO_CURSO (ID_CAND_CURSO, ID_REGISTRO_GERAL, ID_CURSO, DT_INICIO, DT_TERMINO) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataInicio = candidatoCurso.getDataInicio().format(formatter);
+			String dataTermino = candidatoCurso.getDataFim().format(formatter);
+			
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, candidatoCurso.getIdCandidatoCurso());
 			ps.setInt(2, candidatoCurso.getIdRegistroGeral());
 			ps.setInt(3, candidatoCurso.getIdCurso());
-			ps.setDate(4, null);
-			ps.setDate(5, null);
+			ps.setString(4, dataInicio);
+			ps.setString(5, dataTermino);
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -52,11 +58,16 @@ public class CandidatoCursoDAO implements IDAO {
 		String sql = "UPDATE T_CHALL_CANDIDATO_CURSO SET ID_REGISTRO_GERAL = ?, ID_CURSO = ?, DT_INICIO = ?, DT_TERMINO = ? "
 				+ "WHERE ID_CAND_CURSO = ?";
 		try {
+			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String dataInicio = candidatoCurso.getDataInicio().format(formatter);
+			String dataTermino = candidatoCurso.getDataFim().format(formatter);
+			
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, candidatoCurso.getIdRegistroGeral());
 			ps.setInt(2, candidatoCurso.getIdCurso());
-			ps.setDate(3, null);
-			ps.setDate(4, null);
+			ps.setString(3, dataInicio);
+			ps.setString(4, dataTermino);
 			ps.setInt(5, candidatoCurso.getIdCandidatoCurso());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
@@ -95,8 +106,8 @@ public class CandidatoCursoDAO implements IDAO {
 					listaCandidatoCurso += "ID Candidato Curso: " + rs.getInt(1) + "\n";
 					listaCandidatoCurso += "ID Registro Geral: " + rs.getInt(2) + "\n";
 					listaCandidatoCurso += "ID Curso: " + rs.getInt(3) + "\n";
-					listaCandidatoCurso += "Data Inicio: " + rs.getDate(4) + "\n";
-					listaCandidatoCurso += "Data Termino: " + rs.getDate(5) + "\n";
+					listaCandidatoCurso += "Data Inicio: " + rs.getString(4) + "\n";
+					listaCandidatoCurso += "Data Termino: " + rs.getString(5) + "\n";
 				}
 				return listaCandidatoCurso;
 			} else {
