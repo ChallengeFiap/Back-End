@@ -28,8 +28,9 @@ public class RegistroCandidatoDAO implements IDAO {
 	
 	public String inserir(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
-		String sql = "INSERT INTO T_CHALL_REGISTRO_CANDIDATO (ID_REGISTRO_GERAL, NM_NOME_COMPLETO, DS_SENHA, NR_CPF, NR_RG, DT_NASCIMENTO, "
-				+ "FL_SEXO_BIOLOGICO, DS_ESCOLARIDADE, DS_ESTADO_CIVIL, DS_ORIGEM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO T_CHALL_REGISTRO_CANDIDATO (ID_REGISTRO_GERAL, NM_NOME_COMPLETO, DS_EMAIL, DS_SENHA, TP_USUARIO, NR_CPF,"
+				+ "NR_RG, DT_NASCIMENTO, FL_SEXO_BIOLOGICO, DS_ESCOLARIDADE, DS_ESTADO_CIVIL, DS_ORIGEM) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -38,14 +39,16 @@ public class RegistroCandidatoDAO implements IDAO {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, registroCandidato.getIdRegistroGeral());
 			ps.setString(2, registroCandidato.getNomeCompleto());
-			ps.setString(3, registroCandidato.getSenha());
-			ps.setInt(4, registroCandidato.getNumeroCPF());
-			ps.setInt(5, registroCandidato.getNumeroRG());
-			ps.setString(6, dataNascimento);
-			ps.setString(7, registroCandidato.getSexo());
-			ps.setString(8, registroCandidato.getEscolaridade());
-			ps.setString(9, registroCandidato.getEstadoCivil());
-			ps.setString(10, registroCandidato.getOrigem());
+			ps.setString(3, registroCandidato.getEmail());
+			ps.setString(4, registroCandidato.getSenha());
+			ps.setString(5, registroCandidato.getTipoUsuario());
+			ps.setInt(6, registroCandidato.getNumeroCPF());
+			ps.setInt(7, registroCandidato.getNumeroRG());
+			ps.setString(8, dataNascimento);
+			ps.setString(9, registroCandidato.getSexo());
+			ps.setString(10, registroCandidato.getEscolaridade());
+			ps.setString(11, registroCandidato.getEstadoCivil());
+			ps.setString(12, registroCandidato.getOrigem());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -59,8 +62,9 @@ public class RegistroCandidatoDAO implements IDAO {
 
 	public String alterar(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
-		String sql = "UPDATE T_CHALL_REGISTRO_CANDIDATO SET NM_NOME_COMPLETO = ?, DS_SENHA = ?, NR_CPF = ?, NR_RG = ?, DT_NASCIMENTO = ?, "
-				+ "FL_SEXO_BIOLOGICO = ?, DS_ESCOLARIDADE = ?, DS_ESTADO_CIVIL = ?, DS_ORIGEM = ? WHERE ID_REGISTRO_GERAL = ?";
+		String sql = "UPDATE T_CHALL_REGISTRO_CANDIDATO SET NM_NOME_COMPLETO = ?, DS_EMAIL = ?, DS_SENHA = ?, TP_USUARIO = ?, NR_CPF = ?, "
+				+ "NR_RG = ?, DT_NASCIMENTO = ?, FL_SEXO_BIOLOGICO = ?, DS_ESCOLARIDADE = ?, DS_ESTADO_CIVIL = ?, DS_ORIGEM = ? "
+				+ "WHERE ID_REGISTRO_GERAL = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -68,15 +72,17 @@ public class RegistroCandidatoDAO implements IDAO {
 			
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setString(1, registroCandidato.getNomeCompleto());
-			ps.setString(2, registroCandidato.getSenha());
-			ps.setInt(3, registroCandidato.getNumeroCPF());
-			ps.setInt(4, registroCandidato.getNumeroRG());
-			ps.setString(5, dataNascimento);
-			ps.setString(6, registroCandidato.getSexo());
-			ps.setString(7, registroCandidato.getEscolaridade());
-			ps.setString(8, registroCandidato.getEstadoCivil());
-			ps.setString(9, registroCandidato.getOrigem());
-			ps.setInt(10, registroCandidato.getIdRegistroGeral());
+			ps.setString(2, registroCandidato.getEmail());
+			ps.setString(3, registroCandidato.getSenha());
+			ps.setString(4, registroCandidato.getTipoUsuario());
+			ps.setInt(5, registroCandidato.getNumeroCPF());
+			ps.setInt(6, registroCandidato.getNumeroRG());
+			ps.setString(7, dataNascimento);
+			ps.setString(8, registroCandidato.getSexo());
+			ps.setString(9, registroCandidato.getEscolaridade());
+			ps.setString(10, registroCandidato.getEstadoCivil());
+			ps.setString(11, registroCandidato.getOrigem());
+			ps.setInt(12, registroCandidato.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -114,14 +120,16 @@ public class RegistroCandidatoDAO implements IDAO {
 				while (rs.next()) {
 					listaCandidatos += "ID Candidato: " + rs.getInt(1) + "\n";
 					listaCandidatos += "Nome Completo: " + rs.getString(2) + "\n";
-					//PULANDO O INDICE 3 PQ É A SENHA DO USUARIO
-					listaCandidatos += "CPF: " + rs.getInt(4) + "\n";
-					listaCandidatos += "RG: " + rs.getInt(5) + "\n";
-					listaCandidatos += "Data de Nascimento : " + rs.getString(6) + "\n";
-					listaCandidatos += "Sexo : " + rs.getString(7) + "\n";
-					listaCandidatos += "Escolaridade : " + rs.getString(8) + "\n";
-					listaCandidatos += "Estado Civil : " + rs.getString(9) + "\n";
-					listaCandidatos += "Origem : " + rs.getString(10) + "\n";
+					listaCandidatos += "Email: " + rs.getString(3) + "\n";
+					//PULANDO O INDICE 4 PQ É A SENHA DO USUARIO
+					listaCandidatos += "Tipo Usuario: " + rs.getString(5) + "\n";
+					listaCandidatos += "CPF: " + rs.getInt(6) + "\n";
+					listaCandidatos += "RG: " + rs.getInt(7) + "\n";
+					listaCandidatos += "Data de Nascimento : " + rs.getString(8) + "\n";
+					listaCandidatos += "Sexo : " + rs.getString(9) + "\n";
+					listaCandidatos += "Escolaridade : " + rs.getString(10) + "\n";
+					listaCandidatos += "Estado Civil : " + rs.getString(11) + "\n";
+					listaCandidatos += "Origem : " + rs.getString(12) + "\n";
 				}
 				return listaCandidatos;
 			} else {

@@ -9,7 +9,9 @@ public class UsuarioRegistroGeral {
 
 	private int idRegistroGeral;
 	private String nomeCompleto;
+	private String email;
 	private String senha;
+	private String tipoUsuario;
 
 	public int getIdRegistroGeral() {
 		return idRegistroGeral;
@@ -27,6 +29,14 @@ public class UsuarioRegistroGeral {
 		this.nomeCompleto = nomeCompleto;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getSenha() {
 		return senha;
 	}
@@ -34,5 +44,15 @@ public class UsuarioRegistroGeral {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+	
+	
 
 }
