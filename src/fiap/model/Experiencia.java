@@ -2,7 +2,7 @@ package fiap.model;
 
 /**Classe para objetos do tipo Experiencia
  * @author Luís Felipe
- * @version 1.0
+ * @version 1.1
  * @since 07/09/2022
  */
 import java.time.LocalDate;
@@ -17,6 +17,7 @@ public class Experiencia {
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
 	private String statusExperiencia;
+	private String senioridade;
 
 	public int getIdExperiencia() {
 		return idExperiencia;
@@ -95,6 +96,16 @@ public class Experiencia {
 			System.exit(0);
 		}
 	}
+
+	public String getSenioridade() {
+		return senioridade;
+	}
+
+	public void setSenioridade(String senioridade) {
+		this.senioridade = senioridade;
+	}
+	
+	
 
 	
 

@@ -2,7 +2,7 @@ package fiap.model;
 
 /**Classe para a CRUD dos objetos do tipo Formação Academica no Banco de Dados utilizando a classe Conexao
  * @author Luís Felipe
- * @version 1.0
+ * @version 1.1
  * @since 07/09/2022
  */
 
@@ -47,7 +47,7 @@ public class FormacaoAcademicaDAO implements IDAO{
 			ps.setString(7, formacaoAcademica.getNomeCurso());
 			ps.setString(8, formacaoAcademica.getStatusCurso());
 			ps.setString(9, formacaoAcademica.getEscolaridade());
-			ps.setString(10, formacaoAcademica.getFiltroCurso());
+			ps.setString(10, formacaoAcademica.getNivelCurso());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -79,7 +79,7 @@ public class FormacaoAcademicaDAO implements IDAO{
 			ps.setString(6, formacaoAcademica.getNomeCurso());
 			ps.setString(7, formacaoAcademica.getStatusCurso());
 			ps.setString(8, formacaoAcademica.getEscolaridade());
-			ps.setString(9, formacaoAcademica.getFiltroCurso());
+			ps.setString(9, formacaoAcademica.getNivelCurso());
 			ps.setInt(10, formacaoAcademica.getIdFormacaoAcademica());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
@@ -124,7 +124,7 @@ public class FormacaoAcademicaDAO implements IDAO{
 					listaFormacaoAcademica += "Nome Curso: +" + rs.getString(7) + "\n";
 					listaFormacaoAcademica += "Status Curso: +" + rs.getString(8) + "\n";
 					listaFormacaoAcademica += "Escolaridade: +" + rs.getString(9) + "\n";
-					listaFormacaoAcademica += "Filtro Curso: +" + rs.getString(10) + "\n";
+					listaFormacaoAcademica += "Nivel Curso: +" + rs.getString(10) + "\n";
 				}
 				return listaFormacaoAcademica;
 			} else {
