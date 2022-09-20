@@ -2,7 +2,7 @@ package fiap.model;
 
 /**Classe para objetos do tipo Formação Academica
  * @author Luís Felipe
- * @version 1.0
+ * @version 1.1
  * @since 07/09/2022
  */
 
@@ -20,7 +20,7 @@ public class FormacaoAcademica {
 	private String nomeCurso;
 	private String statusCurso;
 	private String escolaridade;
-	private String filtroCurso;
+	private String nivelCurso;
 
 	public int getIdFormacaoAcademica() {
 		return idFormacaoAcademica;
@@ -133,12 +133,14 @@ public class FormacaoAcademica {
 		}
 	}
 
-	public String getFiltroCurso() {
-		return filtroCurso;
+	public String getNivelCurso() {
+		return nivelCurso;
 	}
 
-	public void setFiltroCurso(String filtroCurso) {
-		this.filtroCurso = filtroCurso;
+	public void setNivelCurso(String nivelCurso) {
+		this.nivelCurso = nivelCurso;
 	}
+
+	
 
  }

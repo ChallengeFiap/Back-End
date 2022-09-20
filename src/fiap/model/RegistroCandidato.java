@@ -1,9 +1,10 @@
 package fiap.model;
 /**Classe para objetos do tipo RegistroCandidato
  * @author Luís Felipe
- * @version 1.0
+ * @version 1.1
  * @since 07/09/2022
  */
+
 import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ public class RegistroCandidato extends UsuarioRegistroGeral {
 	private String sexo;
 	private String escolaridade;
 	private String estadoCivil;
-	private String origem;
+	private String cargo;
 
 	public int getNumeroCPF() {
 		return numeroCPF;
@@ -87,13 +88,16 @@ public class RegistroCandidato extends UsuarioRegistroGeral {
 		this.estadoCivil = estadoCivil;
 	}
 
-	public String getOrigem() {
-		return origem;
+	public String getCargo() {
+		return cargo;
 	}
 
-	public void setOrigem(String origem) {
-		this.origem = origem;
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
 	}
+
+	
+
 	
 	
 

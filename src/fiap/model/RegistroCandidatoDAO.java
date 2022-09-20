@@ -2,7 +2,7 @@ package fiap.model;
 
 /**Classe para a CRUD dos objetos do tipo Registro Candiadto no Banco de Dados utilizando a classe Conexao
  * @author Luís Felipe
- * @version 1.0
+ * @version 1.1
  * @since 07/09/2022
  */
 
@@ -29,7 +29,7 @@ public class RegistroCandidatoDAO implements IDAO {
 	public String inserir(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
 		String sql = "INSERT INTO T_CHALL_REGISTRO_CANDIDATO (ID_REGISTRO_GERAL, NM_NOME_COMPLETO, DS_EMAIL, DS_SENHA, TP_USUARIO, NR_CPF,"
-				+ "NR_RG, DT_NASCIMENTO, FL_SEXO_BIOLOGICO, DS_ESCOLARIDADE, DS_ESTADO_CIVIL, DS_ORIGEM) "
+				+ "NR_RG, DT_NASCIMENTO, FL_SEXO_BIOLOGICO, DS_ESCOLARIDADE, DS_ESTADO_CIVIL, DS_CARGO) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
@@ -48,7 +48,7 @@ public class RegistroCandidatoDAO implements IDAO {
 			ps.setString(9, registroCandidato.getSexo());
 			ps.setString(10, registroCandidato.getEscolaridade());
 			ps.setString(11, registroCandidato.getEstadoCivil());
-			ps.setString(12, registroCandidato.getOrigem());
+			ps.setString(12, registroCandidato.getCargo());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -63,7 +63,7 @@ public class RegistroCandidatoDAO implements IDAO {
 	public String alterar(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
 		String sql = "UPDATE T_CHALL_REGISTRO_CANDIDATO SET NM_NOME_COMPLETO = ?, DS_EMAIL = ?, DS_SENHA = ?, TP_USUARIO = ?, NR_CPF = ?, "
-				+ "NR_RG = ?, DT_NASCIMENTO = ?, FL_SEXO_BIOLOGICO = ?, DS_ESCOLARIDADE = ?, DS_ESTADO_CIVIL = ?, DS_ORIGEM = ? "
+				+ "NR_RG = ?, DT_NASCIMENTO = ?, FL_SEXO_BIOLOGICO = ?, DS_ESCOLARIDADE = ?, DS_ESTADO_CIVIL = ?, DS_CARGO = ? "
 				+ "WHERE ID_REGISTRO_GERAL = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
@@ -81,7 +81,7 @@ public class RegistroCandidatoDAO implements IDAO {
 			ps.setString(8, registroCandidato.getSexo());
 			ps.setString(9, registroCandidato.getEscolaridade());
 			ps.setString(10, registroCandidato.getEstadoCivil());
-			ps.setString(11, registroCandidato.getOrigem());
+			ps.setString(11, registroCandidato.getCargo());
 			ps.setInt(12, registroCandidato.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
@@ -129,7 +129,7 @@ public class RegistroCandidatoDAO implements IDAO {
 					listaCandidatos += "Sexo : " + rs.getString(9) + "\n";
 					listaCandidatos += "Escolaridade : " + rs.getString(10) + "\n";
 					listaCandidatos += "Estado Civil : " + rs.getString(11) + "\n";
-					listaCandidatos += "Origem : " + rs.getString(12) + "\n";
+					listaCandidatos += "Cargo : " + rs.getString(12) + "\n";
 				}
 				return listaCandidatos;
 			} else {

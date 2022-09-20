@@ -2,7 +2,7 @@ package fiap.model;
 
 /**Classe para a CRUD dos objetos do tipo Experiencia no Banco de Dados utilizando a classe Conexao
  * @author Luís Felipe
- * @version 1.0
+ * @version 1.1
  * @since 07/09/2022
  */
 
@@ -30,7 +30,7 @@ public class ExperienciaDAO implements IDAO {
 	public String inserir(Object obj) {
 		experiencia = (Experiencia) obj;
 		String sql = "INSERT INTO T_CHALL_EXPERIENCIA (ID_EXPERIENCIA, ID_REGISTRO_GERAL, TP_EXPERIENCIA, DT_INICIO, DT_TERMINO, "
-				+ "ST_STATUS) VALUES (?, ?, ?, ?, ?, ?)";
+				+ "ST_STATUS, DS_SENIORIDADE) VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -44,6 +44,7 @@ public class ExperienciaDAO implements IDAO {
 			ps.setString(4, dataInicio);
 			ps.setString(5, dataTermino);
 			ps.setString(6, experiencia.getStatusExperiencia());
+			ps.setString(7, experiencia.getSenioridade());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -58,7 +59,7 @@ public class ExperienciaDAO implements IDAO {
 	public String alterar(Object obj) {
 		experiencia = (Experiencia) obj;
 		String sql = "UPDATE T_CHALL_EXPERIENCIA SET ID_REGISTRO_GERAL = ?, TP_EXPERIENCIA = ?, DT_INICIO = ?, "
-				+ "DT_TERMINO = ?, ST_STATUS = ? WHERE ID_EXPERIENCIA = ?";
+				+ "DT_TERMINO = ?, ST_STATUS = ?, DS_SENIORIDADE = ? WHERE ID_EXPERIENCIA = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -71,7 +72,8 @@ public class ExperienciaDAO implements IDAO {
 			ps.setString(3, dataInicio);
 			ps.setString(4, dataTermino);
 			ps.setString(5, experiencia.getStatusExperiencia());
-			ps.setInt(6, experiencia.getIdExperiencia());
+			ps.setString(6, experiencia.getSenioridade());
+			ps.setInt(7, experiencia.getIdExperiencia());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -111,7 +113,8 @@ public class ExperienciaDAO implements IDAO {
 					listaExperiencias += "Tipo Experiencia: " + rs.getString(3) + "\n";
 					listaExperiencias += "Data Inicio: " + rs.getString(4) + "\n";
 					listaExperiencias += "Data Termino: " + rs.getString(5) + "\n";
-					listaExperiencias += "Status: " + rs.getString(6) + "\n";	
+					listaExperiencias += "Status: " + rs.getString(6) + "\n";
+					listaExperiencias += "Senioridade: " + rs.getString(7) + "\n";
 				}
 				return listaExperiencias;
 			} else {
