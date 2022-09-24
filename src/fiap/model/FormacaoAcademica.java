@@ -20,6 +20,7 @@ public class FormacaoAcademica {
 	private String nomeCurso;
 	private String statusCurso;
 	private String escolaridade;
+	private String semestre;
 	private String nivelCurso;
 
 	public int getIdFormacaoAcademica() {
@@ -61,15 +62,15 @@ public class FormacaoAcademica {
 
 	public void setDataInicio(LocalDate dataInicio) {
 		LocalDate inicio = LocalDate.parse("1899-12-31");
+		LocalDate dataAtual = LocalDate.now();
 		try {
-			if (dataInicio.isAfter(inicio)) {
+			if (dataInicio.isAfter(inicio) && dataInicio.isBefore(dataAtual)) {
 				this.dataInicio = dataInicio;
 			} else {
 				throw new Exception("Data fora do periodo permitido");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
 		}
 	}
 
@@ -87,7 +88,6 @@ public class FormacaoAcademica {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
 		}
 	}
 
@@ -104,16 +104,7 @@ public class FormacaoAcademica {
 	}
 
 	public void setStatusCurso(String statusCurso) {
-		try {
-			if (statusCurso.length() == 1) {
-				this.statusCurso = statusCurso;
-			} else {
-				throw new Exception ("Status Curso deve ter apenas 1 caracter sendo, (A)tivo e (I)nativo");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
-		}
+		this.statusCurso = statusCurso;
 	}
 
 	public String getEscolaridade() {
@@ -121,16 +112,7 @@ public class FormacaoAcademica {
 	}
 
 	public void setEscolaridade(String escolaridade) {
-		try {
-			if (statusCurso.length() == 1) {
-				this.escolaridade = escolaridade;
-			} else {
-				throw new Exception ("Status Escolaridade deve ter apenas 1 caracter sendo, (A)tivo e (I)nativo");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
-		}
+		this.escolaridade = escolaridade;
 	}
 
 	public String getNivelCurso() {
@@ -140,6 +122,16 @@ public class FormacaoAcademica {
 	public void setNivelCurso(String nivelCurso) {
 		this.nivelCurso = nivelCurso;
 	}
+
+	public String getSemestre() {
+		return semestre;
+	}
+
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
+	}
+	
+	
 
 	
 

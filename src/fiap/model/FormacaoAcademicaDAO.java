@@ -29,8 +29,8 @@ public class FormacaoAcademicaDAO implements IDAO{
 	public String inserir(Object obj) {
 		formacaoAcademica = (FormacaoAcademica) obj;
 		String sql = "INSERT INTO T_CHALL_FORMACAO_ACADEMICA (ID_FORMACAO_ACADEMICA, ID_REGISTRO_GERAL, NM_INSTITUICAO, "
-				+ "DS_ATIVIDADE_EXTRA_CURRICULARES, DT_INICIO, DT_TERMINO, NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, FL_CURSO) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "DS_ATIVIDADE_EXTRA_CURRICULARES, DT_INICIO, DT_TERMINO, NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, DS_SEMESTRE, FL_CURSO) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -47,7 +47,8 @@ public class FormacaoAcademicaDAO implements IDAO{
 			ps.setString(7, formacaoAcademica.getNomeCurso());
 			ps.setString(8, formacaoAcademica.getStatusCurso());
 			ps.setString(9, formacaoAcademica.getEscolaridade());
-			ps.setString(10, formacaoAcademica.getNivelCurso());
+			ps.setString(10, formacaoAcademica.getSemestre());
+			ps.setString(11, formacaoAcademica.getNivelCurso());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -62,7 +63,7 @@ public class FormacaoAcademicaDAO implements IDAO{
 	public String alterar(Object obj) {
 		formacaoAcademica = (FormacaoAcademica) obj;
 		String sql = "UPDATE T_CHALL_FORMACAO_ACADEMICA SET ID_REGISTRO_GERAL = ?, NM_INSTITUICAO = ?, DS_ATIVIDADE_EXTRA_CURRICULARES = ?, "
-				+ "DT_INICIO = ?, DT_TERMINO = ?, NM_CURSO = ?, DS_STATUS_CURSO = ?, DS_ESCOLARIDADE = ?, FL_CURSO = ? WHERE "
+				+ "DT_INICIO = ?, DT_TERMINO = ?, NM_CURSO = ?, DS_STATUS_CURSO = ?, DS_ESCOLARIDADE = ?,DS_SEMESTRE = ?, FL_CURSO = ? WHERE "
 				+ "ID_FORMACAO_ACADEMICA = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
@@ -79,8 +80,9 @@ public class FormacaoAcademicaDAO implements IDAO{
 			ps.setString(6, formacaoAcademica.getNomeCurso());
 			ps.setString(7, formacaoAcademica.getStatusCurso());
 			ps.setString(8, formacaoAcademica.getEscolaridade());
-			ps.setString(9, formacaoAcademica.getNivelCurso());
-			ps.setInt(10, formacaoAcademica.getIdFormacaoAcademica());
+			ps.setString(9, formacaoAcademica.getSemestre());
+			ps.setString(10, formacaoAcademica.getNivelCurso());
+			ps.setInt(11, formacaoAcademica.getIdFormacaoAcademica());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -124,7 +126,8 @@ public class FormacaoAcademicaDAO implements IDAO{
 					listaFormacaoAcademica += "Nome Curso: +" + rs.getString(7) + "\n";
 					listaFormacaoAcademica += "Status Curso: +" + rs.getString(8) + "\n";
 					listaFormacaoAcademica += "Escolaridade: +" + rs.getString(9) + "\n";
-					listaFormacaoAcademica += "Nivel Curso: +" + rs.getString(10) + "\n";
+					listaFormacaoAcademica += "Semestre: +" + rs.getString(10) + "\n";
+					listaFormacaoAcademica += "Nivel Curso: +" + rs.getString(11) + "\n";
 				}
 				return listaFormacaoAcademica;
 			} else {

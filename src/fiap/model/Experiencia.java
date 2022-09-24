@@ -49,15 +49,15 @@ public class Experiencia {
 
 	public void setDataInicio(LocalDate dataInicio) {
 		LocalDate inicio = LocalDate.parse("1899-12-31");
+		LocalDate dataAtual = LocalDate.now();
 		try {
-			if (dataInicio.isAfter(inicio)) {
+			if (dataInicio.isAfter(inicio) && dataInicio.isBefore(dataAtual)) {
 				this.dataInicio = dataInicio;
 			} else {
 				throw new Exception("Data fora do periodo permitido");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
 		}
 	}
 
@@ -75,7 +75,6 @@ public class Experiencia {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
 		}
 
 	}
@@ -85,16 +84,7 @@ public class Experiencia {
 	}
 
 	public void setStatusExperiencia(String statusExperiencia) {
-		try {
-			if (statusExperiencia.length() == 1) {
-				this.statusExperiencia = statusExperiencia;
-			} else {
-				throw new Exception ("Status Experiencia deve ter apenas 1 caracter sendo, (A)tivo e (I)nativo");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
-		}
+		this.statusExperiencia = statusExperiencia;
 	}
 
 	public String getSenioridade() {

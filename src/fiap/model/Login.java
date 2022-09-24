@@ -1,4 +1,9 @@
 package fiap.model;
+/**Classe para objetos do tipo Login
+ * @author Luís Felipe
+ * @version 1.0
+ * @since 19/09/2022
+ */
 
 public class Login extends UsuarioRegistroGeral {
 

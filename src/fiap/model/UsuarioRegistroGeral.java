@@ -12,6 +12,7 @@ public class UsuarioRegistroGeral {
 	private String email;
 	private String senha;
 	private String tipoUsuario;
+	private int numeroCPF;
 
 	public int getIdRegistroGeral() {
 		return idRegistroGeral;
@@ -52,6 +53,16 @@ public class UsuarioRegistroGeral {
 	public void setTipoUsuario(String tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
+
+	public int getNumeroCPF() {
+		return numeroCPF;
+	}
+
+	public void setNumeroCPF(int numeroCPF) {
+		this.numeroCPF = numeroCPF;
+	}
+	
+	
 	
 	
 

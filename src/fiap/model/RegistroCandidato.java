@@ -11,21 +11,12 @@ import javax.swing.JOptionPane;
 
 public class RegistroCandidato extends UsuarioRegistroGeral {
 
-	private int numeroCPF;
 	private int numeroRG;
 	private LocalDate dataNascimento;
 	private String sexo;
 	private String escolaridade;
 	private String estadoCivil;
 	private String cargo;
-
-	public int getNumeroCPF() {
-		return numeroCPF;
-	}
-
-	public void setNumeroCPF(int numeroCPF) {
-		this.numeroCPF = numeroCPF;
-	}
 
 	public int getNumeroRG() {
 		return numeroRG;
@@ -50,7 +41,6 @@ public class RegistroCandidato extends UsuarioRegistroGeral {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
 			
 		}
 	}
@@ -60,16 +50,7 @@ public class RegistroCandidato extends UsuarioRegistroGeral {
 	}
 
 	public void setSexo(String sexo) {
-		try {
-			if (sexo.length() == 1) {
-				this.sexo = sexo;
-			} else {
-				throw new Exception ("O sexo deve ter apenas 1 caracter sendo, (M)asculino e (F)eninimo");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
-		}
+		this.sexo = sexo;
 	}
 
 	public String getEscolaridade() {

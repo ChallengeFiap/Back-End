@@ -1,4 +1,9 @@
 package fiap.model;
+/**Classe para Visualizar o Perfil no Sistema utilizando a classe Conexao
+ * @author Luís Felipe
+ * @version 1.0
+ * @since 19/09/2022
+ */
 
 import java.sql.*;
 
