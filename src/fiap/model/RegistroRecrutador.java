@@ -7,17 +7,8 @@ package fiap.model;
 
 public class RegistroRecrutador extends UsuarioRegistroGeral {
 
-	private int numeroCNPJ;
 	private String nomeEmpresa;
 	private String cargoRecrutador;
-
-	public int getNumeroCNPJ() {
-		return numeroCNPJ;
-	}
-
-	public void setNumeroCNPJ(int numeroCNPJ) {
-		this.numeroCNPJ = numeroCNPJ;
-	}
 
 	public String getNomeEmpresa() {
 		return nomeEmpresa;

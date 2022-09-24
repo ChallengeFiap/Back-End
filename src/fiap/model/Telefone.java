@@ -5,7 +5,6 @@ package fiap.model;
  * @since 07/09/2022
  */
 
-import javax.swing.JOptionPane;
 
 public class Telefone {
 
@@ -70,17 +69,7 @@ public class Telefone {
 	}
 
 	public void setStatusTelefone(String statusTelefone) {
-		try {
-			if (statusTelefone.length() == 1) {
-				this.statusTelefone = statusTelefone;
-			} else {
-				throw new Exception ("Status Telefone deve ter apenas 1 caracter sendo, (A)tivo e (I)nativo");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
-		}
-		
+		this.statusTelefone = statusTelefone;
 	}
 
 }

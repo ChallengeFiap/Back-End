@@ -1,31 +1,27 @@
 package fiap.model;
-
-/**
- * Classe para objetos do tipo CandidatoCurso
- * 
+/**Classe para objetos do tipo IdiomaCandidato
  * @author Luís Felipe
  * @version 1.0
- * @since 07/09/2022
+ * @since 23/09/2022
  */
 
 import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
-public class CandidatoCurso {
+public class IdiomaCandidato {
 
-	private int idCandidatoCurso;
+	private int idIdiomaCandidato;
 	private int idRegistroGeral;
-	private int idCurso;
+	private int idIdiomas;
 	private LocalDate dataInicio;
-	private LocalDate dataFim;
 
-	public int getIdCandidatoCurso() {
-		return idCandidatoCurso;
+	public int getIdIdiomaCandidato() {
+		return idIdiomaCandidato;
 	}
 
-	public void setIdCandidatoCurso(int idCandidatoCurso) {
-		this.idCandidatoCurso = idCandidatoCurso;
+	public void setIdIdiomaCandidato(int idIdiomaCandidato) {
+		this.idIdiomaCandidato = idIdiomaCandidato;
 	}
 
 	public int getIdRegistroGeral() {
@@ -36,12 +32,12 @@ public class CandidatoCurso {
 		this.idRegistroGeral = idRegistroGeral;
 	}
 
-	public int getIdCurso() {
-		return idCurso;
+	public int getIdIdiomas() {
+		return idIdiomas;
 	}
 
-	public void setIdCurso(int idCurso) {
-		this.idCurso = idCurso;
+	public void setIdIdiomas(int idIdiomas) {
+		this.idIdiomas = idIdiomas;
 	}
 
 	public LocalDate getDataInicio() {
@@ -54,23 +50,6 @@ public class CandidatoCurso {
 		try {
 			if (dataInicio.isAfter(inicio) && dataInicio.isBefore(dataAtual)) {
 				this.dataInicio = dataInicio;
-			} else {
-				throw new Exception("Data fora do periodo permitido");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-	}
-
-	public LocalDate getDataFim() {
-		return dataFim;
-	}
-
-	public void setDataFim(LocalDate dataFim) {
-		LocalDate inicio = LocalDate.parse("1899-12-31");
-		try {
-			if (dataInicio.isAfter(inicio)) {
-				this.dataFim = dataFim;
 			} else {
 				throw new Exception("Data fora do periodo permitido");
 			}

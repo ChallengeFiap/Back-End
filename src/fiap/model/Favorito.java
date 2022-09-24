@@ -1,15 +1,22 @@
 package fiap.model;
+
 /**Classe para objetos do tipo Favorito
  * @author Luís Felipe
- * @version 1.0
- * @since 07/09/2022
+ * @version 1.1
+ * @since 23/09/2022
  */
+
+import java.time.LocalDate;
+
+import javax.swing.JOptionPane;
 
 public class Favorito {
 
 	private int idFavorito;
-	private int idSelecao;
-	private int idRegistroGeral;
+	private int idRecrutador;
+	private int idCandidato;
+	private LocalDate dataFavoritou;
+	private String statusFavoritos;
 
 	public int getIdFavorito() {
 		return idFavorito;
@@ -19,20 +26,47 @@ public class Favorito {
 		this.idFavorito = idFavorito;
 	}
 
-	public int getIdSelecao() {
-		return idSelecao;
+	public int getIdRecrutador() {
+		return idRecrutador;
 	}
 
-	public void setIdSelecao(int idSelecao) {
-		this.idSelecao = idSelecao;
+	public void setIdRecrutador(int idRecrutador) {
+		this.idRecrutador = idRecrutador;
 	}
 
-	public int getIdRegistroGeral() {
-		return idRegistroGeral;
+	public int getIdCandidato() {
+		return idCandidato;
 	}
 
-	public void setIdRegistroGeral(int idRegistroGeral) {
-		this.idRegistroGeral = idRegistroGeral;
+	public void setIdCandidato(int idCandidato) {
+		this.idCandidato = idCandidato;
+	}
+
+	public LocalDate getDataFavoritou() {
+		return dataFavoritou;
+	}
+
+	public void setDataFavoritou(LocalDate dataFavoritou) {
+		this.dataFavoritou = dataFavoritou;
+		LocalDate inicio = LocalDate.parse("1899-12-31");
+		LocalDate dataAtual = LocalDate.now();
+		try {
+			if (dataFavoritou.isAfter(inicio) && dataFavoritou.isBefore(dataAtual)) {
+				this.dataFavoritou = dataFavoritou;
+			} else {
+				throw new Exception("Data fora do periodo permitido");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+
+	public String getStatusFavoritos() {
+		return statusFavoritos;
+	}
+
+	public void setStatusFavoritos(String statusFavoritos) {
+		this.statusFavoritos = statusFavoritos;
 	}
 
 }

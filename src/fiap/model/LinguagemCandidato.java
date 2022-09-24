@@ -56,7 +56,6 @@ public class LinguagemCandidato {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
 			
 		}
 
