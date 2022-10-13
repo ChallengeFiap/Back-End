@@ -6,6 +6,7 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class IdiomaDAO implements IDAO{
 	
@@ -26,12 +27,11 @@ public class IdiomaDAO implements IDAO{
 	
 	public String inserir(Object obj) {
 		idioma = (Idioma) obj;
-		String sql = "INSERT INTO T_CHALL_IDIOMAS (ID_IDOMAS, TP_IDIOMAS, FL_PROFICIENCIA) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO T_CHALL_IDIOMAS (ID_IDOMAS, TP_IDIOMAS) VALUES (?, ?)";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, idioma.getIdIdioma());
 			ps.setString(2, idioma.getIdioma());
-			ps.setString(3, idioma.getFluencia());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -45,12 +45,11 @@ public class IdiomaDAO implements IDAO{
 	
 	public String alterar(Object obj) {
 		idioma = (Idioma) obj;
-		String sql = "UPDATE T_CHALL_IDIOMAS SET TP_IDIOMAS = ?, FL_PROFICIENCIA = ? WHERE ID_IDOMAS = ?";
+		String sql = "UPDATE T_CHALL_IDIOMAS SET TP_IDIOMAS = ? WHERE ID_IDOMAS = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setString(1, idioma.getIdioma());
-			ps.setString(2, idioma.getFluencia());
-			ps.setInt(3, idioma.getIdIdioma());
+			ps.setInt(2, idioma.getIdIdioma());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -77,17 +76,42 @@ public class IdiomaDAO implements IDAO{
 		}
 	}
 	
-	public String listarTodos() {
+	public ArrayList<Idioma> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_IDIOMAS WHERE ID_FAVORITO = ?";
+		ArrayList<Idioma> listaIdiomas = new ArrayList<Idioma>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				Idioma idm = new Idioma();
+				idm.setIdIdioma(rs.getInt(1));
+				idm.setIdioma(rs.getString(2));
+				listaIdiomas.add(idm);
+				return listaIdiomas;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
+	}
+	
+	public ArrayList<Idioma> listarTodos() {
 		String sql = "SELECT * FROM T_CHALL_IDIOMAS";
-		String listaIdiomas = "Lista dos Idiomas\n\n";
+		ArrayList<Idioma> listaIdiomas = new ArrayList<Idioma>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+
 			if (rs != null) {
 				while (rs.next()) {
-					listaIdiomas += "ID Idioma: " + rs.getInt(1) + "\n";
-					listaIdiomas += "Idioma: " + rs.getString(2) + "\n";
-					listaIdiomas += "Fluencia: +" + rs.getString(3) + "\n";
+					Idioma id = new Idioma();
+					id.setIdIdioma(rs.getInt(1));
+					id.setIdioma(rs.getString(2));
+					listaIdiomas.add(id);
 				}
 				return listaIdiomas;
 			} else {
@@ -96,6 +120,9 @@ public class IdiomaDAO implements IDAO{
 		} catch (SQLException e) {
 			return null;
 		}
+
 	}
+	
+	
 
 }

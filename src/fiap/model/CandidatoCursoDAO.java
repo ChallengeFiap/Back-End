@@ -7,7 +7,9 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class CandidatoCursoDAO implements IDAO {
 
@@ -95,27 +97,74 @@ public class CandidatoCursoDAO implements IDAO {
 		}
 	}
 	
-	public String listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_CANDIDATO_CURSO";
-		String listaCandidatoCurso = "Lista dos CandidatosCursos\n\n";
+	public ArrayList<CandidatoCurso> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_CANDIDATO_CURSO WHERE ID_CAND_CURSO = ?";
+		ArrayList<CandidatoCurso> listaCandidatosCursos = new ArrayList<CandidatoCurso>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			if (rs != null) {
-				while (rs.next()) {
-					listaCandidatoCurso += "ID Candidato Curso: " + rs.getInt(1) + "\n";
-					listaCandidatoCurso += "ID Registro Geral: " + rs.getInt(2) + "\n";
-					listaCandidatoCurso += "ID Curso: " + rs.getInt(3) + "\n";
-					listaCandidatoCurso += "Data Inicio: " + rs.getString(4) + "\n";
-					listaCandidatoCurso += "Data Termino: " + rs.getString(5) + "\n";
-				}
-				return listaCandidatoCurso;
+
+			if (rs.next()) {
+				CandidatoCurso cc = new CandidatoCurso();
+				cc.setIdCandidatoCurso(rs.getInt(1));
+				cc.setIdRegistroGeral(rs.getInt(2));
+				cc.setIdCurso(rs.getInt(3));
+
+				// Transformando a String de Data do Banco em LocalDate
+				String aux = rs.getString(4);
+				LocalDate dataInicio = LocalDate.parse(aux);
+				
+				cc.setDataInicio(dataInicio);
+				
+				aux = rs.getString(5);
+				LocalDate dataFim = LocalDate.parse(aux);
+				
+				cc.setDataFim(dataFim);
+				listaCandidatosCursos.add(cc);
+				return listaCandidatosCursos;
 			} else {
 				return null;
 			}
 		} catch (SQLException e) {
 			return null;
 		}
+	}
+	
+	public ArrayList<CandidatoCurso> listarTodos() {
+		String sql = "SELECT * FROM T_CHALL_CANDIDATO_CURSO";
+		ArrayList<CandidatoCurso> listaCandidatosCursos = new ArrayList<CandidatoCurso>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs != null) {
+				while (rs.next()) {
+					CandidatoCurso cc = new CandidatoCurso();
+					cc.setIdCandidatoCurso(rs.getInt(1));
+					cc.setIdRegistroGeral(rs.getInt(2));
+					cc.setIdCurso(rs.getInt(3));
+
+					// Transformando a String de Data do Banco em LocalDate
+					String aux = rs.getString(4);
+					LocalDate dataInicio = LocalDate.parse(aux);
+					
+					cc.setDataInicio(dataInicio);
+					
+					aux = rs.getString(5);
+					LocalDate dataFim = LocalDate.parse(aux);
+					
+					cc.setDataFim(dataFim);
+					listaCandidatosCursos.add(cc);
+				}
+				return listaCandidatosCursos;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
 	}
 
 }

@@ -6,7 +6,9 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class IdiomaCandidatoDAO implements IDAO{
 	
@@ -27,8 +29,8 @@ public class IdiomaCandidatoDAO implements IDAO{
 	
 	public String inserir(Object obj) {
 		idiomaCandidato = (IdiomaCandidato) obj;
-		String sql = "INSERT INTO T_CHALL_IDIOMA_CANDIDATO (ID_IDOMA_CANDIDATO, ID_REGISTRO_GERAL, ID_IDIOMAS, DT_INICIO) "
-				+ "VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO T_CHALL_IDIOMA_CANDIDATO (ID_IDOMA_CANDIDATO, ID_REGISTRO_GERAL, ID_IDIOMAS, DT_INICIO, FL_PROFICIENCIA) "
+				+ "VALUES (?, ?, ?, ?, ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -39,6 +41,7 @@ public class IdiomaCandidatoDAO implements IDAO{
 			ps.setInt(2, idiomaCandidato.getIdRegistroGeral());
 			ps.setInt(3, idiomaCandidato.getIdIdiomas());
 			ps.setString(4, dataInicio);
+			ps.setString(5, idiomaCandidato.getProficiencia());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -52,7 +55,8 @@ public class IdiomaCandidatoDAO implements IDAO{
 	
 	public String alterar(Object obj) {
 		idiomaCandidato = (IdiomaCandidato) obj;
-		String sql = "UPDATE T_CHALL_IDIOMA_CANDIDATO SET ID_REGISTRO_GERAL = ?, ID_IDIOMAS = ?, DT_INICIO = ? WHERE ID_IDOMA_CANDIDATO = ?";
+		String sql = "UPDATE T_CHALL_IDIOMA_CANDIDATO SET ID_REGISTRO_GERAL = ?, ID_IDIOMAS = ?, DT_INICIO = ?, FL_PROFICIENCIA = ? "
+				+ "WHERE ID_IDOMA_CANDIDATO = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -62,7 +66,8 @@ public class IdiomaCandidatoDAO implements IDAO{
 			ps.setInt(1, idiomaCandidato.getIdRegistroGeral());
 			ps.setInt(2, idiomaCandidato.getIdIdiomas());
 			ps.setString(3, dataInicio);
-			ps.setInt(4, idiomaCandidato.getIdIdiomaCandidato());
+			ps.setString(4, idiomaCandidato.getProficiencia());
+			ps.setInt(5, idiomaCandidato.getIdIdiomaCandidato());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -89,18 +94,58 @@ public class IdiomaCandidatoDAO implements IDAO{
 		}
 	}
 	
-	public String listarTodos() {
-		String sql = "SELECT * FROM ID_IDOMA_CANDIDATO";
-		String listaIdiomaCandidatos = "Lista dos Idioma Candidatos\n\n";
+	public ArrayList<IdiomaCandidato> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_IDIOMA_CANDIDATO WHERE ID_FAVORITO = ?";
+		ArrayList<IdiomaCandidato> listaIdiomaCandidatos = new ArrayList<IdiomaCandidato>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				IdiomaCandidato ic = new IdiomaCandidato();
+				ic.setIdIdiomaCandidato(rs.getInt(1));
+				ic.setIdRegistroGeral(rs.getInt(2));
+				ic.setIdIdiomas(rs.getInt(3));
+				
+				// Transformando a String de Data do Banco em LocalDate
+				String aux = rs.getString(4);
+				LocalDate dataInicio = LocalDate.parse(aux);
+
+				ic.setDataInicio(dataInicio);
+				ic.setProficiencia(rs.getString(5));
+				listaIdiomaCandidatos.add(ic);
+				return listaIdiomaCandidatos;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
+	}
+	
+	public ArrayList<IdiomaCandidato> listarTodos() {
+		String sql = "SELECT * FROM T_CHALL_IDIOMA_CANDIDATO";
+		ArrayList<IdiomaCandidato> listaIdiomaCandidatos = new ArrayList<IdiomaCandidato>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+
 			if (rs != null) {
 				while (rs.next()) {
-					listaIdiomaCandidatos += "ID Idioma Candidato: " + rs.getInt(1) + "\n";
-					listaIdiomaCandidatos += "ID Registro Geral: " + rs.getInt(2) + "\n";
-					listaIdiomaCandidatos += "ID Idioma: " + rs.getInt(3) + "\n";
-					listaIdiomaCandidatos += "Data Inicio: " + rs.getString(4) + "\n";
+					IdiomaCandidato ic = new IdiomaCandidato();
+					ic.setIdIdiomaCandidato(rs.getInt(1));
+					ic.setIdRegistroGeral(rs.getInt(2));
+					ic.setIdIdiomas(rs.getInt(3));
+					
+					// Transformando a String de Data do Banco em LocalDate
+					String aux = rs.getString(4);
+					LocalDate dataInicio = LocalDate.parse(aux);
+
+					ic.setDataInicio(dataInicio);
+					ic.setProficiencia(rs.getString(5));
+					listaIdiomaCandidatos.add(ic);
 				}
 				return listaIdiomaCandidatos;
 			} else {
@@ -109,6 +154,7 @@ public class IdiomaCandidatoDAO implements IDAO{
 		} catch (SQLException e) {
 			return null;
 		}
+
 	}
 
 }

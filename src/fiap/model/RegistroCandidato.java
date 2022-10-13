@@ -11,18 +11,18 @@ import javax.swing.JOptionPane;
 
 public class RegistroCandidato extends UsuarioRegistroGeral {
 
-	private int numeroRG;
+	private String numeroRG;
 	private LocalDate dataNascimento;
 	private String sexo;
 	private String escolaridade;
 	private String estadoCivil;
 	private String cargo;
 
-	public int getNumeroRG() {
+	public String getNumeroRG() {
 		return numeroRG;
 	}
 
-	public void setNumeroRG(int numeroRG) {
+	public void setNumeroRG(String numeroRG) {
 		this.numeroRG = numeroRG;
 	}
 

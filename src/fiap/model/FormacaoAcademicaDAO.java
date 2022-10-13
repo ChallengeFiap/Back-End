@@ -7,7 +7,9 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class FormacaoAcademicaDAO implements IDAO{
 
@@ -30,7 +32,7 @@ public class FormacaoAcademicaDAO implements IDAO{
 		formacaoAcademica = (FormacaoAcademica) obj;
 		String sql = "INSERT INTO T_CHALL_FORMACAO_ACADEMICA (ID_FORMACAO_ACADEMICA, ID_REGISTRO_GERAL, NM_INSTITUICAO, "
 				+ "DS_ATIVIDADE_EXTRA_CURRICULARES, DT_INICIO, DT_TERMINO, NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, DS_SEMESTRE, FL_CURSO) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, 'A', ?, ?, ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -45,10 +47,9 @@ public class FormacaoAcademicaDAO implements IDAO{
 			ps.setString(5, dataInicio);
 			ps.setString(6, dataTermino);
 			ps.setString(7, formacaoAcademica.getNomeCurso());
-			ps.setString(8, formacaoAcademica.getStatusCurso());
-			ps.setString(9, formacaoAcademica.getEscolaridade());
-			ps.setString(10, formacaoAcademica.getSemestre());
-			ps.setString(11, formacaoAcademica.getNivelCurso());
+			ps.setString(8, formacaoAcademica.getEscolaridade());
+			ps.setString(9, formacaoAcademica.getSemestre());
+			ps.setString(10, formacaoAcademica.getNivelCurso());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -109,33 +110,89 @@ public class FormacaoAcademicaDAO implements IDAO{
 		}
 	}
 	
-	public String listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_FORMACAO_ACADEMICA";
-		String listaFormacaoAcademica = "Lista das Formações Academicas\n\n";
+	public ArrayList<FormacaoAcademica> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_FORMACAO_ACADEMICA WHERE ID_FORMACAO_ACADEMICA = ?";
+		ArrayList<FormacaoAcademica> listaFormacaoAcademicas = new ArrayList<FormacaoAcademica>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			if (rs != null) {
-				while (rs.next()) {
-					listaFormacaoAcademica += "ID Formação Academica: " + rs.getInt(1) + "\n";
-					listaFormacaoAcademica += "ID Registro Geral: " + rs.getInt(2) + "\n";
-					listaFormacaoAcademica += "Nome Instituicao: +" + rs.getString(3) + "\n";
-					listaFormacaoAcademica += "Atividade Extra Curricular: +" + rs.getString(4) + "\n";
-					listaFormacaoAcademica += "Data Inicio: +" + rs.getString(5) + "\n";
-					listaFormacaoAcademica += "Data Termino: +" + rs.getString(6) + "\n";
-					listaFormacaoAcademica += "Nome Curso: +" + rs.getString(7) + "\n";
-					listaFormacaoAcademica += "Status Curso: +" + rs.getString(8) + "\n";
-					listaFormacaoAcademica += "Escolaridade: +" + rs.getString(9) + "\n";
-					listaFormacaoAcademica += "Semestre: +" + rs.getString(10) + "\n";
-					listaFormacaoAcademica += "Nivel Curso: +" + rs.getString(11) + "\n";
-				}
-				return listaFormacaoAcademica;
+
+			if (rs.next()) {
+				FormacaoAcademica fa = new FormacaoAcademica();
+				fa.setIdFormacaoAcademica(rs.getInt(1));
+				fa.setIdRegistroGeral(rs.getInt(2));
+				fa.setNomeInstituicao(rs.getString(3));
+				fa.setAtividadeExtraCurricular(rs.getString(4));
+				
+				// Transformando a String de Data do Banco em LocalDate
+				String aux = rs.getString(5);
+				LocalDate dataInicio = LocalDate.parse(aux);
+				
+				fa.setDataInicio(dataInicio);
+				
+				// Transformando a String de Data do Banco em LocalDate
+				aux = rs.getString(6);
+				LocalDate dataFim = LocalDate.parse(aux);
+				
+				fa.setDataTermino(dataFim);
+				fa.setNomeCurso(rs.getString(7));
+				fa.setStatusCurso(rs.getString(8));
+				fa.setEscolaridade(rs.getString(9));
+				fa.setNivelCurso(rs.getString(10));
+				fa.setSemestre(rs.getString(11));
+				listaFormacaoAcademicas.add(fa);
+				return listaFormacaoAcademicas;
 			} else {
 				return null;
 			}
 		} catch (SQLException e) {
 			return null;
 		}
+
+	}
+	
+	public ArrayList<FormacaoAcademica> listarTodos() {
+		String sql = "SELECT * FROM T_CHALL_FAVORITO";
+		ArrayList<FormacaoAcademica> listaFormacaoAcademicas = new ArrayList<FormacaoAcademica>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs != null) {
+				while (rs.next()) {
+					FormacaoAcademica fa = new FormacaoAcademica();
+					fa.setIdFormacaoAcademica(rs.getInt(1));
+					fa.setIdRegistroGeral(rs.getInt(2));
+					fa.setNomeInstituicao(rs.getString(3));
+					fa.setAtividadeExtraCurricular(rs.getString(4));
+					
+					// Transformando a String de Data do Banco em LocalDate
+					String aux = rs.getString(5);
+					LocalDate dataInicio = LocalDate.parse(aux);
+					
+					fa.setDataInicio(dataInicio);
+					
+					// Transformando a String de Data do Banco em LocalDate
+					aux = rs.getString(6);
+					LocalDate dataFim = LocalDate.parse(aux);
+					
+					fa.setDataTermino(dataFim);
+					fa.setNomeCurso(rs.getString(7));
+					fa.setStatusCurso(rs.getString(8));
+					fa.setEscolaridade(rs.getString(9));
+					fa.setNivelCurso(rs.getString(10));
+					fa.setSemestre(rs.getString(11));
+					listaFormacaoAcademicas.add(fa);
+				}
+				return listaFormacaoAcademicas;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
 	}
 
 }

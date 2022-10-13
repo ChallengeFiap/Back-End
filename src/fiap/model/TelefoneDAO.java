@@ -5,6 +5,7 @@ package fiap.model;
  * @since 07/09/2022
  */
 import java.sql.*;
+import java.util.ArrayList;
 
 public class TelefoneDAO implements IDAO {
 
@@ -25,17 +26,15 @@ public class TelefoneDAO implements IDAO {
 
 	public String inserir(Object obj) {
 		telefone = (Telefone) obj;
-		String sql = "INSERT INTO T_CHALL_TELEFONE (ID_TELEFONE, ID_REGISTRO_GERAL, NR_DDI, NR_DDD, NR_TELEFONE, TP_TELEFONE, ST_TELEFONE) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO T_CHALL_TELEFONE (ID_TELEFONE, ID_REGISTRO_GERAL, NR_DDD, NR_TELEFONE, ST_TELEFONE) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, 'A')";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, telefone.getIdTelefone());
 			ps.setInt(2, telefone.getIdRegistroGeral());
-			ps.setInt(3, telefone.getNumeroDDI());
 			ps.setInt(4, telefone.getNumeroDDD());
-			ps.setInt(5, telefone.getTelefone());
-			ps.setString(6, telefone.getTipoTelefone());
-			ps.setString(7, telefone.getStatusTelefone());
+			ps.setInt(4, telefone.getTelefone());
+			ps.setString(5, telefone.getStatusTelefone());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -49,17 +48,15 @@ public class TelefoneDAO implements IDAO {
 
 	public String alterar(Object obj) {
 		telefone = (Telefone) obj;
-		String sql = "UPDATE T_CHALL_TELEFONE SET ID_REGISTRO_GERAL = ?, NR_DDI = ?, NR_DDD = ?, NR_TELEFONE = ?, TP_TELEFONE = ?,"
-				+ "ST_TELEFONE = ? WHERE ID_TELEFONE = ?";
+		String sql = "UPDATE T_CHALL_TELEFONE SET ID_REGISTRO_GERAL = ?, NR_DDD = ?, NR_TELEFONE = ?, ST_TELEFONE = ? "
+				+ "WHERE ID_TELEFONE = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, telefone.getIdRegistroGeral());
-			ps.setInt(2, telefone.getNumeroDDI());
-			ps.setInt(3, telefone.getNumeroDDD());
-			ps.setInt(4, telefone.getTelefone());
-			ps.setString(5, telefone.getTipoTelefone());
-			ps.setString(6, telefone.getStatusTelefone());
-			ps.setInt(7, telefone.getIdTelefone());
+			ps.setInt(2, telefone.getNumeroDDD());
+			ps.setInt(3, telefone.getTelefone());
+			ps.setString(4, telefone.getStatusTelefone());
+			ps.setInt(5, telefone.getIdTelefone());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -86,27 +83,57 @@ public class TelefoneDAO implements IDAO {
 		}
 	}
 	
-	public String listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_TELEFONE";
-		String listaTelefone = "Lista dos Telefones\n\n";
+	public ArrayList<Telefone> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_TELEFONE WHERE ID_TELEFONE = ?";
+		ArrayList<Telefone> listaTelefones = new ArrayList<Telefone>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			if (rs != null) {
-				while (rs.next()) {
-					listaTelefone += "ID Telefone: " + rs.getInt(1) + "\n";
-					listaTelefone += "ID Resgistro: " + rs.getInt(2) + "\n";
-					listaTelefone += "Telefone: +" + rs.getInt(3) + " (" + rs.getInt(4) + ") " + rs.getInt(5) + "\n";
-					listaTelefone += "Tipo Telefone: " + rs.getString(6) + "\n";
-					listaTelefone += "Status Telefone: " + rs.getString(7) + "\n";
-				}
-				return listaTelefone;
+
+			if (rs.next()) {
+				Telefone tl = new Telefone();
+				tl.setIdTelefone(rs.getInt(1));
+				tl.setIdRegistroGeral(rs.getInt(2));
+				tl.setNumeroDDD(rs.getInt(3));
+				tl.setTelefone(rs.getInt(4));
+				tl.setStatusTelefone(rs.getString(5));
+				listaTelefones.add(tl);
+				return listaTelefones;
 			} else {
 				return null;
 			}
 		} catch (SQLException e) {
 			return null;
 		}
+
+	}
+	
+	public ArrayList<Telefone> listarTodos() {
+		String sql = "SELECT * FROM T_CHALL_TELEFONE";
+		ArrayList<Telefone> listaLinguagens = new ArrayList<Telefone>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs != null) {
+				while (rs.next()) {
+					Telefone tl = new Telefone();
+					tl.setIdTelefone(rs.getInt(1));
+					tl.setIdRegistroGeral(rs.getInt(2));
+					tl.setNumeroDDD(rs.getInt(3));
+					tl.setTelefone(rs.getInt(4));
+					tl.setStatusTelefone(rs.getString(5));
+					listaLinguagens.add(tl);
+				}
+				return listaLinguagens;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
 	}
 	
 	

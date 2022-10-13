@@ -6,7 +6,9 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class FavoritoDAO implements IDAO{
 	
@@ -28,7 +30,7 @@ public class FavoritoDAO implements IDAO{
 	public String inserir(Object obj) {
 		favorito = (Favorito) obj;
 		String sql = "INSERT INTO T_CHALL_FAVORITO (ID_FAVORITO, ID_RECRUTADOR, ID_CANDIDATO, DT_FAVORITOU, ST_FAVORITOS) "
-				+ "VALUES (?, ?, ?, ?, ?)";
+				+ "VALUES (?, ?, ?, ?, 'A')";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -39,7 +41,6 @@ public class FavoritoDAO implements IDAO{
 			ps.setInt(2, favorito.getIdRecrutador());
 			ps.setInt(3, favorito.getIdCandidato());
 			ps.setString(4, dataFavorito);
-			ps.setString(5, favorito.getStatusFavoritos());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -92,20 +93,27 @@ public class FavoritoDAO implements IDAO{
 		}
 	}
 	
-	public String listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_FAVORITO";
-		String listaFavorito = "Lista das Favoritos\n\n";
+	public ArrayList<Favorito> listarUm() {
+		String sql = "SELECT * FROM T_CHALL_FAVORITO WHERE ID_FAVORITO = ?";
+		ArrayList<Favorito> listaFavorito = new ArrayList<Favorito>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, favorito.getIdFavorito());
 			ResultSet rs = ps.executeQuery();
-			if (rs != null) {
-				while (rs.next()) {
-					listaFavorito += "ID Favorito: " + rs.getInt(1) + "\n";
-					listaFavorito += "ID Recrutador: " + rs.getInt(2) + "\n";
-					listaFavorito += "ID Candidato: " + rs.getInt(3) + "\n";
-					listaFavorito += "Data Favorito: " + rs.getString(4) + "\n";
-					listaFavorito += "Status Favorito: " + rs.getInt(5) + "\n";
-				}
+
+			if (rs.next()) {
+				Favorito fa = new Favorito();
+				fa.setIdFavorito(rs.getInt(1));
+				fa.setIdRecrutador(rs.getInt(2));
+				fa.setIdCandidato(rs.getInt(3));
+
+				// Transformando a String de Data do Banco em LocalDate
+				String aux = rs.getString(4);
+				LocalDate dataFavoritou = LocalDate.parse(aux);
+
+				fa.setDataFavoritou(dataFavoritou);
+				fa.setStatusFavoritos(rs.getString(5));
+				listaFavorito.add(fa);
 				return listaFavorito;
 			} else {
 				return null;
@@ -113,6 +121,39 @@ public class FavoritoDAO implements IDAO{
 		} catch (SQLException e) {
 			return null;
 		}
+
+	}
+
+	public ArrayList<Favorito> listarTodos() {
+		String sql = "SELECT * FROM T_CHALL_FAVORITO";
+		ArrayList<Favorito> listaFavoritos = new ArrayList<Favorito>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs != null) {
+				while (rs.next()) {
+					Favorito fa = new Favorito();
+					fa.setIdFavorito(rs.getInt(1));
+					fa.setIdRecrutador(rs.getInt(2));
+					fa.setIdCandidato(rs.getInt(3));
+
+					// Transformando a String de Data do Banco em LocalDate
+					String aux = rs.getString(4);
+					LocalDate datafavoritou = LocalDate.parse(aux);
+
+					fa.setDataFavoritou(datafavoritou);
+					fa.setStatusFavoritos(rs.getString(5));
+					listaFavoritos.add(fa);
+				}
+				return listaFavoritos;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
 	}
 
 }

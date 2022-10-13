@@ -15,6 +15,7 @@ public class IdiomaCandidato {
 	private int idRegistroGeral;
 	private int idIdiomas;
 	private LocalDate dataInicio;
+	private String proficiencia;
 
 	public int getIdIdiomaCandidato() {
 		return idIdiomaCandidato;
@@ -57,5 +58,15 @@ public class IdiomaCandidato {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
+
+	public String getProficiencia() {
+		return proficiencia;
+	}
+
+	public void setProficiencia(String proficiencia) {
+		this.proficiencia = proficiencia;
+	}
+	
+	
 
 }
