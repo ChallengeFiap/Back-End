@@ -10,7 +10,6 @@ public class Idioma {
 
 	private int idIdioma;
 	private String idioma;
-	private String fluencia;
 
 	public int getIdIdioma() {
 		return idIdioma;
@@ -26,14 +25,6 @@ public class Idioma {
 
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
-	}
-
-	public String getFluencia() {
-		return fluencia;
-	}
-
-	public void setFluencia(String fluencia) {
-		this.fluencia = fluencia;
 	}
 
 }

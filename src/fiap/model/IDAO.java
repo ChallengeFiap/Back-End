@@ -13,6 +13,5 @@ public interface IDAO {
 	
 	public String excluir(Object obj);
 	
-	public String listarTodos();
 
 }

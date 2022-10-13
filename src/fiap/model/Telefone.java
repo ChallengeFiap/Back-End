@@ -10,10 +10,8 @@ public class Telefone {
 
 	private int idTelefone;
 	private int idRegistroGeral;
-	private int numeroDDI;
 	private int numeroDDD;
 	private int telefone;
-	private String tipoTelefone;
 	private String statusTelefone;
 
 	public int getIdTelefone() {
@@ -32,13 +30,6 @@ public class Telefone {
 		this.idRegistroGeral = idRegistroGeral;
 	}
 
-	public int getNumeroDDI() {
-		return numeroDDI;
-	}
-
-	public void setNumeroDDI(int numeroDDI) {
-		this.numeroDDI = numeroDDI;
-	}
 
 	public int getNumeroDDD() {
 		return numeroDDD;
@@ -56,13 +47,6 @@ public class Telefone {
 		this.telefone = telefone;
 	}
 
-	public String getTipoTelefone() {
-		return tipoTelefone;
-	}
-
-	public void setTipoTelefone(String tipoTelefone) {
-		this.tipoTelefone = tipoTelefone;
-	}
 
 	public String getStatusTelefone() {
 		return statusTelefone;

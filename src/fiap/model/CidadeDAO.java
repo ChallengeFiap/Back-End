@@ -1,4 +1,5 @@
 package fiap.model;
+
 /**Classe para a CRUD dos objetos do tipo Cidade no Banco de Dados utilizando a classe Conexao
  * @author Luís Felipe
  * @version 1.0
@@ -6,12 +7,13 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.util.ArrayList;
 
-public class CidadeDAO implements IDAO{
-	
+public class CidadeDAO implements IDAO {
+
 	private Connection con;
 	private Cidade cidade;
-	
+
 	public CidadeDAO() {
 		setCon(con);
 	}
@@ -23,37 +25,35 @@ public class CidadeDAO implements IDAO{
 	public void setCon(Connection con) {
 		this.con = con;
 	}
-	
+
 	public String inserir(Object obj) {
 		cidade = (Cidade) obj;
-		String sql = "INSERT INTO T_CHALL_CIDADE (ID_CIDADE, ID_ESTADO, CD_IBGE, NM_CIDADE, NR_DDD) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO T_CHALL_CIDADE (ID_CIDADE, ID_REGISTRO_GERAL, ID_ESTADO, NM_CIDADE) VALUES (?, ?, ?, ?)";
 		try {
-			PreparedStatement ps =  getCon().prepareStatement(sql);
+			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, cidade.getIdCidade());
-			ps.setInt(2, cidade.getIdEstado());
-			ps.setInt(3, cidade.getCodigoIBGE());
+			ps.setInt(2, cidade.getIdRegistroGeral());
+			ps.setInt(3, cidade.getIdEstado());
 			ps.setString(4, cidade.getNomeCidade());
-			ps.setInt(5, cidade.getNumeroDDD());
-			if(ps.executeUpdate() > 0) {
+			if (ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
 				return "Erro ao inserir.";
 			}
-			
+
 		} catch (SQLException e) {
 			return e.getMessage();
 		}
 	}
-	
+
 	public String alterar(Object obj) {
 		cidade = (Cidade) obj;
-		String sql = "UPDATE T_CHALL_CIDADE SET ID_ESTADO = ?, CD_IBGE = ?, NM_CIDADE = ?, NR_DDD = ? WHERE ID_CIDADE = ?";
+		String sql = "UPDATE T_CHALL_CIDADE SET ID_ESTADO = ?,  ID_REGISTRO_GERAL = ?, NM_CIDADE = ? WHERE ID_CIDADE = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, cidade.getIdEstado());
-			ps.setInt(2, cidade.getCodigoIBGE());
+			ps.setInt(2, cidade.getIdRegistroGeral());
 			ps.setString(3, cidade.getNomeCidade());
-			ps.setInt(4, cidade.getNumeroDDD());
 			ps.setInt(5, cidade.getIdCidade());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
@@ -64,7 +64,7 @@ public class CidadeDAO implements IDAO{
 			return e.getMessage();
 		}
 	}
-	
+
 	public String excluir(Object obj) {
 		cidade = (Cidade) obj;
 		String sql = "DELETE FROM T_CHALL_CIDADE WHERE ID_CIDADE = ?";
@@ -80,20 +80,47 @@ public class CidadeDAO implements IDAO{
 			return e.getMessage();
 		}
 	}
-	
-	public String listarTodos() {
+
+	public ArrayList<Cidade> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_CIDADE WHERE ID_CIDADE = ?";
+		ArrayList<Cidade> listaCidades = new ArrayList<Cidade>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				Cidade ci = new Cidade();
+				ci.setIdCidade(rs.getInt(1));
+				ci.setIdRegistroGeral(rs.getInt(2));
+				ci.setIdEstado(rs.getInt(3));
+				ci.setNomeCidade(rs.getString(4));
+				listaCidades.add(ci);
+				return listaCidades;
+
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+
+	public ArrayList<Cidade> listarTodos() {
 		String sql = "SELECT * FROM T_CHALL_CIDADE";
-		String listaCidades = "Lista das Cidades\n\n";
+		ArrayList<Cidade> listaCidades = new ArrayList<Cidade>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+
 			if (rs != null) {
 				while (rs.next()) {
-					listaCidades += "ID Cidade: " + rs.getInt(1) + "\n";
-					listaCidades += "ID Estado: " + rs.getInt(2) + "\n";
-					listaCidades += "Codigo IBGE: +" + rs.getInt(3) + "\n";
-					listaCidades += "Cidade: +" + rs.getString(4) + "\n";
-					listaCidades += "DDD: +" + rs.getInt(5) + "\n";
+					Cidade ci = new Cidade();
+					ci.setIdCidade(rs.getInt(1));
+					ci.setIdRegistroGeral(rs.getInt(2));
+					ci.setIdEstado(rs.getInt(3));
+					ci.setNomeCidade(rs.getString(4));
+					listaCidades.add(ci);
 				}
 				return listaCidades;
 			} else {

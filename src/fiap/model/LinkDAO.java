@@ -6,6 +6,7 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class LinkDAO implements IDAO{
 	
@@ -79,26 +80,55 @@ public class LinkDAO implements IDAO{
 		}
 	}
 	
-	public String listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_LINK";
-		String listaLink = "Lista dos Links\n\n";
+	public ArrayList<Link> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_LINK WHERE ID_LINK = ?";
+		ArrayList<Link> listaLinks = new ArrayList<Link>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			if (rs != null) {
-				while (rs.next()) {
-					listaLink += "ID Link: " + rs.getInt(1) + "\n";
-					listaLink += "ID Resgistro: " + rs.getInt(2) + "\n";
-					listaLink += "Link: +" + rs.getString(3) +"\n";
-					listaLink += "Nome Link: " + rs.getString(4) + "\n";
-				}
-				return listaLink;
+
+			if (rs.next()) {
+				Link lk = new Link();
+				lk.setIdLink(rs.getInt(1));
+				lk.setIdRegistroGeral(rs.getInt(2));
+				lk.setLink(rs.getString(3));
+				lk.setNomeLink(rs.getString(4));
+				listaLinks.add(lk);
+				return listaLinks;
 			} else {
 				return null;
 			}
 		} catch (SQLException e) {
 			return null;
 		}
+
+	}
+	
+	public ArrayList<Link> listarTodos() {
+		String sql = "SELECT * FROM T_CHALL_LINK";
+		ArrayList<Link> listaLinks = new ArrayList<Link>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs != null) {
+				while (rs.next()) {
+					Link lk = new Link();
+					lk.setIdLink(rs.getInt(1));
+					lk.setIdRegistroGeral(rs.getInt(2));
+					lk.setLink(rs.getString(3));
+					lk.setNomeLink(rs.getString(4));
+					listaLinks.add(lk);
+				}
+				return listaLinks;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
 	}
 	
 }

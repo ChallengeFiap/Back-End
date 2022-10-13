@@ -6,6 +6,7 @@ package fiap.model;
  */
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class LinguagemDAO implements IDAO{
 	
@@ -26,12 +27,11 @@ public class LinguagemDAO implements IDAO{
 	
 	public String inserir(Object obj) {
 		linguagem = (Linguagem) obj;
-		String sql = "INSERT INTO T_CHALL_LINGUAGEM (ID_LINGUAGEM, TP_LINGUAGEM, FL_PROFICIENCIA) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO T_CHALL_LINGUAGEM (ID_LINGUAGEM, TP_LINGUAGEM) VALUES (?, ?)";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, linguagem.getIdLinguagem());
 			ps.setString(2, linguagem.getLinguagem());
-			ps.setString(3, linguagem.getNivelProficiencia());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {
@@ -45,12 +45,11 @@ public class LinguagemDAO implements IDAO{
 
 	public String alterar(Object obj) {
 		linguagem = (Linguagem) obj;
-		String sql = "UPDATE T_CHALL_LINGUAGEM SET TP_LINGUAGEM = ?, FL_PROFICIENCIA = ? WHERE ID_LINGUAGEM = ?";
+		String sql = "UPDATE T_CHALL_LINGUAGEM SET TP_LINGUAGEM = ? WHERE ID_LINGUAGEM = ?";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setString(1, linguagem.getLinguagem());
-			ps.setString(2, linguagem.getNivelProficiencia());
-			ps.setInt(3, linguagem.getIdLinguagem());
+			ps.setInt(2, linguagem.getIdLinguagem());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -77,25 +76,51 @@ public class LinguagemDAO implements IDAO{
 		}
 	}
 	
-	public String listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_LINGUAGEM";
-		String listaLinguagem = "Lista das Linguagens de Programação\n\n";
+	public ArrayList<Linguagem> listarUm(int id) {
+		String sql = "SELECT * FROM T_CHALL_LINGUAGEM WHERE ID_LINGUAGEM = ?";
+		ArrayList<Linguagem> listaLinguagens = new ArrayList<Linguagem>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			if (rs != null) {
-				while (rs.next()) {
-					listaLinguagem += "ID Linguagem: " + rs.getInt(1) + "\n";
-					listaLinguagem += "Link: +" + rs.getString(2) +"\n";
-					listaLinguagem += "Nome Link: " + rs.getString(3) + "\n";
-				}
-				return listaLinguagem;
+
+			if (rs.next()) {
+				Linguagem li = new Linguagem();
+				li.setIdLinguagem(rs.getInt(1));
+				li.setLinguagem(rs.getString(2));
+				listaLinguagens.add(li);
+				return listaLinguagens;
 			} else {
 				return null;
 			}
 		} catch (SQLException e) {
 			return null;
 		}
+
+	}
+	
+	public ArrayList<Linguagem> listarTodos() {
+		String sql = "SELECT * FROM T_CHALL_LINGUAGEM";
+		ArrayList<Linguagem> listaLinguagens = new ArrayList<Linguagem>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs != null) {
+				while (rs.next()) {
+					Linguagem li = new Linguagem();
+					li.setIdLinguagem(rs.getInt(1));
+					li.setLinguagem(rs.getString(2));
+					listaLinguagens.add(li);
+				}
+				return listaLinguagens;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
 	}
 	
 }
