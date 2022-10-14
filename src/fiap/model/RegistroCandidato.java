@@ -77,7 +77,6 @@ public class RegistroCandidato extends UsuarioRegistroGeral {
 		this.cargo = cargo;
 	}
 
-	
 
 	
 	

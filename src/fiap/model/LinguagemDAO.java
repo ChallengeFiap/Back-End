@@ -13,7 +13,7 @@ public class LinguagemDAO implements IDAO{
 	private Connection con;
 	private Linguagem linguagem;
 	
-	public LinguagemDAO() {
+	public LinguagemDAO(Connection con) {
 		setCon(con);
 	}
 

@@ -16,7 +16,7 @@ public class CandidatoCursoDAO implements IDAO {
 	private Connection con;
 	private CandidatoCurso candidatoCurso;
 	
-	public CandidatoCursoDAO() {
+	public CandidatoCursoDAO(Connection con) {
 		setCon(con);
 	}
 

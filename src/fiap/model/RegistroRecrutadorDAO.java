@@ -14,7 +14,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 	private RegistroRecrutador registroRecrutador;
 	
 	
-	public RegistroRecrutadorDAO() {
+	public RegistroRecrutadorDAO(Connection con) {
 		setCon(con);
 	}
 
@@ -28,7 +28,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 	
 	public String inserirRegistro(Object obj) {
 		registroRecrutador = (RegistroRecrutador) obj;
-		String sql = "INSERT INTO T_CHALL_REGISTRO_GERAL (ID_REGISTRO_GERAL, NM_NOME_COMPLETO, DS_EMAIL, DS_SENHA, TP_USUARIO, NR_CPF,) "
+		String sql = "INSERT INTO T_CHALL_REGISTRO_GERAL (ID_REGISTRO_GERAL, NM_NOME_COMPLETO, DS_EMAIL, DS_SENHA, TP_USUARIO, NR_CPF) "
 				+ "VALUES (?, ?, ?, ?, 'R', ?)";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
@@ -38,7 +38,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 			ps.setString(4, registroRecrutador.getSenha());
 			ps.setString(5, registroRecrutador.getNumeroCPF());
 			if(ps.executeUpdate() > 0) {
-				return "Inserido com sucesso.";
+				return "Inserido com sucesso";
 			} else {
 				return "Erro ao inserir.";
 			}
@@ -57,7 +57,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 			ps.setString(2, registroRecrutador.getNomeEmpresa());
 			ps.setString(3, registroRecrutador.getCargoRecrutador());
 			if(ps.executeUpdate() > 0) {
-				return "Inserido com sucesso.";
+				return "Inserido com sucesso";
 			} else {
 				return "Erro ao inserir.";
 			}
@@ -79,7 +79,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 			ps.setString(4, registroRecrutador.getNumeroCPF());
 			ps.setInt(5, registroRecrutador.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
-				return "Alterado R com sucesso!";
+				return "Alterado com sucesso!";
 			} else {
 				return "Erro ao alterar!";
 			}
@@ -90,14 +90,14 @@ public class RegistroRecrutadorDAO implements IDAOR {
 	
 	public String alterarUsuario(Object obj) {
 		registroRecrutador = (RegistroRecrutador) obj;
-		String sql = "UPDATE T_CHALL_REGISTRO_RECRUTADOR SET NM_EMPRESA = ?,DS_CARGO = ? WHERE ID_REGISTRO_GERAL = ? AND TP_USUARIO = 'R'";
+		String sql = "UPDATE T_CHALL_REGISTRO_RECRUTADOR SET NM_EMPRESA = ?, DS_CARGO = ? WHERE ID_REGISTRO_GERAL = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setString(1, registroRecrutador.getNomeEmpresa());
 			ps.setString(2, registroRecrutador.getCargoRecrutador());
 			ps.setInt(3, registroRecrutador.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
-				return "Alterado RR com sucesso!";
+				return "Alterado com sucesso!";
 			} else {
 				return "Erro ao alterar!";
 			}
@@ -113,7 +113,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, registroRecrutador.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
-				return "Excluido R com sucesso!";
+				return "Excluido com sucesso!";
 			} else {
 				return "Erro ao excluir!";
 			}
@@ -129,7 +129,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, registroRecrutador.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
-				return "Excluido RR com sucesso!";
+				return "Excluido com sucesso!";
 			} else {
 				return "Erro ao excluir!";
 			}

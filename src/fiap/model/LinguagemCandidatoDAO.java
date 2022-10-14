@@ -19,7 +19,7 @@ public class LinguagemCandidatoDAO implements IDAO {
 	private Connection con;
 	private LinguagemCandidato linguagemCandidato;
 	
-	public LinguagemCandidatoDAO() {
+	public LinguagemCandidatoDAO(Connection con) {
 		setCon(con);
 	}
 

@@ -15,7 +15,7 @@ public class FavoritoDAO implements IDAO{
 	private Connection con;
 	private Favorito favorito;
 	
-	public FavoritoDAO() {
+	public FavoritoDAO(Connection con) {
 		setCon(con);
 	}
 

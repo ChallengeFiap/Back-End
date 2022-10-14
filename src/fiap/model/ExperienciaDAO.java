@@ -16,7 +16,7 @@ public class ExperienciaDAO implements IDAO {
 	private Connection con;
 	private Experiencia experiencia;
 
-	public ExperienciaDAO() {
+	public ExperienciaDAO(Connection con) {
 		setCon(con);
 	}
 

@@ -16,7 +16,7 @@ public class FormacaoAcademicaDAO implements IDAO{
 	private Connection con;
 	private FormacaoAcademica formacaoAcademica;
 	
-	public FormacaoAcademicaDAO() {
+	public FormacaoAcademicaDAO(Connection con) {
 		setCon(con);
 	}
 

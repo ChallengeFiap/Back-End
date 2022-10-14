@@ -13,7 +13,7 @@ public class IdiomaDAO implements IDAO{
 	private Connection con;
 	private Idioma idioma;
 	
-	public IdiomaDAO() {
+	public IdiomaDAO(Connection con) {
 		setCon(con);
 	}
 
