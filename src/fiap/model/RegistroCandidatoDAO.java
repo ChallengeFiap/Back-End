@@ -11,12 +11,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class RegistroCandidatoDAO implements IDAOR {
+public class RegistroCandidatoDAO implements IDAOR{
 
 	private Connection con;
 	private RegistroCandidato registroCandidato;
 
-	public RegistroCandidatoDAO() {
+	public RegistroCandidatoDAO(Connection con)  {
 		setCon(con);
 	}
 
@@ -27,39 +27,39 @@ public class RegistroCandidatoDAO implements IDAOR {
 	public void setCon(Connection con) {
 		this.con = con;
 	}
-	
+
 	public String inserirRegistro(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
-		String sql = "INSERT INTO T_CHALL_REGISTRO_GERAL (ID_REGISTRO_GERAL, NM_NOME_COMPLETO, DS_EMAIL, DS_SENHA, TP_USUARIO, NR_CPF,) "
+		String sql = "INSERT INTO T_CHALL_REGISTRO_GERAL (ID_REGISTRO_GERAL, NM_NOME_COMPLETO, DS_EMAIL, DS_SENHA, TP_USUARIO, NR_CPF) "
 				+ "VALUES (?, ?, ?, ?, 'C', ?)";
 		try {
-			PreparedStatement ps =  getCon().prepareStatement(sql);
+			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, registroCandidato.getIdRegistroGeral());
 			ps.setString(2, registroCandidato.getNomeCompleto());
 			ps.setString(3, registroCandidato.getEmail());
 			ps.setString(4, registroCandidato.getSenha());
 			ps.setString(5, registroCandidato.getNumeroCPF());
-			if(ps.executeUpdate() > 0) {
-				return "Inserido R com sucesso.";
+			if (ps.executeUpdate() > 0) {
+				return "Inserido com sucesso";
 			} else {
 				return "Erro ao inserir.";
 			}
-			
+
 		} catch (SQLException e) {
 			return e.getMessage();
 		}
 	}
-	
+
 	public String inserirUsuario(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
-		String sql = "INSERT INTO T_CHALL_REGISTRO_CANDIDATO (ID_REGISTRO_GERAL, NR_RG, DT_NASCIMENTO, FL_SEXO_BIOLOGICO, DS_ESCOLARIDADE,"
-				+ "DS_ESTADO_CIVIL, DS_CARGO) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO T_CHALL_REGISTRO_CANDIDATO (ID_REGISTRO_GERAL, NR_RG, DT_NASCIMENTO, FL_SEXO_BIOLOGICO, TP_ESCOLARIDADE,"
+				+ "DS_ESTADO_CIVIL, DS_CARGO) VALUES (?, ?, TO_DATE(?, 'DD/MM/YYYY'), ?, ?, ?, ?)";
 		try {
-			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			// Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			String dataNascimento = registroCandidato.getDataNascimento().format(formatter);
-			
-			PreparedStatement ps =  getCon().prepareStatement(sql);
+
+			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, registroCandidato.getIdRegistroGeral());
 			ps.setString(2, registroCandidato.getNumeroRG());
 			ps.setString(3, dataNascimento);
@@ -67,12 +67,12 @@ public class RegistroCandidatoDAO implements IDAOR {
 			ps.setString(5, registroCandidato.getEscolaridade());
 			ps.setString(6, registroCandidato.getEstadoCivil());
 			ps.setString(7, registroCandidato.getCargo());
-			if(ps.executeUpdate() > 0) {
-				return "Inserido RC com sucesso.";
+			if (ps.executeUpdate() > 0) {
+				return "Inserido com sucesso";
 			} else {
 				return "Erro ao inserir.";
 			}
-			
+
 		} catch (SQLException e) {
 			return e.getMessage();
 		}
@@ -80,8 +80,8 @@ public class RegistroCandidatoDAO implements IDAOR {
 
 	public String alterarRegistro(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
-		String sql = "UPDATE T_CHALL_REGISTRO_CANDIDATO SET NM_NOME_COMPLETO = ?, DS_EMAIL = ?, DS_SENHA = ?, NR_CPF = ?, "
-				+  "WHERE ID_REGISTRO_GERAL = ? AND TP_USUARIO = 'C' ";
+		String sql = "UPDATE T_CHALL_REGISTRO_GERAL SET NM_NOME_COMPLETO = ?, DS_EMAIL = ?, DS_SENHA = ?, NR_CPF = ? "
+				+ "WHERE ID_REGISTRO_GERAL = ? AND TP_USUARIO = 'C' ";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setString(1, registroCandidato.getNomeCompleto());
@@ -90,7 +90,7 @@ public class RegistroCandidatoDAO implements IDAOR {
 			ps.setString(4, registroCandidato.getNumeroCPF());
 			ps.setInt(5, registroCandidato.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
-				return "Alterado R com sucesso!";
+				return "Alterado com sucesso!";
 			} else {
 				return "Erro ao alterar!";
 			}
@@ -98,16 +98,16 @@ public class RegistroCandidatoDAO implements IDAOR {
 			return e.getMessage();
 		}
 	}
-	
+
 	public String alterarUsuario(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
-		String sql = "UPDATE T_CHALL_REGISTRO_CANDIDATO SET NR_RG = ?, DT_NASCIMENTO = ?, FL_SEXO_BIOLOGICO = ?, DS_ESCOLARIDADE = ?, "
-				+ "DS_ESTADO_CIVIL = ?, DS_CARGO = ? WHERE ID_REGISTRO_GERAL = ? AND TP_USUARIO = 'C' ";
+		String sql = "UPDATE T_CHALL_REGISTRO_CANDIDATO SET NR_RG = ?, DT_NASCIMENTO = ?, FL_SEXO_BIOLOGICO = ?, TP_ESCOLARIDADE = ?, "
+				+ "DS_ESTADO_CIVIL = ?, DS_CARGO = ? WHERE ID_REGISTRO_GERAL = ? ";
 		try {
-			//Transformando o LocalDate em String para mandar para o Banco de Dados
+			// Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			String dataNascimento = registroCandidato.getDataNascimento().format(formatter);
-			
+
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setString(1, registroCandidato.getNumeroRG());
 			ps.setString(2, dataNascimento);
@@ -117,7 +117,7 @@ public class RegistroCandidatoDAO implements IDAOR {
 			ps.setString(6, registroCandidato.getCargo());
 			ps.setInt(7, registroCandidato.getIdRegistroGeral());
 			if (ps.executeUpdate() > 0) {
-				return "Alterado RC com sucesso!";
+				return "Alterado com sucesso!";
 			} else {
 				return "Erro ao alterar!";
 			}
@@ -125,7 +125,7 @@ public class RegistroCandidatoDAO implements IDAOR {
 			return e.getMessage();
 		}
 	}
-	
+
 	public String excluirRegistro(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
 		String sql = "DELETE FROM T_CHALL_REGISTRO_GERAL WHERE ID_REGISTRO_GERAL = ?";
@@ -141,7 +141,7 @@ public class RegistroCandidatoDAO implements IDAOR {
 			return e.getMessage();
 		}
 	}
-	
+
 	public String excluirUsuario(Object obj) {
 		registroCandidato = (RegistroCandidato) obj;
 		String sql = "DELETE FROM T_CHALL_REGISTRO_CANDIDATO WHERE ID_REGISTRO_GERAL = ?";
@@ -157,41 +157,42 @@ public class RegistroCandidatoDAO implements IDAOR {
 			return e.getMessage();
 		}
 	}
-	
-	
-	public  ArrayList<RegistroCandidato>listarUm(int id) {
-		String sql = "SELECT RC.ID_REGISTRO_GERAL, RG.TP_USUARIO, RG.NM_NOME_COMPLETO, RG.DS_EMAIL, RG.DS_SENHA, RG.NR_CPF,"
-				+ "RC.NR_RG, RC.DT_NASCIMENTO, RC.FL_SEXO_BIOLOGICO, RC.TP_ESCOLARIDADE, RC.DS_ESTADO_CIVIL, RC.DS_CARGO"
-				+ "FROM T_CHALL_REGISTRO_GERAL RG INNER JOIN T_CHALL_REGISTRO_CANDIDATO RC"
+
+	public ArrayList<RegistroCandidato> listarUm(int id) {
+		String sql = "SELECT RC.ID_REGISTRO_GERAL, RG.TP_USUARIO, RG.NM_NOME_COMPLETO, RG.DS_EMAIL, RG.DS_SENHA, RG.NR_CPF, "
+				+ "RC.NR_RG, TO_CHAR(RC.DT_NASCIMENTO, 'YYYY/MM/DD'), RC.FL_SEXO_BIOLOGICO, RC.TP_ESCOLARIDADE, RC.DS_ESTADO_CIVIL, RC.DS_CARGO "
+				+ "FROM T_CHALL_REGISTRO_GERAL RG INNER JOIN T_CHALL_REGISTRO_CANDIDATO RC "
 				+ "ON(RG.ID_REGISTRO_GERAL = RC.ID_REGISTRO_GERAL) WHERE RC.ID_REGISTRO_GERAL = ? ";
-		 ArrayList<RegistroCandidato> listaCandidatos = new  ArrayList<RegistroCandidato>();
+		ArrayList<RegistroCandidato> listaCandidatos = new ArrayList<RegistroCandidato>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			
-			if (rs != null) {
-				while (rs.next()) {
-					RegistroCandidato rc = new RegistroCandidato();
-					rc.setIdRegistroGeral(rs.getInt(1));
-					rc.setTipoUsuario(rs.getString(2));
-					rc.setNomeCompleto(rs.getString(3));
-					rc.setEmail(rs.getString(4));
-					rc.setSenha(rs.getString(5));
-					rc.setNumeroCPF(rs.getString(6));
-					rc.setNumeroRG(rs.getString(7));
-					
-					//Transformando o LocalDate em String para mandar para o Banco de Dados
-					String aux = rs.getString(8);
-					LocalDate dataNascimento  = LocalDate.parse(aux);
-					
-					rc.setDataNascimento(dataNascimento);
-					rc.setSexo(rs.getString(9));
-					rc.setEscolaridade(rs.getString(10));
-					rc.setEstadoCivil(rs.getString(11));
-					rc.setCargo(rs.getString(12));
-					listaCandidatos.add(rc);
-				}
+
+			if (rs.next()) {
+				RegistroCandidato rc = new RegistroCandidato();
+				rc.setIdRegistroGeral(rs.getInt(1));
+				rc.setTipoUsuario(rs.getString(2));
+				rc.setNomeCompleto(rs.getString(3));
+				rc.setEmail(rs.getString(4));
+				rc.setSenha(rs.getString(5));
+				rc.setNumeroCPF(rs.getString(6));
+				rc.setNumeroRG(rs.getString(7));
+
+				// Transformando o LocalDate em String para mandar para o Banco de Dados
+				String aux = rs.getString(8);
+				String data = aux.substring(0, 4) + "-";
+				data += aux.substring(5, 7) + "-";
+				data += aux.substring(8, 10);
+				LocalDate dataNascimento = LocalDate.parse(data);
+
+				rc.setDataNascimento(dataNascimento);
+				rc.setSexo(rs.getString(9));
+				rc.setEscolaridade(rs.getString(10));
+				rc.setEstadoCivil(rs.getString(11));
+				rc.setCargo(rs.getString(12));
+				listaCandidatos.add(rc);
+
 				return listaCandidatos;
 			} else {
 				return null;
@@ -200,17 +201,17 @@ public class RegistroCandidatoDAO implements IDAOR {
 			return null;
 		}
 	}
-	
-	public  ArrayList<RegistroCandidato>listarTodos() {
-		String sql = "SELECT RC.ID_REGISTRO_GERAL, RG.TP_USUARIO, RG.NM_NOME_COMPLETO, RG.DS_EMAIL, RG.DS_SENHA, RG.NR_CPF,"
-				+ "RC.NR_RG, RC.DT_NASCIMENTO, RC.FL_SEXO_BIOLOGICO, RC.TP_ESCOLARIDADE, RC.DS_ESTADO_CIVIL, RC.DS_CARGO"
-				+ "FROM T_CHALL_REGISTRO_GERAL RG INNER JOIN T_CHALL_REGISTRO_CANDIDATO RC"
-				+ "ON(RG.ID_REGISTRO_GERAL = RC.ID_REGISTRO_GERAL) ";
-		 ArrayList<RegistroCandidato> listaCandidatos = new  ArrayList<RegistroCandidato>();
+
+	public ArrayList<RegistroCandidato> listarTodos() {
+		String sql = "SELECT RC.ID_REGISTRO_GERAL, RG.TP_USUARIO, RG.NM_NOME_COMPLETO, RG.DS_EMAIL, RG.DS_SENHA, RG.NR_CPF, "
+				+ "RC.NR_RG, TO_CHAR(RC.DT_NASCIMENTO, 'YYYY/MM/DD'), RC.FL_SEXO_BIOLOGICO, RC.TP_ESCOLARIDADE, RC.DS_ESTADO_CIVIL, RC.DS_CARGO "
+				+ "FROM T_CHALL_REGISTRO_GERAL RG INNER JOIN T_CHALL_REGISTRO_CANDIDATO RC "
+				+ "ON(RG.ID_REGISTRO_GERAL = RC.ID_REGISTRO_GERAL)";
+		ArrayList<RegistroCandidato> listaCandidatos = new ArrayList<RegistroCandidato>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			
+
 			if (rs != null) {
 				while (rs.next()) {
 					RegistroCandidato rc = new RegistroCandidato();
@@ -221,11 +222,14 @@ public class RegistroCandidatoDAO implements IDAOR {
 					rc.setSenha(rs.getString(5));
 					rc.setNumeroCPF(rs.getString(6));
 					rc.setNumeroRG(rs.getString(7));
-					
-					//Transformando o LocalDate em String para mandar para o Banco de Dados
+
+					// Transformando o LocalDate em String para mandar para o Banco de Dados
 					String aux = rs.getString(8);
-					LocalDate dataNascimento  = LocalDate.parse(aux);
-					
+					String data = aux.substring(0, 4) + "-";
+					data += aux.substring(5, 7) + "-";
+					data += aux.substring(8, 10);
+					LocalDate dataNascimento = LocalDate.parse(data);
+
 					rc.setDataNascimento(dataNascimento);
 					rc.setSexo(rs.getString(9));
 					rc.setEscolaridade(rs.getString(10));
@@ -241,7 +245,6 @@ public class RegistroCandidatoDAO implements IDAOR {
 			return null;
 		}
 	}
-	
-	
-	
+
+
 }

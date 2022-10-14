@@ -14,7 +14,7 @@ public class EstadoDAO implements IDAO {
 	private Connection con;
 	private Estado estado;
 
-	public EstadoDAO() {
+	public EstadoDAO(Connection con) {
 		setCon(con);
 	}
 

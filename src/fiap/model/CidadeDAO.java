@@ -14,7 +14,7 @@ public class CidadeDAO implements IDAO {
 	private Connection con;
 	private Cidade cidade;
 
-	public CidadeDAO() {
+	public CidadeDAO(Connection con) {
 		setCon(con);
 	}
 

@@ -12,7 +12,7 @@ public class TelefoneDAO implements IDAO {
 	private Connection con;
 	private Telefone telefone;
 
-	public TelefoneDAO() {
+	public TelefoneDAO(Connection con) {
 		setCon(con);
 	}
 

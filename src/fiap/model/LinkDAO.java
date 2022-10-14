@@ -13,7 +13,7 @@ public class LinkDAO implements IDAO{
 	private Connection con;
 	private Link link;
 	
-	public LinkDAO() {
+	public LinkDAO(Connection con) {
 		setCon(con);
 	}
 
