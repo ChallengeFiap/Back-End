@@ -1,4 +1,4 @@
-package fiap.view;
+package fiap.test;
 
 import javax.swing.JOptionPane;
 import fiap.controller.*;

@@ -27,7 +27,7 @@ public class IdiomaDAO implements IDAO{
 	
 	public String inserir(Object obj) {
 		idioma = (Idioma) obj;
-		String sql = "INSERT INTO T_CHALL_IDIOMAS (ID_IDOMAS, TP_IDIOMAS) VALUES (?, ?)";
+		String sql = "INSERT INTO T_CHALL_IDIOMAS (ID_IDIOMAS, TP_IDIOMAS) VALUES (?, ?)";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, idioma.getIdIdioma());
@@ -45,7 +45,7 @@ public class IdiomaDAO implements IDAO{
 	
 	public String alterar(Object obj) {
 		idioma = (Idioma) obj;
-		String sql = "UPDATE T_CHALL_IDIOMAS SET TP_IDIOMAS = ? WHERE ID_IDOMAS = ?";
+		String sql = "UPDATE T_CHALL_IDIOMAS SET TP_IDIOMAS = ? WHERE ID_IDIOMAS = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setString(1, idioma.getIdioma());
@@ -62,7 +62,7 @@ public class IdiomaDAO implements IDAO{
 	
 	public String excluir(Object obj) {
 		idioma = (Idioma) obj;
-		String sql = "DELETE FROM T_CHALL_IDIOMAS WHERE ID_IDOMAS = ?";
+		String sql = "DELETE FROM T_CHALL_IDIOMAS WHERE ID_IDIOMAS = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, idioma.getIdIdioma());
@@ -77,7 +77,7 @@ public class IdiomaDAO implements IDAO{
 	}
 	
 	public ArrayList<Idioma> listarUm(int id) {
-		String sql = "SELECT * FROM T_CHALL_IDIOMAS WHERE ID_FAVORITO = ?";
+		String sql = "SELECT * FROM T_CHALL_IDIOMAS WHERE ID_IDIOMAS = ?";
 		ArrayList<Idioma> listaIdiomas = new ArrayList<Idioma>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

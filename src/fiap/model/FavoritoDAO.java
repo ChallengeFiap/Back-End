@@ -29,8 +29,8 @@ public class FavoritoDAO implements IDAO{
 	
 	public String inserir(Object obj) {
 		favorito = (Favorito) obj;
-		String sql = "INSERT INTO T_CHALL_FAVORITO (ID_FAVORITO, ID_RECRUTADOR, ID_CANDIDATO, DT_FAVORITOU, ST_FAVORITOS) "
-				+ "VALUES (?, ?, ?, ?, 'A')";
+		String sql = "INSERT INTO T_CHALL_FAVORITO (ID_FAVORITO, ID_REGISTRO_RECRUTADOR, ID_REGISTRO_CANDIDATO, DT_FAVORITOU, ST_FAVORITOS) "
+				+ "VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'), 'A')";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -54,8 +54,8 @@ public class FavoritoDAO implements IDAO{
 	
 	public String alterar(Object obj) {
 		favorito = (Favorito) obj;
-		String sql = "UPDATE T_CHALL_FAVORITO SET ID_RECRUTADOR = ?, ID_CANDIDATO = ?, DT_FAVORITOU = ?, ST_FAVORITOS = ? "
-				+ "WHERE ID_FAVORITO = ?";
+		String sql = "UPDATE T_CHALL_FAVORITO SET ID_REGISTRO_RECRUTADOR = ?, ID_REGISTRO_CANDIDATO = ?,"
+				+ " DT_FAVORITOU = TO_DATE(?, 'DD/MM/YYYY'), ST_FAVORITOS = ? WHERE ID_FAVORITO = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -93,12 +93,13 @@ public class FavoritoDAO implements IDAO{
 		}
 	}
 	
-	public ArrayList<Favorito> listarUm() {
-		String sql = "SELECT * FROM T_CHALL_FAVORITO WHERE ID_FAVORITO = ?";
+	public ArrayList<Favorito> listarUm(int id) {
+		String sql = "SELECT ID_FAVORITO, ID_REGISTRO_RECRUTADOR, ID_REGISTRO_CANDIDATO, TO_CHAR(DT_FAVORITOU, 'YYYY/MM/DD'), ST_FAVORITOS "
+				+ "FROM T_CHALL_FAVORITO WHERE ID_FAVORITO = ?";
 		ArrayList<Favorito> listaFavorito = new ArrayList<Favorito>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
-			ps.setInt(1, favorito.getIdFavorito());
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -107,9 +108,12 @@ public class FavoritoDAO implements IDAO{
 				fa.setIdRecrutador(rs.getInt(2));
 				fa.setIdCandidato(rs.getInt(3));
 
-				// Transformando a String de Data do Banco em LocalDate
+				// Transformando o LocalDate em String para mandar para o Banco de Dados
 				String aux = rs.getString(4);
-				LocalDate dataFavoritou = LocalDate.parse(aux);
+				String data = aux.substring(0, 4) + "-";
+				data += aux.substring(5, 7) + "-";
+				data += aux.substring(8, 10);
+				LocalDate dataFavoritou = LocalDate.parse(data);
 
 				fa.setDataFavoritou(dataFavoritou);
 				fa.setStatusFavoritos(rs.getString(5));
@@ -125,7 +129,7 @@ public class FavoritoDAO implements IDAO{
 	}
 
 	public ArrayList<Favorito> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_FAVORITO";
+		String sql = "SELECT ID_FAVORITO, ID_REGISTRO_RECRUTADOR, ID_REGISTRO_CANDIDATO, TO_CHAR(DT_FAVORITOU, 'YYYY/MM/DD'), ST_FAVORITOS FROM T_CHALL_FAVORITO";
 		ArrayList<Favorito> listaFavoritos = new ArrayList<Favorito>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
@@ -138,11 +142,14 @@ public class FavoritoDAO implements IDAO{
 					fa.setIdRecrutador(rs.getInt(2));
 					fa.setIdCandidato(rs.getInt(3));
 
-					// Transformando a String de Data do Banco em LocalDate
+					// Transformando o LocalDate em String para mandar para o Banco de Dados
 					String aux = rs.getString(4);
-					LocalDate datafavoritou = LocalDate.parse(aux);
+					String data = aux.substring(0, 4) + "-";
+					data += aux.substring(5, 7) + "-";
+					data += aux.substring(8, 10);
+					LocalDate dataFavoritou = LocalDate.parse(data);
 
-					fa.setDataFavoritou(datafavoritou);
+					fa.setDataFavoritou(dataFavoritou);
 					fa.setStatusFavoritos(rs.getString(5));
 					listaFavoritos.add(fa);
 				}

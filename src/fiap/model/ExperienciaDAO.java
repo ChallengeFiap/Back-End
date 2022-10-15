@@ -30,8 +30,8 @@ public class ExperienciaDAO implements IDAO {
 
 	public String inserir(Object obj) {
 		experiencia = (Experiencia) obj;
-		String sql = "INSERT INTO T_CHALL_EXPERIENCIA (ID_EXPERIENCIA, ID_REGISTRO_GERAL, TP_EXPERIENCIA, DT_INICIO, DT_TERMINO, "
-				+ "ST_STATUS, DS_SENIORIDADE) VALUES (?, ?, ?, ?, ?, 'A', ?)";
+		String sql = "INSERT INTO T_CHALL_EXPERIENCIA (ID_EXPERIENCIA, ID_REGISTRO_GERAL, TP_EXPERIENCIA, DT_INICIO, DT_TERMINO, ST_STATUS, DS_SENIORIDADE) "
+				+ "VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'), TO_DATE(?, 'DD/MM/YYYY'), 'A', ?)";
 		try {
 			// Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -58,8 +58,8 @@ public class ExperienciaDAO implements IDAO {
 
 	public String alterar(Object obj) {
 		experiencia = (Experiencia) obj;
-		String sql = "UPDATE T_CHALL_EXPERIENCIA SET ID_REGISTRO_GERAL = ?, TP_EXPERIENCIA = ?, DT_INICIO = ?, "
-				+ "DT_TERMINO = ?, ST_STATUS = ?, DS_SENIORIDADE = ? WHERE ID_EXPERIENCIA = ?";
+		String sql = "UPDATE T_CHALL_EXPERIENCIA SET ID_REGISTRO_GERAL = ?, TP_EXPERIENCIA = ?, DT_INICIO = TO_DATE(?, 'DD/MM/YYYY'), "
+				+ "DT_TERMINO = TO_DATE(?, 'DD/MM/YYYY'), ST_STATUS = ?, DS_SENIORIDADE = ? WHERE ID_EXPERIENCIA = ?";
 		try {
 			// Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -101,7 +101,8 @@ public class ExperienciaDAO implements IDAO {
 	}
 
 	public ArrayList<Experiencia> listarUm(int id) {
-		String sql = "SELECT * FROM T_CHALL_EXPERIENCIA WHERE ID_EXPERIENCIA = ?";
+		String sql = "SELECT ID_EXPERIENCIA, ID_REGISTRO_GERAL, TP_EXPERIENCIA, TO_CHAR(DT_INICIO, 'YYYY/MM/DD'), TO_CHAR(DT_TERMINO, 'YYYY/MM/DD'), "
+				+ "ST_STATUS, DS_SENIORIDADE FROM T_CHALL_EXPERIENCIA WHERE ID_EXPERIENCIA = ?";
 		ArrayList<Experiencia> listaExperiencias = new ArrayList<Experiencia>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
@@ -114,15 +115,21 @@ public class ExperienciaDAO implements IDAO {
 				ex.setIdRegistroGeral(rs.getInt(2));
 				ex.setExperiencia(rs.getString(3));
 
-				// Transformando a String de Data do Banco em LocalDate
+				/// Transformando o LocalDate em String para mandar para o Banco de Dados
 				String aux = rs.getString(4);
-				LocalDate dataInicio = LocalDate.parse(aux);
+				String data = aux.substring(0, 4) + "-";
+				data += aux.substring(5, 7) + "-";
+				data += aux.substring(8, 10);
+				LocalDate dataInicio = LocalDate.parse(data);
 
 				ex.setDataInicio(dataInicio);
 
-				// Transformando a String de Data do Banco em LocalDate
+				// Transformando o LocalDate em String para mandar para o Banco de Dados
 				aux = rs.getString(5);
-				LocalDate dataFim = LocalDate.parse(aux);
+				data = aux.substring(0, 4) + "-";
+				data += aux.substring(5, 7) + "-";
+				data += aux.substring(8, 10);
+				LocalDate dataFim = LocalDate.parse(data);
 
 				ex.setDataFim(dataFim);
 				ex.setStatusExperiencia(rs.getString(6));
@@ -139,7 +146,8 @@ public class ExperienciaDAO implements IDAO {
 	}
 
 	public ArrayList<Experiencia> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_EXPERIENCIA";
+		String sql = "SELECT ID_EXPERIENCIA, ID_REGISTRO_GERAL, TP_EXPERIENCIA, TO_CHAR(DT_INICIO, 'YYYY/MM/DD'), TO_CHAR(DT_TERMINO, 'YYYY/MM/DD'), "
+				+ "ST_STATUS, DS_SENIORIDADE FROM T_CHALL_EXPERIENCIA ORDER BY ID_EXPERIENCIA";
 		ArrayList<Experiencia> listaExperiencias = new ArrayList<Experiencia>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
@@ -152,15 +160,21 @@ public class ExperienciaDAO implements IDAO {
 					ex.setIdRegistroGeral(rs.getInt(2));
 					ex.setExperiencia(rs.getString(3));
 
-					// Transformando a String de Data do Banco em LocalDate
+					// Transformando o LocalDate em String para mandar para o Banco de Dados
 					String aux = rs.getString(4);
-					LocalDate dataInicio = LocalDate.parse(aux);
+					String data = aux.substring(0, 4) + "-";
+					data += aux.substring(5, 7) + "-";
+					data += aux.substring(8, 10);
+					LocalDate dataInicio = LocalDate.parse(data);
 
 					ex.setDataInicio(dataInicio);
 
-					// Transformando a String de Data do Banco em LocalDate
+					// Transformando o LocalDate em String para mandar para o Banco de Dados
 					aux = rs.getString(5);
-					LocalDate dataFim = LocalDate.parse(aux);
+				    data = aux.substring(0, 4) + "-";
+					data += aux.substring(5, 7) + "-";
+					data += aux.substring(8, 10);
+					LocalDate dataFim = LocalDate.parse(data);
 
 					ex.setDataFim(dataFim);
 					ex.setStatusExperiencia(rs.getString(6));
