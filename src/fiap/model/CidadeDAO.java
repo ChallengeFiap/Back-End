@@ -54,7 +54,7 @@ public class CidadeDAO implements IDAO {
 			ps.setInt(1, cidade.getIdEstado());
 			ps.setInt(2, cidade.getIdRegistroGeral());
 			ps.setString(3, cidade.getNomeCidade());
-			ps.setInt(5, cidade.getIdCidade());
+			ps.setInt(4, cidade.getIdCidade());
 			if (ps.executeUpdate() > 0) {
 				return "Alterado com sucesso!";
 			} else {
@@ -107,7 +107,7 @@ public class CidadeDAO implements IDAO {
 	}
 
 	public ArrayList<Cidade> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_CIDADE";
+		String sql = "SELECT * FROM T_CHALL_CIDADE ORDER BY ID_CIDADE";
 		ArrayList<Cidade> listaCidades = new ArrayList<Cidade>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

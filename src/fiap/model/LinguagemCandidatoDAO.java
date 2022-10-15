@@ -34,7 +34,7 @@ public class LinguagemCandidatoDAO implements IDAO {
 	public String inserir(Object obj) {
 		linguagemCandidato = (LinguagemCandidato) obj;
 		String sql = "INSERT INTO T_CHALL_LINGUAGEM_CANDIDATO (ID_LINGUAGEM_CANDIDATO, ID_LINGUAGEM_PROG, ID_REGISTRO_GERAL, DT_INICIO, "
-				+ "FL_PROFICIENCIA) VALUES (?, ?, ?, ?, ?)";
+				+ "FL_PROFICIENCIA) VALUES (?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'), ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -59,7 +59,7 @@ public class LinguagemCandidatoDAO implements IDAO {
 
 	public String alterar(Object obj) {
 		linguagemCandidato = (LinguagemCandidato) obj;
-		String sql = "UPDATE T_CHALL_LINGUAGEM_CANDIDATO SET ID_LINGUAGEM_PROG = ?, ID_REGISTRO_GERAL = ?,  DT_INICIO = ?, FL_PROFICIENCIA = ? "
+		String sql = "UPDATE T_CHALL_LINGUAGEM_CANDIDATO SET ID_LINGUAGEM_PROG = ?, ID_REGISTRO_GERAL = ?,  DT_INICIO = TO_DATE(?, 'DD/MM/YYYY'), FL_PROFICIENCIA = ? "
 				+ "WHERE ID_LINGUAGEM_CANDIDATO = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
@@ -112,9 +112,12 @@ public class LinguagemCandidatoDAO implements IDAO {
 				lc.setIdLinguagem(rs.getInt(2));
 				lc.setIdRegistroGeral(rs.getInt(3));
 				
-				// Transformando a String de Data do Banco em LocalDate
+				// Transformando o LocalDate em String para mandar para o Banco de Dados
 				String aux = rs.getString(4);
-				LocalDate dataInicio = LocalDate.parse(aux);
+				String data = aux.substring(0, 4) + "-";
+				data += aux.substring(5, 7) + "-";
+				data += aux.substring(8, 10);
+				LocalDate dataInicio = LocalDate.parse(data);
 
 				lc.setDataInicio(dataInicio);
 				lc.setProficiencia(rs.getString(5));
@@ -130,7 +133,7 @@ public class LinguagemCandidatoDAO implements IDAO {
 	}
 	
 	public ArrayList<LinguagemCandidato> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_LINGUAGEM_CANDIDATO";
+		String sql = "SELECT * FROM T_CHALL_LINGUAGEM_CANDIDATO ORDER BY ID_LINGUAGEM_CANDIDATO";
 		ArrayList<LinguagemCandidato> listaLinguagemCandidatos = new ArrayList<LinguagemCandidato>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
@@ -143,9 +146,12 @@ public class LinguagemCandidatoDAO implements IDAO {
 					lc.setIdLinguagem(rs.getInt(2));
 					lc.setIdRegistroGeral(rs.getInt(3));
 					
-					// Transformando a String de Data do Banco em LocalDate
+					// Transformando o LocalDate em String para mandar para o Banco de Dados
 					String aux = rs.getString(4);
-					LocalDate dataInicio = LocalDate.parse(aux);
+					String data = aux.substring(0, 4) + "-";
+					data += aux.substring(5, 7) + "-";
+					data += aux.substring(8, 10);
+					LocalDate dataInicio = LocalDate.parse(data);
 
 					lc.setDataInicio(dataInicio);
 					lc.setProficiencia(rs.getString(5));
