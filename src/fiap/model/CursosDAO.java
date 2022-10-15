@@ -106,7 +106,7 @@ public class CursosDAO implements IDAO {
 	}
 
 	public ArrayList<Cursos> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_CURSOS";
+		String sql = "SELECT * FROM T_CHALL_CURSOS ORDER BY ID_CURSO";
 		ArrayList<Cursos> listaCursos = new ArrayList<Cursos>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

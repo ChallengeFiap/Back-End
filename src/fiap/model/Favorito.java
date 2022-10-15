@@ -49,9 +49,8 @@ public class Favorito {
 	public void setDataFavoritou(LocalDate dataFavoritou) {
 		this.dataFavoritou = dataFavoritou;
 		LocalDate inicio = LocalDate.parse("1899-12-31");
-		LocalDate dataAtual = LocalDate.now();
 		try {
-			if (dataFavoritou.isAfter(inicio) && dataFavoritou.isBefore(dataAtual)) {
+			if (dataFavoritou.isAfter(inicio)) {
 				this.dataFavoritou = dataFavoritou;
 			} else {
 				throw new Exception("Data fora do periodo permitido");

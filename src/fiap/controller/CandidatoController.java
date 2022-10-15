@@ -30,6 +30,8 @@ public class CandidatoController {
 			rc.setCargo(Cargo);
 			resultado = rcd.inserirRegistro(rc);
 			resultado2 = rcd.inserirUsuario(rc);
+			System.out.println(resultado);
+			System.out.println(resultado2);
 			Conexao.fecharConexao(con);
 			if (resultado == "Inserido com sucesso." && resultado2 == "Inserido com sucesso.") {
 				return "Cadastrado com sucesso!";
