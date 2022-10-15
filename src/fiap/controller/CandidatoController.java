@@ -31,7 +31,7 @@ public class CandidatoController {
 			resultado = rcd.inserirRegistro(rc);
 			resultado2 = rcd.inserirUsuario(rc);
 			Conexao.fecharConexao(con);
-			if (resultado == "Inserido com sucesso" && resultado2 == "Inserido com sucesso") {
+			if (resultado == "Inserido com sucesso." && resultado2 == "Inserido com sucesso.") {
 				return "Cadastrado com sucesso!";
 			} else {
 				return "Erro ao Cadatrar";

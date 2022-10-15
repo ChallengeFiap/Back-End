@@ -1,12 +1,8 @@
 package fiap.view;
 
-import java.sql.*;
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-
 import fiap.controller.*;
-import fiap.model.*;
+
 
 public class TesteRecrutador {
 	public static void main(String[] args) {
@@ -14,8 +10,8 @@ public class TesteRecrutador {
 		RecrutadorController recrutador = new RecrutadorController();
 
 		// testando inserir dados
-		//JOptionPane.showMessageDialog(null, recrutador.insereRecrutador(1, "Valdir da Silva", "valdir@gmail.com",
-		//		"123abc", "R", "354.815.848-19", "IBM", "Desenvolvedor"));
+		//JOptionPane.showMessageDialog(null, recrutador.insereRecrutador(3, "Valdir da Silva", "valdir@gmail.com",
+		//		"123abc", "R", "354.815.848-80", "IBM", "Desenvolvedor"));
 		
 		// testando alterar dados
 		//JOptionPane.showMessageDialog(null, recrutador.alteraRecrutador(1, "Valdir SM", "vava@gmail.com",
@@ -27,7 +23,7 @@ public class TesteRecrutador {
 		// Listar
 		//JOptionPane.showMessageDialog(null, recrutador.listaRecrutador(1));
 		
-		//JOptionPane.showMessageDialog(null, recrutador.listaRecrutadores());
+		JOptionPane.showMessageDialog(null, recrutador.listaRecrutadores());
 		
 		/*
 		  Connection con = Conexao.abrirConexao();

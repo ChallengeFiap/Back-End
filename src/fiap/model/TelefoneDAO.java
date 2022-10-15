@@ -26,15 +26,13 @@ public class TelefoneDAO implements IDAO {
 
 	public String inserir(Object obj) {
 		telefone = (Telefone) obj;
-		String sql = "INSERT INTO T_CHALL_TELEFONE (ID_TELEFONE, ID_REGISTRO_GERAL, NR_DDD, NR_TELEFONE, ST_TELEFONE) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, 'A')";
+		String sql = "INSERT INTO T_CHALL_TELEFONE (ID_TELEFONE, ID_REGISTRO_GERAL, NR_DDD, NR_TELEFONE, ST_TELEFONE) VALUES (?, ?, ?, ?, 'A')";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, telefone.getIdTelefone());
 			ps.setInt(2, telefone.getIdRegistroGeral());
-			ps.setInt(4, telefone.getNumeroDDD());
+			ps.setInt(3, telefone.getNumeroDDD());
 			ps.setInt(4, telefone.getTelefone());
-			ps.setString(5, telefone.getStatusTelefone());
 			if(ps.executeUpdate() > 0) {
 				return "Inserido com sucesso.";
 			} else {

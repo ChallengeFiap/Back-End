@@ -38,7 +38,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 			ps.setString(4, registroRecrutador.getSenha());
 			ps.setString(5, registroRecrutador.getNumeroCPF());
 			if(ps.executeUpdate() > 0) {
-				return "Inserido com sucesso";
+				return "Inserido com sucesso.";
 			} else {
 				return "Erro ao inserir.";
 			}
@@ -57,7 +57,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 			ps.setString(2, registroRecrutador.getNomeEmpresa());
 			ps.setString(3, registroRecrutador.getCargoRecrutador());
 			if(ps.executeUpdate() > 0) {
-				return "Inserido com sucesso";
+				return "Inserido com sucesso.";
 			} else {
 				return "Erro ao inserir.";
 			}

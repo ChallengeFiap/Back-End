@@ -24,7 +24,7 @@ public class RecrutadorController {
 			resultado = rrd.inserirRegistro(rr);
 			resultado2 = rrd.inserirUsuario(rr);
 			Conexao.fecharConexao(con);
-			if (resultado == "Inserido com sucesso" && resultado2 == "Inserido com sucesso") {
+			if (resultado == "Inserido com sucesso." && resultado2 == "Inserido com sucesso.") {
 				return "Cadastrado com sucesso!";
 			} else {
 				return "Erro ao Cadatrar";

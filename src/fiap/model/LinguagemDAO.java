@@ -27,7 +27,7 @@ public class LinguagemDAO implements IDAO{
 	
 	public String inserir(Object obj) {
 		linguagem = (Linguagem) obj;
-		String sql = "INSERT INTO T_CHALL_LINGUAGEM (ID_LINGUAGEM, TP_LINGUAGEM) VALUES (?, ?)";
+		String sql = "INSERT INTO T_CHALL_LINGUAGEM_PROG (ID_LINGUAGEM_PROG, TP_LINGUAGEM) VALUES (?, ?)";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setInt(1, linguagem.getIdLinguagem());
@@ -45,7 +45,7 @@ public class LinguagemDAO implements IDAO{
 
 	public String alterar(Object obj) {
 		linguagem = (Linguagem) obj;
-		String sql = "UPDATE T_CHALL_LINGUAGEM SET TP_LINGUAGEM = ? WHERE ID_LINGUAGEM = ?";
+		String sql = "UPDATE T_CHALL_LINGUAGEM_PROG SET TP_LINGUAGEM = ? WHERE ID_LINGUAGEM_PROG = ?";
 		try {
 			PreparedStatement ps =  getCon().prepareStatement(sql);
 			ps.setString(1, linguagem.getLinguagem());
@@ -62,7 +62,7 @@ public class LinguagemDAO implements IDAO{
 	
 	public String excluir(Object obj) {
 		linguagem = (Linguagem) obj;
-		String sql = "DELETE FROM T_CHALL_LINGUAGEM WHERE ID_LINGUAGEM = ?";
+		String sql = "DELETE FROM T_CHALL_LINGUAGEM_PROG WHERE ID_LINGUAGEM_PROG = ?";
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
 			ps.setInt(1, linguagem.getIdLinguagem());
@@ -77,7 +77,7 @@ public class LinguagemDAO implements IDAO{
 	}
 	
 	public ArrayList<Linguagem> listarUm(int id) {
-		String sql = "SELECT * FROM T_CHALL_LINGUAGEM WHERE ID_LINGUAGEM = ?";
+		String sql = "SELECT * FROM T_CHALL_LINGUAGEM_PROG WHERE ID_LINGUAGEM_PROG = ?";
 		ArrayList<Linguagem> listaLinguagens = new ArrayList<Linguagem>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
@@ -100,7 +100,7 @@ public class LinguagemDAO implements IDAO{
 	}
 	
 	public ArrayList<Linguagem> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_LINGUAGEM";
+		String sql = "SELECT * FROM T_CHALL_LINGUAGEM_PROG ORDER BY ID_LINGUAGEM_PROG";
 		ArrayList<Linguagem> listaLinguagens = new ArrayList<Linguagem>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

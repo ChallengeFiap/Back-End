@@ -31,8 +31,8 @@ public class FormacaoAcademicaDAO implements IDAO{
 	public String inserir(Object obj) {
 		formacaoAcademica = (FormacaoAcademica) obj;
 		String sql = "INSERT INTO T_CHALL_FORMACAO_ACADEMICA (ID_FORMACAO_ACADEMICA, ID_REGISTRO_GERAL, NM_INSTITUICAO, "
-				+ "DS_ATIVIDADE_EXTRA_CURRICULARES, DT_INICIO, DT_TERMINO, NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, DS_SEMESTRE, FL_CURSO) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, 'A', ?, ?, ?)";
+				+ "DS_ATV_EXTRA_CURRICULARES, DT_INICIO, DT_TERMINO, NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, DS_SEMESTRE, FL_CURSO) "
+				+ "VALUES (?, ?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'), TO_DATE(?, 'DD/MM/YYYY'), ?, 'A', ?, ?, ?)";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -63,9 +63,9 @@ public class FormacaoAcademicaDAO implements IDAO{
 	
 	public String alterar(Object obj) {
 		formacaoAcademica = (FormacaoAcademica) obj;
-		String sql = "UPDATE T_CHALL_FORMACAO_ACADEMICA SET ID_REGISTRO_GERAL = ?, NM_INSTITUICAO = ?, DS_ATIVIDADE_EXTRA_CURRICULARES = ?, "
-				+ "DT_INICIO = ?, DT_TERMINO = ?, NM_CURSO = ?, DS_STATUS_CURSO = ?, DS_ESCOLARIDADE = ?,DS_SEMESTRE = ?, FL_CURSO = ? WHERE "
-				+ "ID_FORMACAO_ACADEMICA = ?";
+		String sql = "UPDATE T_CHALL_FORMACAO_ACADEMICA SET ID_REGISTRO_GERAL = ?, NM_INSTITUICAO = ?, DS_ATV_EXTRA_CURRICULARES = ?, "
+				+ "DT_INICIO = TO_DATE(?, 'DD/MM/YYYY'), DT_TERMINO = TO_DATE(?, 'DD/MM/YYYY'), NM_CURSO = ?, DS_STATUS_CURSO = ?, "
+				+ "DS_ESCOLARIDADE = ?,DS_SEMESTRE = ?, FL_CURSO = ? WHERE ID_FORMACAO_ACADEMICA = ?";
 		try {
 			//Transformando o LocalDate em String para mandar para o Banco de Dados
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -111,7 +111,9 @@ public class FormacaoAcademicaDAO implements IDAO{
 	}
 	
 	public ArrayList<FormacaoAcademica> listarUm(int id) {
-		String sql = "SELECT * FROM T_CHALL_FORMACAO_ACADEMICA WHERE ID_FORMACAO_ACADEMICA = ?";
+		String sql = "SELECT ID_FORMACAO_ACADEMICA, ID_REGISTRO_GERAL, NM_INSTITUICAO, DS_ATV_EXTRA_CURRICULARES, TO_CHAR(DT_INICIO, 'YYYY/MM/DD'), "
+				+ "TO_CHAR(DT_TERMINO, 'YYYY/MM/DD'), NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, DS_SEMESTRE, FL_CURSO "
+				+ "FROM T_CHALL_FORMACAO_ACADEMICA WHERE ID_FORMACAO_ACADEMICA = ?";
 		ArrayList<FormacaoAcademica> listaFormacaoAcademicas = new ArrayList<FormacaoAcademica>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
@@ -125,15 +127,21 @@ public class FormacaoAcademicaDAO implements IDAO{
 				fa.setNomeInstituicao(rs.getString(3));
 				fa.setAtividadeExtraCurricular(rs.getString(4));
 				
-				// Transformando a String de Data do Banco em LocalDate
+				// Transformando o LocalDate em String para mandar para o Banco de Dados
 				String aux = rs.getString(5);
-				LocalDate dataInicio = LocalDate.parse(aux);
+				String data = aux.substring(0, 4) + "-";
+				data += aux.substring(5, 7) + "-";
+				data += aux.substring(8, 10);
+				LocalDate dataInicio = LocalDate.parse(data);
 				
 				fa.setDataInicio(dataInicio);
 				
-				// Transformando a String de Data do Banco em LocalDate
+				// Transformando o LocalDate em String para mandar para o Banco de Dados
 				aux = rs.getString(6);
-				LocalDate dataFim = LocalDate.parse(aux);
+				data = aux.substring(0, 4) + "-";
+				data += aux.substring(5, 7) + "-";
+				data += aux.substring(8, 10);
+				LocalDate dataFim = LocalDate.parse(data);
 				
 				fa.setDataTermino(dataFim);
 				fa.setNomeCurso(rs.getString(7));
@@ -153,7 +161,9 @@ public class FormacaoAcademicaDAO implements IDAO{
 	}
 	
 	public ArrayList<FormacaoAcademica> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_FAVORITO";
+		String sql = "SELECT ID_FORMACAO_ACADEMICA, ID_REGISTRO_GERAL, NM_INSTITUICAO, DS_ATV_EXTRA_CURRICULARES, TO_CHAR(DT_INICIO, 'YYYY/MM/DD'), "
+				+ "TO_CHAR(DT_TERMINO, 'YYYY/MM/DD'), NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, DS_SEMESTRE, FL_CURSO "
+				+ "FROM T_CHALL_FORMACAO_ACADEMICA";
 		ArrayList<FormacaoAcademica> listaFormacaoAcademicas = new ArrayList<FormacaoAcademica>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
@@ -167,15 +177,20 @@ public class FormacaoAcademicaDAO implements IDAO{
 					fa.setNomeInstituicao(rs.getString(3));
 					fa.setAtividadeExtraCurricular(rs.getString(4));
 					
-					// Transformando a String de Data do Banco em LocalDate
 					String aux = rs.getString(5);
-					LocalDate dataInicio = LocalDate.parse(aux);
+					String data = aux.substring(0, 4) + "-";
+					data += aux.substring(5, 7) + "-";
+					data += aux.substring(8, 10);
+					LocalDate dataInicio = LocalDate.parse(data);
 					
 					fa.setDataInicio(dataInicio);
 					
-					// Transformando a String de Data do Banco em LocalDate
+					// Transformando o LocalDate em String para mandar para o Banco de Dados
 					aux = rs.getString(6);
-					LocalDate dataFim = LocalDate.parse(aux);
+					data = aux.substring(0, 4) + "-";
+					data += aux.substring(5, 7) + "-";
+					data += aux.substring(8, 10);
+					LocalDate dataFim = LocalDate.parse(data);
 					
 					fa.setDataTermino(dataFim);
 					fa.setNomeCurso(rs.getString(7));

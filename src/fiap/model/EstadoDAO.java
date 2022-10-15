@@ -103,7 +103,7 @@ public class EstadoDAO implements IDAO {
 	}
 
 	public ArrayList<Estado> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_CURSOS";
+		String sql = "SELECT * FROM T_CHALL_ESTADO ORDER BY ID_ESTADO";
 		ArrayList<Estado> listaEstados = new ArrayList<Estado>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

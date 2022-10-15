@@ -40,7 +40,7 @@ public class RegistroCandidatoDAO implements IDAOR{
 			ps.setString(4, registroCandidato.getSenha());
 			ps.setString(5, registroCandidato.getNumeroCPF());
 			if (ps.executeUpdate() > 0) {
-				return "Inserido com sucesso";
+				return "Inserido com sucesso.";
 			} else {
 				return "Erro ao inserir.";
 			}
@@ -68,7 +68,7 @@ public class RegistroCandidatoDAO implements IDAOR{
 			ps.setString(6, registroCandidato.getEstadoCivil());
 			ps.setString(7, registroCandidato.getCargo());
 			if (ps.executeUpdate() > 0) {
-				return "Inserido com sucesso";
+				return "Inserido com sucesso.";
 			} else {
 				return "Erro ao inserir.";
 			}
