@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/kalan/OneDrive/Área de Trabalho/Clone/Back-End/ojdbc11.jar"/>
+	<classpathentry kind="lib" path="C:/ojdbc11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

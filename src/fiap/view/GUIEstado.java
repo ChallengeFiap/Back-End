@@ -13,7 +13,7 @@ import javax.swing.*;
 
 import fiap.controller.EstadoController;
 
-@SuppressWarnings({ "serial", "unused" })
+@SuppressWarnings({ "serial" })
 public class GUIEstado extends JPanel{
 	private JButton btInserir, btUpdate, btExcluir, btSelectById, btSelectAll;
 	private JLabel lbIdEstado, lbSgEstado, lbNmEstado;

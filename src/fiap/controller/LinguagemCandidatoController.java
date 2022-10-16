@@ -135,7 +135,7 @@ public class LinguagemCandidatoController {
 			if (lista != null) {
 				for (LinguagemCandidato linguagemCandidato : lista) {
 					dados += "ID Linguagem Candidato: " + linguagemCandidato.getIdLinguagemCandidato() + "\n";
-					dados += "ID Linguagem Programa��o: " + linguagemCandidato.getIdLinguagem() + "\n";
+					dados += "ID Linguagem Programacao: " + linguagemCandidato.getIdLinguagem() + "\n";
 					dados += "ID Registro: " + linguagemCandidato.getIdRegistroGeral() + "\n";
 					dados += "Data Inicio: " + linguagemCandidato.getDataInicio() + "\n";
 					dados += "Proficiencia: " + linguagemCandidato.getProficiencia() + "\n\n";
