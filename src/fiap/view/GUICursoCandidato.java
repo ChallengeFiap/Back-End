@@ -14,7 +14,7 @@ import javax.swing.*;
 
 import fiap.controller.CandidatoCursoController;
 
-@SuppressWarnings({ "serial", "unused" })
+@SuppressWarnings({ "serial" })
 public class GUICursoCandidato extends JPanel{
 
 	private JButton btInserir, btUpdate, btExcluir, btSelectById, btSelectAll;

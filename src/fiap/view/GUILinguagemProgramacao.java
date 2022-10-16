@@ -14,7 +14,7 @@ import javax.swing.*;
 
 import fiap.controller.LinguagemController;
 
-@SuppressWarnings({ "serial", "unused" })
+@SuppressWarnings({ "serial" })
 public class GUILinguagemProgramacao extends JPanel {
 
 	private JButton btInserir, btUpdate, btExcluir, btSelectById, btSelectAll;
