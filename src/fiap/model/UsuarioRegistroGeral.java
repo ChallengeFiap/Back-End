@@ -1,6 +1,6 @@
 package fiap.model;
-/**Classe para objetos do tipo Usuario Registro Geral (Classe Pai do Registro Candidato e Registro Recrutador) *Herança*
- * @author Luís Felipe
+/**Classe para objetos do tipo Usuario Registro Geral (Classe Pai do Registro Candidato e Registro Recrutador) *Heranï¿½a*
+ * @author Luis Felipe
  * @version 1.0
  * @since 07/09/2022
  */

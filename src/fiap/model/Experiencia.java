@@ -1,7 +1,7 @@
 package fiap.model;
 
 /**Classe para objetos do tipo Experiencia
- * @author Luís Felipe
+ * @author Luis Felipe
  * @version 1.1
  * @since 07/09/2022
  */

@@ -1,11 +1,21 @@
 package fiap.controller;
 
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Recrutador 
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import fiap.model.*;
 import java.util.*;
 
 public class RecrutadorController {
 
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idRecrutador, nome, email, senha, tipoUsuario, cpf, nomeEmpresa, cargo
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereRecrutador(int id, String nome, String email, String senha, String tipoUsuario, String cpf,
 			String nomeEmpresa, String cargo) {
 		String resultado, resultado2;
@@ -35,6 +45,11 @@ public class RecrutadorController {
 		}
 	}
 
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idRecrutador, nome, email, senha, tipoUsuario, cpf, nomeEmpresa, cargo
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraRecrutador(int id, String nome, String email, String senha, String tipoUsuario, String cpf,
 			String nomeEmpresa, String cargo) {
 		String resultado, resultado2;
@@ -54,7 +69,7 @@ public class RecrutadorController {
 			resultado2 = rrd.alterarUsuario(rr);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!" && resultado2 == "Alterado com sucesso!") {
-				return "Altera��o feita com sucesso!";
+				return "Alteracao feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -63,6 +78,11 @@ public class RecrutadorController {
 		}
 	}
 
+	/**Metodo para para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiRecrutador(int id) {
 		String resultado, resultado2;
 		Connection con = Conexao.abrirConexao();
@@ -74,7 +94,7 @@ public class RecrutadorController {
 			resultado2 = rrd.excluirRegistro(rr);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!" && resultado2 == "Excluido com sucesso!") {
-				return "Exclus�o feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -82,6 +102,12 @@ public class RecrutadorController {
 			return e.getMessage();
 		}
 	}
+
+	/**Metodo para trazer os dados de um Recrutador no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 
 	public ArrayList<String> listaRecrutador(int id) {
 		Connection con = Conexao.abrirConexao();
@@ -108,6 +134,11 @@ public class RecrutadorController {
 		}
 
 	}
+
+	/**Metodo para trazer os dados de todos os Recrutadores no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 
 	public String listaRecrutadores() {
 		Connection con = Conexao.abrirConexao();

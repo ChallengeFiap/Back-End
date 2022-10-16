@@ -1,7 +1,7 @@
 package fiap.model;
 
-/**Classe para a CRUD dos objetos do tipo Formação Academica no Banco de Dados utilizando a classe Conexao
- * @author Luís Felipe
+/**Classe para a CRUD dos objetos do tipo Formaï¿½ï¿½o Academica no Banco de Dados utilizando a classe Conexao
+ * @author Luis Felipe
  * @version 1.1
  * @since 07/09/2022
  */

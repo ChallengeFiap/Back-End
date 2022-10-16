@@ -1,5 +1,11 @@
 package fiap.view;
 
+/**Classe de Interface GUI Principal
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+ */
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

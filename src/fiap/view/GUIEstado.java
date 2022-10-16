@@ -1,5 +1,10 @@
 package fiap.view;
 
+/**Classe de Interface GUI para mostrar as informacoes de Estado
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+ */
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -23,7 +28,7 @@ public class GUIEstado extends JPanel{
 		setLayout(null);
 		setBackground(Color.CYAN);
 		
-		//Instanciando Botões 
+		//Instanciando Botï¿½es 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");
@@ -54,7 +59,7 @@ public class GUIEstado extends JPanel{
 		tfNmEstado.setBounds(130, 100, 200, 25);
 
 		
-		//set Bounds Botões
+		//set Bounds Botï¿½es
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);

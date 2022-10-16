@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**Classe para a CRUD dos objetos do tipo LinguagemCandidato no Banco de Dados utilizando a classe Conexao
- * @author Luís Felipe
+ * @author Luis Felipe
  * @version 1.0
  * @since 19/09/2022
  */

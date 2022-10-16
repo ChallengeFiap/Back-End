@@ -1,12 +1,21 @@
 package fiap.controller;
 
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Cursos
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import java.util.ArrayList;
 
 import fiap.model.*;
 
 public class CursosController {
-
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idCurso, numeroCurso, siglaCurso, nomeCurso
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereCurso(int idCurso, int nrCurso, String sgCurso, String nmCurso) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -29,6 +38,11 @@ public class CursosController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idCurso, numeroCurso, siglaCurso, nomeCurso
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraCurso(int idCurso, int nrCurso, String sgCurso, String nmCurso) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -51,7 +65,11 @@ public class CursosController {
 			return e.getMessage();
 		}
 	}
-	
+	/**Metodo para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiCurso(int idCurso) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -62,7 +80,7 @@ public class CursosController {
 			resultado = cudao.excluir(cu);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -72,6 +90,10 @@ public class CursosController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de um Curso no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public ArrayList<String> listaUmCurso(int id) {
 		Connection con = Conexao.abrirConexao();
 		CursosDAO cudao = new CursosDAO(con);
@@ -93,6 +115,10 @@ public class CursosController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de todos os Cursos no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String listaCurso() {
 		Connection con = Conexao.abrirConexao();
 		CursosDAO cudao = new CursosDAO(con);

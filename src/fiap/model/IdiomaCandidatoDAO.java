@@ -1,6 +1,6 @@
 package fiap.model;
 /**Classe para a CRUD dos objetos do tipo Idioma Candidato no Banco de Dados utilizando a classe Conexao
- * @author Luís Felipe
+ * @author Luis Felipe
  * @version 1.0
  * @since 23/09/2022
  */

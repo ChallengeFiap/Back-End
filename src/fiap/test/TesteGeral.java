@@ -1,5 +1,10 @@
 package fiap.test;
 
+/**Classe para testar todos os Controllers
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+ */
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -64,7 +69,7 @@ public class TesteGeral {
 		// JOptionPane.showMessageDialog(null, cc.listaCidades());
 
 		
-		// LINGUAGEM DE PROGRAMAÇÃO
+		// LINGUAGEM DE PROGRAMAï¿½ï¿½O
 
 		// LinguagemController lc = new LinguagemController();
 
@@ -154,7 +159,7 @@ public class TesteGeral {
 
 		// IdiomasController ic = new IdiomasController();
 
-		// JOptionPane.showMessageDialog(null, ic.insereIdioma(1, "Inglês"));
+		// JOptionPane.showMessageDialog(null, ic.insereIdioma(1, "Inglï¿½s"));
 		
 		// JOptionPane.showMessageDialog(null, ic.alteraIdioma(1, "Espanhol"));
 		

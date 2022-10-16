@@ -1,5 +1,10 @@
 package fiap.controller;
 
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Experiencia
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,6 +14,11 @@ import fiap.model.*;
 
 public class ExperienciaController {
 	
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idExperiencia, idCandidato, experiencia, DataInicio, dataTermino, status, senioridade
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereExperiencia(int idXp, int idRegistro, String experiencia, LocalDate dataInicio, LocalDate dataTermino, String status, String senioridade) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -34,6 +44,11 @@ public class ExperienciaController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idExperiencia, idCandidato, experiencia, DataInicio, dataTermino, status, senioridade
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraExperiencia(int idXp, int idRegistro, String experiencia, LocalDate dataInicio, LocalDate dataTermino, String status, String senioridade) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -51,7 +66,7 @@ public class ExperienciaController {
 			System.out.println(resultado);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Altera��o feita com sucesso!";
+				return "Alteracao feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -60,7 +75,11 @@ public class ExperienciaController {
 		}
 	}
 	
-	
+	/**Metodo para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiExperiencia(int idXp) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -71,7 +90,7 @@ public class ExperienciaController {
 			resultado = exdao.excluir(ex);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclus�o feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -80,6 +99,11 @@ public class ExperienciaController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de uma Experiencia no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public ArrayList<String> listaUmaExperiencia(int id) {
 		Connection con = Conexao.abrirConexao();
 		ExperienciaDAO exdao = new ExperienciaDAO(con);
@@ -103,7 +127,11 @@ public class ExperienciaController {
 			return null;
 		}
 	}
-	
+	/**Metodo para trazer os dados de todas as Experiencias no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
+
 	public String listaExperiencias() {
 		Connection con = Conexao.abrirConexao();
 		ExperienciaDAO exdao = new ExperienciaDAO(con);

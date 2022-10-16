@@ -1,5 +1,10 @@
 package fiap.controller;
 
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Telefone
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -7,6 +12,11 @@ import fiap.model.*;
 
 public class TelefoneController {
 	
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idTelefone, idRegistro, numeroDDD, telefone, statusT
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereTelefone(int idTelefone, int idRegistro, int numeroDDD, int telefone, String statusT ) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -30,6 +40,11 @@ public class TelefoneController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idTelefone, idRegistro, numeroDDD, telefone, statusT
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraTelefone(int idTelefone, int idRegistro, int numeroDDD, int telefone, String statusT ) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -54,6 +69,11 @@ public class TelefoneController {
 		}
 	}
 	
+	/**Metodo para para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiTelefone(int idTelefone) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -64,7 +84,7 @@ public class TelefoneController {
 			resultado = td.excluir(tl);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclus�o feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -74,6 +94,11 @@ public class TelefoneController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de um Telefone no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public ArrayList<String> listaUmTelefone(int id) {
 		Connection con = Conexao.abrirConexao();
 		TelefoneDAO td = new TelefoneDAO(con);
@@ -96,6 +121,10 @@ public class TelefoneController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de todos os Telefones no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String listaTelefones() {
 		Connection con = Conexao.abrirConexao();
 		TelefoneDAO td = new TelefoneDAO(con);
