@@ -2,9 +2,12 @@ package fiap.view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
+import fiap.controller.CandidatoController;
 
 @SuppressWarnings({ "serial", "unused" })
 public class GUICandidato extends JPanel{
@@ -132,7 +135,39 @@ public class GUICandidato extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoController candidato = new CandidatoController();
+				if (tfRegistroGeral.getText().equals("") || tfNomeCompleto.getText().equals("")
+						|| tfSenha.getText().equals("") || tfEmail.getText().equals("")
+						|| tfTpUsuario.getText().equals("") || tfNrCPF.getText().equals("")
+						|| tfNrRG.getText().equals("") || tfDtNascimento.getText().equals("")
+						|| tfSexoBiologico.getText().equals("") || tfTpEscolaridade.getText().equals("")
+						|| tfEstadoCivicl.getText().equals("") || tfCargo.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfRegistroGeral.getText());
+					String aux = tfDtNascimento.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2) + "-";
+					LocalDate dataN = LocalDate.parse(data);
+					JOptionPane.showMessageDialog(null,
+							candidato.insereCandidato(id, tfNomeCompleto.getText(), tfEmail.getText(), tfSenha.getText(),
+									tfTpUsuario.getText(), tfNrCPF.getText(), tfNrRG.getText(),
+									dataN, tfSexoBiologico.getText(), tfTpEscolaridade.getText(),
+									tfEstadoCivicl.getText(), tfCargo.getText()));
+					tfRegistroGeral.setText("");
+					tfNomeCompleto.setText("");
+					tfSenha.setText("");
+					tfEmail.setText("");
+					tfTpUsuario.setText("");
+					tfNrCPF.setText("");
+					tfNrRG.setText("");
+					tfDtNascimento.setText("");
+					tfSexoBiologico.setText("");
+					tfTpEscolaridade.setText("");
+					tfEstadoCivicl.setText("");
+					tfCargo.setText("");
+				}
 				
 			}
 		});

@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import fiap.controller.EstadoController;
+import fiap.controller.IdiomaCandidatoController;
+import fiap.controller.IdiomasController;
+
 @SuppressWarnings({ "serial", "unused" })
 public class GUIIdiomas extends JPanel{
 
@@ -77,35 +81,78 @@ public class GUIIdiomas extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				IdiomasController idioma = new IdiomasController();
+				if (tfIdIdiomas.getText().equals("") || tfTpIdiomas.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdIdiomas.getText());
+					JOptionPane.showMessageDialog(null, idioma.insereIdioma(id, tfTpIdiomas.getText()));
+					tfIdIdiomas.setText("");
+					tfTpIdiomas.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				IdiomasController idioma = new IdiomasController();
+				if (tfIdIdiomas.getText().equals("") || tfTpIdiomas.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdIdiomas.getText());
+					JOptionPane.showMessageDialog(null, idioma.alteraIdioma(id, tfTpIdiomas.getText()));
+					tfIdIdiomas.setText("");
+					tfTpIdiomas.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				IdiomasController idioma = new IdiomasController();
+				if (tfIdIdiomas.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Idioma");
+				} else {
+					int id = Integer.parseInt(tfIdIdiomas.getText());
+					JOptionPane.showMessageDialog(null, idioma.excluiIdioma(id));
+					tfIdIdiomas.setText("");
+					tfTpIdiomas.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				IdiomasController idioma = new IdiomasController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdIdiomas.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Idioma");
+					tfIdIdiomas.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdIdiomas.getText());
+					dados = idioma.listaUmIdioma(id);
+					if (dados != null) {
+						tfTpIdiomas.setText(dados.get(1));
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				IdiomasController idioma = new IdiomasController();
+				String dados = idioma.listaIdiomas();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

@@ -68,22 +68,23 @@ public class IdiomasController {
 		}
 	}
 	
-	public String listaUmIdioma(int id) {
+	public ArrayList<String> listaUmIdioma(int id) {
 		Connection con = Conexao.abrirConexao();
 		IdiomaDAO idao = new IdiomaDAO(con);
 		try {
 			ArrayList<Idioma> lista = idao.listarUm(id);
-			String dados = "Lista de Idioma:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (Idioma idioma : lista) {
-					dados += "ID Idioma: " + idioma.getIdIdioma() + "\n";
-					dados += "Idioma: " + idioma.getIdioma() + "\n\n";
+					dados.add("" + idioma.getIdIdioma());
+					dados.add(idioma.getIdioma());
+
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

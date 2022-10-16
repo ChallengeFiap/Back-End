@@ -71,23 +71,23 @@ public class EstadoController {
 		}
 	}
 	
-	public String listaUmEstado(int id) {
+	public ArrayList<String> listaUmEstado(int id) {
 		Connection con = Conexao.abrirConexao();
 		EstadoDAO ed = new EstadoDAO(con);
 		try {
 			ArrayList<Estado> lista = ed.listarUm(id);
-			String dados = "Lista de Estado:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (Estado estado : lista) {
-					dados += "ID Estado: " + estado.getIdEstado() + "\n";
-					dados += "Sigla: " + estado.getSiglaEstado() + "\n";
-					dados += "Nome Estado: " + estado.getNomeEstado() + "\n\n";
+					dados.add("" + estado.getIdEstado());
+					dados.add(estado.getSiglaEstado());
+					dados.add(estado.getNomeEstado());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

@@ -206,7 +206,7 @@ public class RegistroCandidatoDAO implements IDAOR{
 		String sql = "SELECT RC.ID_REGISTRO_GERAL, RG.TP_USUARIO, RG.NM_NOME_COMPLETO, RG.DS_EMAIL, RG.DS_SENHA, RG.NR_CPF, "
 				+ "RC.NR_RG, TO_CHAR(RC.DT_NASCIMENTO, 'YYYY/MM/DD'), RC.FL_SEXO_BIOLOGICO, RC.TP_ESCOLARIDADE, RC.DS_ESTADO_CIVIL, RC.DS_CARGO "
 				+ "FROM T_CHALL_REGISTRO_GERAL RG INNER JOIN T_CHALL_REGISTRO_CANDIDATO RC "
-				+ "ON(RG.ID_REGISTRO_GERAL = RC.ID_REGISTRO_GERAL)";
+				+ "ON(RG.ID_REGISTRO_GERAL = RC.ID_REGISTRO_GERAL) ORDER BY RC.ID_REGISTRO_GERAL";
 		ArrayList<RegistroCandidato> listaCandidatos = new ArrayList<RegistroCandidato>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

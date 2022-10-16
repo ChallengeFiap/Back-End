@@ -3,11 +3,16 @@ package fiap.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import fiap.controller.CursosController;
+import fiap.controller.EstadoController;
 
 @SuppressWarnings("serial")
 public class GUICursos extends JPanel{
@@ -89,36 +94,90 @@ public class GUICursos extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CursosController curso = new CursosController();
+				if (tfIdCurso.getText().equals("") || tfNrCurso.getText().equals("") || 
+						tfSgCurso.getText().equals("") || tfNmCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdCurso.getText());
+					int nrCurso = Integer.parseInt(tfNrCurso.getText());
+					JOptionPane.showMessageDialog(null, curso.insereCurso(id, nrCurso, tfSgCurso.getText(), tfNmCurso.getText()));
+					tfIdCurso.setText("");
+					tfNrCurso.setText("");
+					tfSgCurso.setText("");
+					tfNmCurso.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CursosController curso = new CursosController();
+				if (tfIdCurso.getText().equals("") || tfNrCurso.getText().equals("") || 
+						tfSgCurso.getText().equals("") || tfNmCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdCurso.getText());
+					int nrCurso = Integer.parseInt(tfNrCurso.getText());
+					JOptionPane.showMessageDialog(null, curso.alteraCurso(id, nrCurso, tfSgCurso.getText(), tfNmCurso.getText()));
+					tfIdCurso.setText("");
+					tfNrCurso.setText("");
+					tfSgCurso.setText("");
+					tfNmCurso.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CursosController curso = new CursosController();
+				if (tfIdCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Curso");
+				} else {
+					int id = Integer.parseInt(tfIdCurso.getText());
+					JOptionPane.showMessageDialog(null, curso.excluiCurso(id));
+					tfIdCurso.setText("");
+					tfNrCurso.setText("");
+					tfSgCurso.setText("");
+					tfNmCurso.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CursosController curso = new CursosController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Estado");
+					tfIdCurso.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdCurso.getText());
+					dados = curso.listaUmCurso(id);
+					if (dados != null) {
+						tfNrCurso.setText(dados.get(1));
+						tfSgCurso.setText(dados.get(2));
+						tfNmCurso.setText(dados.get(3));
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				CursosController curso = new CursosController();
+				String dados = curso.listaCurso();
+				JOptionPane.showMessageDialog(null, dados);
 			}
 		});
 		

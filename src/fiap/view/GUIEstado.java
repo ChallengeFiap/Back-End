@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import fiap.controller.EstadoController;
+
 @SuppressWarnings({ "serial", "unused" })
 public class GUIEstado extends JPanel{
 	private JButton btInserir, btUpdate, btExcluir, btSelectById, btSelectAll;
@@ -80,35 +82,83 @@ public class GUIEstado extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				EstadoController estado = new EstadoController();
+				if (tfIdEstado.getText().equals("") || tfSgEstado.getText().equals("") || tfNmEstado.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdEstado.getText());
+					JOptionPane.showMessageDialog(null, estado.insereEstado(id, tfSgEstado.getText(), tfNmEstado.getText()));
+					tfIdEstado.setText("");
+					tfSgEstado.setText("");
+					tfNmEstado.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				EstadoController estado = new EstadoController();
+				if (tfIdEstado.getText().equals("") || tfSgEstado.getText().equals("") || tfNmEstado.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdEstado.getText());
+					JOptionPane.showMessageDialog(null, estado.alteraEstado(id, tfSgEstado.getText(), tfNmEstado.getText()));
+					tfIdEstado.setText("");
+					tfSgEstado.setText("");
+					tfNmEstado.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				EstadoController estado = new EstadoController();
+				if (tfIdEstado.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Estado");
+					tfIdEstado.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdEstado.getText());
+					JOptionPane.showMessageDialog(null, estado.excluiEstado(id));
+					tfIdEstado.setText("");
+					tfSgEstado.setText("");
+					tfNmEstado.setText("");
+					
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				EstadoController estado = new EstadoController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdEstado.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Estado");
+					tfIdEstado.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdEstado.getText());
+					dados = estado.listaUmEstado(id);
+					if (dados != null) {
+						tfSgEstado.setText(dados.get(1));
+						tfNmEstado.setText(dados.get(2));
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				EstadoController estado = new EstadoController();
+				String dados = estado.listaEstados();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

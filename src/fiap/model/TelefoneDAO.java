@@ -108,7 +108,7 @@ public class TelefoneDAO implements IDAO {
 	}
 	
 	public ArrayList<Telefone> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_TELEFONE";
+		String sql = "SELECT * FROM T_CHALL_TELEFONE ORDER BY ID_TELEFONE";
 		ArrayList<Telefone> listaLinguagens = new ArrayList<Telefone>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

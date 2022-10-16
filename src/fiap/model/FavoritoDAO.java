@@ -129,7 +129,8 @@ public class FavoritoDAO implements IDAO{
 	}
 
 	public ArrayList<Favorito> listarTodos() {
-		String sql = "SELECT ID_FAVORITO, ID_REGISTRO_RECRUTADOR, ID_REGISTRO_CANDIDATO, TO_CHAR(DT_FAVORITOU, 'YYYY/MM/DD'), ST_FAVORITOS FROM T_CHALL_FAVORITO";
+		String sql = "SELECT ID_FAVORITO, ID_REGISTRO_RECRUTADOR, ID_REGISTRO_CANDIDATO, TO_CHAR(DT_FAVORITOU, 'YYYY/MM/DD'), ST_FAVORITOS FROM T_CHALL_FAVORITO "
+				+ "ORDER BY ID_FAVORITO";
 		ArrayList<Favorito> listaFavoritos = new ArrayList<Favorito>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
