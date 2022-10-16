@@ -1,5 +1,9 @@
 package fiap.controller;
-
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Formacao Academica
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,6 +12,11 @@ import fiap.model.*;
 
 public class FormacaoAcademicaController {
 	
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idFormacao, idCandidato, nomeInstituicao, atividadeExtra, dataInicio, dataTermino, nomeCurso, statusCurso, escolaridade, xpCurso, Semestre
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereFormacaoAcademica(int idFormacao, int idRegistro, String nomeInstituicao, String atividadeExtra, LocalDate dataInicio, LocalDate dataTermino,
 			String nomeCurso, String statusCurso, String escolaridade, String xpCurso, String Semestre) {
 		String resultado;
@@ -38,6 +47,11 @@ public class FormacaoAcademicaController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idFormacao, idCandidato, nomeInstituicao, atividadeExtra, dataInicio, dataTermino, nomeCurso, statusCurso, escolaridade, xpCurso, Semestre
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraFormacaoAcademica(int idFormacao, int idRegistro, String nomeInstituicao, String atividadeExtra, LocalDate dataInicio, LocalDate dataTermino,
 			String nomeCurso, String statusCurso, String escolaridade, String xpCurso, String Semestre) {
 		String resultado;
@@ -59,7 +73,7 @@ public class FormacaoAcademicaController {
 			resultado = fcdao.alterar(fa);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Altera��o feita com sucesso!";
+				return "Alteracao feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -68,7 +82,11 @@ public class FormacaoAcademicaController {
 		}
 	}
 	
-	
+	/**Metodo para trazer os dados do GUI e excluir no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluirFormacaoAcademica(int idFormacao) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -79,7 +97,7 @@ public class FormacaoAcademicaController {
 			resultado = fcdao.excluir(fa);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclus�o feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -88,6 +106,12 @@ public class FormacaoAcademicaController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de Formacao Academica no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
+
 	public ArrayList<String> listaUmaFormacaoAcademica(int id) {
 		Connection con = Conexao.abrirConexao();
 		FormacaoAcademicaDAO fcdao = new FormacaoAcademicaDAO(con);
@@ -116,6 +140,11 @@ public class FormacaoAcademicaController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de todas as Formacoes Academicas no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
+
 	public String listaFormacoesAcademicas() {
 		Connection con = Conexao.abrirConexao();
 		FormacaoAcademicaDAO fcdao = new FormacaoAcademicaDAO(con);

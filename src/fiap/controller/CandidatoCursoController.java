@@ -1,5 +1,11 @@
 package fiap.controller;
 
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo CandidatoCurso
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,7 +13,11 @@ import java.util.ArrayList;
 import fiap.model.*;
 
 public class CandidatoCursoController {
-
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idCandidatoCurso, idCandidato, idCurso, dataInicio, dataTermino
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereCandidatoCurso(int idCandCurso, int idRegistro, int idCurso, LocalDate dataInicio, LocalDate dataTermino) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -32,6 +42,11 @@ public class CandidatoCursoController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idCandidatoCurso, idCandidato, idCurso, dataInicio, dataTermino
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraCandidatoCurso(int idCandCurso, int idRegistro, int idCurso, LocalDate dataInicio, LocalDate dataTermino) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -47,7 +62,7 @@ public class CandidatoCursoController {
 			System.out.println(resultado);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Alteração feita com sucesso!";
+				return "Alteracao feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -56,6 +71,11 @@ public class CandidatoCursoController {
 		}
 	}
 	
+	/**Metodo para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiCandidatoCurso(int idLingCand) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -66,7 +86,7 @@ public class CandidatoCursoController {
 			resultado = ccdao.excluir(cc);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -74,7 +94,11 @@ public class CandidatoCursoController {
 			return e.getMessage();
 		}
 	}
-	
+	/**Metodo para trazer os dados de um Candidato Curso no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public ArrayList<String> listaUmCandidatoCurso(int id) {
 		Connection con = Conexao.abrirConexao();
 		CandidatoCursoDAO ccdao = new CandidatoCursoDAO(con);
@@ -97,6 +121,10 @@ public class CandidatoCursoController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de todos os Candidato Curso no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String listaCandidatoCurso() {
 		Connection con = Conexao.abrirConexao();
 		CandidatoCursoDAO ccdao = new CandidatoCursoDAO(con);

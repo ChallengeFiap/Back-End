@@ -1,5 +1,10 @@
 package fiap.controller;
 
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Idioma Candidato
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,6 +13,11 @@ import fiap.model.*;
 
 public class IdiomaCandidatoController {
 	
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idIdiomaCandidato, IdCandidato, IdIdiomas, dataInicio, proficiencia
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereIdiomaCandidato(int idIdiomaCandidato, int IdRegistro, int IdIdiomas, LocalDate dataInicio, String proficiencia) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -32,6 +42,11 @@ public class IdiomaCandidatoController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idIdiomaCandidato, IdCandidato, IdIdiomas, dataInicio, proficiencia
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraIdiomaCandidato(int idIdiomaCandidato, int IdRegistro, int IdIdiomas, LocalDate dataInicio, String proficiencia) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -46,7 +61,7 @@ public class IdiomaCandidatoController {
 			resultado = icdao.alterar(ic);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Altera��o feita com sucesso!";
+				return "Alteracao feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -55,6 +70,11 @@ public class IdiomaCandidatoController {
 		}
 	}
 	
+	/**Metodo para para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiIdiomaCandidato(int idIdiomaCandidato) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -65,7 +85,7 @@ public class IdiomaCandidatoController {
 			resultado = icdao.excluir(ic);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclus�o feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -74,6 +94,11 @@ public class IdiomaCandidatoController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de um IdiomaCandidato no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public ArrayList<String> listaUmIdiomaCandidato(int id) {
 		Connection con = Conexao.abrirConexao();
 		IdiomaCandidatoDAO icdao = new IdiomaCandidatoDAO(con);
@@ -96,6 +121,10 @@ public class IdiomaCandidatoController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de todos os IdiomasCandidatos no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String listaIdiomaCandidatos() {
 		Connection con = Conexao.abrirConexao();
 		IdiomaCandidatoDAO icdao = new IdiomaCandidatoDAO(con);

@@ -1,7 +1,7 @@
 package fiap.model;
 
 /**Classe para objetos do tipo Favorito
- * @author Luís Felipe
+ * @author Luis Felipe
  * @version 1.1
  * @since 23/09/2022
  */

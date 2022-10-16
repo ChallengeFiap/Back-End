@@ -1,5 +1,10 @@
 package fiap.controller;
 
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Idioma
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -7,6 +12,11 @@ import fiap.model.*;
 
 public class IdiomasController {
 
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idIdiomas, idioma
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereIdioma(int idIdiomas, String idiomas) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -27,6 +37,11 @@ public class IdiomasController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e alterar no DAO
+	 * @author Luis Felipe
+	 * @param idIdiomas, idioma
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraIdioma(int idIdiomas, String idiomas) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -48,6 +63,11 @@ public class IdiomasController {
 		}
 	}
 	
+	/**Metodo para para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiIdioma(int idIdiomas) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -58,7 +78,7 @@ public class IdiomasController {
 			resultado = idao.excluir(idi);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -68,6 +88,11 @@ public class IdiomasController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de um Idioma no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public ArrayList<String> listaUmIdioma(int id) {
 		Connection con = Conexao.abrirConexao();
 		IdiomaDAO idao = new IdiomaDAO(con);
@@ -88,6 +113,10 @@ public class IdiomasController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de todos idiomas no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String listaIdiomas() {
 		Connection con = Conexao.abrirConexao();
 		IdiomaDAO idao = new IdiomaDAO(con);

@@ -1,5 +1,9 @@
 package fiap.controller;
-
+/**Classe Controller para para chamar a Classe DAO do objeto, do tipo Favorito
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+*/
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,6 +12,11 @@ import fiap.model.*;
 
 public class FavoritoController {
 	
+	/**Metodo para inserir os dados do GUI e mandar para o DAO
+	 * @author Luis Felipe
+	 * @param idFavorito, idRecrutador, idCandidato, dataFavoritou, statusFavorito
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String insereFavorito(int idFavorito, int idRegistroRecrutador, int idRegistroCandidato, LocalDate dataFavoritou, String statusFavorito) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -32,6 +41,11 @@ public class FavoritoController {
 		}
 	}
 	
+	/**Metodo para inserir os dados do GUI e altera no o DAO
+	 * @author Luis Felipe
+	 * @param idFavorito, idRecrutador, idCandidato, dataFavoritou, statusFavorito
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String alteraFavorito(int idFavorito, int idRegistroRecrutador, int idRegistroCandidato, LocalDate dataFavoritou, String statusFavorito) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -46,7 +60,7 @@ public class FavoritoController {
 			resultado = fvdao.alterar(fv);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Altera��o feita com sucesso!";
+				return "Alteracao feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -55,6 +69,11 @@ public class FavoritoController {
 		}
 	}
 	
+	/**Metodo para excluir os dados no DAO
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String excluiFavorito(int idFavorito) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
@@ -65,7 +84,7 @@ public class FavoritoController {
 			resultado = fvdao.excluir(fv);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclus�o feita com sucesso!";
+				return "Exclusao feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -74,6 +93,11 @@ public class FavoritoController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de um Favorito no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @param id
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public ArrayList<String> listaFavorito(int id) {
 		Connection con = Conexao.abrirConexao();
 		FavoritoDAO fvdao = new FavoritoDAO(con);
@@ -96,6 +120,10 @@ public class FavoritoController {
 		}
 	}
 	
+	/**Metodo para trazer os dados de todos os Favoritos no DAO e mandar para o GUI
+	 * @author Luis Felipe
+	 * @return Mensagem com Sucesso ou Fracasso
+	*/
 	public String listaFavoritos() {
 		Connection con = Conexao.abrirConexao();
 		FavoritoDAO fvdao = new FavoritoDAO(con);

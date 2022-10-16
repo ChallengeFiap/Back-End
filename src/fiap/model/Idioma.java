@@ -1,6 +1,6 @@
 package fiap.model;
 /**Classe para objetos do tipo Idioma
- * @author Luís Felipe
+ * @author Luis Felipe
  * @version 1.0
  * @since 23/09/2022
  */

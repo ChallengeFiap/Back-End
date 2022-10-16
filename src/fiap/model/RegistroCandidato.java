@@ -1,6 +1,6 @@
 package fiap.model;
 /**Classe para objetos do tipo RegistroCandidato
- * @author Luís Felipe
+ * @author Luis Felipe
  * @version 1.1
  * @since 07/09/2022
  */

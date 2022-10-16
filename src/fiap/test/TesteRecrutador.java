@@ -1,5 +1,10 @@
 package fiap.test;
 
+/**Classe para testar o Controller do Recrutador
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+ */
 import javax.swing.JOptionPane;
 import fiap.controller.*;
 

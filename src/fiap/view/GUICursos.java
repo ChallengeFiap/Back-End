@@ -1,5 +1,10 @@
 package fiap.view;
 
+/**Classe de Interface GUI para mostrar as informacoes de Curso
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+ */
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

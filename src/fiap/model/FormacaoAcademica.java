@@ -1,7 +1,7 @@
 package fiap.model;
 
-/**Classe para objetos do tipo Formação Academica
- * @author Luís Felipe
+/**Classe para objetos do tipo Formaï¿½ï¿½o Academica
+ * @author Luis Felipe
  * @version 1.1
  * @since 07/09/2022
  */

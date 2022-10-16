@@ -1,5 +1,10 @@
 package fiap.view;
 
+/**Classe de Interface GUI para mostrar as informacoes de Formacao Academica
+ * @author Luis Felipe
+ * @version 1.0
+ * @since 16/10/2022
+ */
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
