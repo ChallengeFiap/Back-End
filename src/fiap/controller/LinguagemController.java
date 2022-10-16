@@ -66,22 +66,22 @@ public class LinguagemController {
 		}
 	}
 	
-	public String listaUmaLinguagem(int id) {
+	public ArrayList<String> listaUmaLinguagem(int id) {
 		Connection con = Conexao.abrirConexao();
 		LinguagemDAO ldao = new LinguagemDAO(con);
 		try {
 			ArrayList<Linguagem> lista = ldao.listarUm(id);
-			String dados = "Lista de Linguagens:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (Linguagem linguagem : lista) {
-					dados += "ID Linguagem: " + linguagem.getIdLinguagem() + "\n";
-					dados += "Linguagem: " + linguagem.getLinguagem() + "\n\n";
+					dados.add("" + linguagem.getIdLinguagem());
+					dados.add(linguagem.getLinguagem());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

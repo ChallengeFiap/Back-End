@@ -163,7 +163,7 @@ public class FormacaoAcademicaDAO implements IDAO{
 	public ArrayList<FormacaoAcademica> listarTodos() {
 		String sql = "SELECT ID_FORMACAO_ACADEMICA, ID_REGISTRO_GERAL, NM_INSTITUICAO, DS_ATV_EXTRA_CURRICULARES, TO_CHAR(DT_INICIO, 'YYYY/MM/DD'), "
 				+ "TO_CHAR(DT_TERMINO, 'YYYY/MM/DD'), NM_CURSO, DS_STATUS_CURSO, DS_ESCOLARIDADE, DS_SEMESTRE, FL_CURSO "
-				+ "FROM T_CHALL_FORMACAO_ACADEMICA";
+				+ "FROM T_CHALL_FORMACAO_ACADEMICA ORDER BY ID_FORMACAO_ACADEMICA";
 		ArrayList<FormacaoAcademica> listaFormacaoAcademicas = new ArrayList<FormacaoAcademica>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

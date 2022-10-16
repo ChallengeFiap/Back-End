@@ -130,7 +130,8 @@ public class IdiomaCandidatoDAO implements IDAO{
 	}
 	
 	public ArrayList<IdiomaCandidato> listarTodos() {
-		String sql = "SELECT ID_IDIOMA_CANDIDATO, ID_REGISTRO_GERAL, ID_IDIOMAS, TO_CHAR(DT_INICIO, 'YYYY/MM/DD'), FL_PROFICIENCIA FROM T_CHALL_IDIOMA_CANDIDATO";
+		String sql = "SELECT ID_IDIOMA_CANDIDATO, ID_REGISTRO_GERAL, ID_IDIOMAS, TO_CHAR(DT_INICIO, 'YYYY/MM/DD'), FL_PROFICIENCIA FROM T_CHALL_IDIOMA_CANDIDATO "
+				+ "ORDER BY ID_IDIOMA_CANDIDATO";
 		ArrayList<IdiomaCandidato> listaIdiomaCandidatos = new ArrayList<IdiomaCandidato>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

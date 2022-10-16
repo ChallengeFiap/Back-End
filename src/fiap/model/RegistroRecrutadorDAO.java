@@ -171,7 +171,7 @@ public class RegistroRecrutadorDAO implements IDAOR {
 	public ArrayList<RegistroRecrutador> listarTodos() {
 		String sql = "SELECT RR.ID_REGISTRO_GERAL, RG.TP_USUARIO, RG.NM_NOME_COMPLETO, RG.DS_EMAIL, RG.DS_SENHA, RG.NR_CPF,"
 				+ " RR.NM_EMPRESA, RR.DS_CARGO FROM T_CHALL_REGISTRO_GERAL RG INNER JOIN T_CHALL_REGISTRO_RECRUTADOR RR "
-				+ "ON(RG.ID_REGISTRO_GERAL = RR.ID_REGISTRO_GERAL)";
+				+ "ON(RG.ID_REGISTRO_GERAL = RR.ID_REGISTRO_GERAL) ORDER BY RR.ID_REGISTRO_GERAL";
 		ArrayList<RegistroRecrutador> listaRecrutadores = new ArrayList<RegistroRecrutador>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

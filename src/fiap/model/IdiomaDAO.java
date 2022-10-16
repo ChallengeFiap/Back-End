@@ -100,7 +100,7 @@ public class IdiomaDAO implements IDAO{
 	}
 	
 	public ArrayList<Idioma> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_IDIOMAS";
+		String sql = "SELECT * FROM T_CHALL_IDIOMAS ORDER BY ID_IDIOMAS";
 		ArrayList<Idioma> listaIdiomas = new ArrayList<Idioma>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);

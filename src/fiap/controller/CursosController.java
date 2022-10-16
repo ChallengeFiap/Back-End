@@ -29,7 +29,7 @@ public class CursosController {
 		}
 	}
 	
-	public String alteraAltera(int idCurso, int nrCurso, String sgCurso, String nmCurso) {
+	public String alteraCurso(int idCurso, int nrCurso, String sgCurso, String nmCurso) {
 		String resultado;
 		Connection con = Conexao.abrirConexao();
 		CursosDAO cudao = new CursosDAO(con);
@@ -72,24 +72,24 @@ public class CursosController {
 		}
 	}
 	
-	public String listaUmCurso(int id) {
+	public ArrayList<String> listaUmCurso(int id) {
 		Connection con = Conexao.abrirConexao();
 		CursosDAO cudao = new CursosDAO(con);
 		try {
 			ArrayList<Cursos> lista = cudao.listarUm(id);
-			String dados = "Lista de Cursos:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (Cursos cursos : lista) {
-					dados += "ID Curso: " + cursos.getIdCurso() + "\n";
-					dados += "Numero do Curso: " + cursos.getNumeroCurso() + "\n";
-					dados += "Sigla do Curso: " + cursos.getSiglaCurso() + "\n";
-					dados += "Nome do Curso: " + cursos.getNomeCurso() + "\n\n";
+					dados.add("" + cursos.getIdCurso());
+					dados.add("" + cursos.getNumeroCurso());
+					dados.add(cursos.getSiglaCurso());
+					dados.add(cursos.getNomeCurso());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

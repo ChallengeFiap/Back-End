@@ -106,7 +106,7 @@ public class LinkDAO implements IDAO{
 	}
 	
 	public ArrayList<Link> listarTodos() {
-		String sql = "SELECT * FROM T_CHALL_LINK";
+		String sql = "SELECT * FROM T_CHALL_LINK ORDER BY ID_LINK";
 		ArrayList<Link> listaLinks = new ArrayList<Link>();
 		try {
 			PreparedStatement ps = getCon().prepareStatement(sql);
