@@ -2,9 +2,13 @@ package fiap.view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
+import fiap.controller.CandidatoController;
+import fiap.controller.FormacaoAcademicaController;
 
 @SuppressWarnings({ "serial", "unused" })
 public class GUIFormacaoAcademica extends JPanel{
@@ -25,7 +29,7 @@ public class GUIFormacaoAcademica extends JPanel{
 		setBackground(Color.orange);
 
 		
-		//Instanciando Botões 
+		//Instanciando Botï¿½es 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");		
@@ -84,7 +88,7 @@ public class GUIFormacaoAcademica extends JPanel{
 		tfDsSemestre.setBounds(130, 345, 200, 25);
 		tfFlCurso.setBounds(170, 380, 160, 25);
 		
-		//set Bounds Botões
+		//set Bounds Botï¿½es
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -127,35 +131,170 @@ public class GUIFormacaoAcademica extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				FormacaoAcademicaController fAcad = new FormacaoAcademicaController();
+				if (tfIdFormacaoAcademica.getText().equals("") || tfIdRegistroGeral.getText().equals("")
+						|| tfNmInstituicao.getText().equals("") || tfDsAtvExtraCur.getText().equals("")
+						|| tfDtInicio.getText().equals("") || tfDtTermino.getText().equals("")
+						|| tfNmCurso.getText().equals("") || tfDsStatusCurso.getText().equals("")
+						|| tfDsEscolaridade.getText().equals("") || tfDsSemestre.getText().equals("")
+						|| tfFlCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdFormacaoAcademica.getText());
+					int idRegistro = Integer.parseInt(tfIdRegistroGeral.getText());
+					
+					String aux = tfDtInicio.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataI = LocalDate.parse(data);
+					
+					aux = tfDtTermino.getText();
+					data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataT = LocalDate.parse(data);
+					
+					JOptionPane.showMessageDialog(null, fAcad.insereFormacaoAcademica(id, idRegistro, tfNmInstituicao.getText(), 
+							tfDsAtvExtraCur.getText(), dataI, dataT, tfNmCurso.getText(), tfDsStatusCurso.getText(),
+							tfDsEscolaridade.getText(), tfFlCurso.getText(), tfDsSemestre.getText()));
+					tfIdFormacaoAcademica.setText("");
+					tfIdRegistroGeral.setText("");
+					tfNmInstituicao.setText("");
+					tfDsAtvExtraCur.setText("");
+					tfDtInicio.setText("");
+					tfDtTermino.setText("");
+					tfNmCurso.setText("");
+					tfDsStatusCurso.setText("");
+					tfDsEscolaridade.setText("");
+					tfDsSemestre.setText("");
+					tfFlCurso.setText("");
+				}
 				
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				FormacaoAcademicaController fAcad = new FormacaoAcademicaController();
+				if (tfIdFormacaoAcademica.getText().equals("") || tfIdRegistroGeral.getText().equals("")
+						|| tfNmInstituicao.getText().equals("") || tfDsAtvExtraCur.getText().equals("")
+						|| tfDtInicio.getText().equals("") || tfDtTermino.getText().equals("")
+						|| tfNmCurso.getText().equals("") || tfDsStatusCurso.getText().equals("")
+						|| tfDsEscolaridade.getText().equals("") || tfDsSemestre.getText().equals("")
+						|| tfFlCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdFormacaoAcademica.getText());
+					int idRegistro = Integer.parseInt(tfIdRegistroGeral.getText());
+					
+					String aux = tfDtInicio.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataI = LocalDate.parse(data);
+					
+					aux = tfDtTermino.getText();
+					data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataT = LocalDate.parse(data);
+					
+					JOptionPane.showMessageDialog(null, fAcad.alteraFormacaoAcademica(id, idRegistro, tfNmInstituicao.getText(), 
+							tfDsAtvExtraCur.getText(), dataI, dataT, tfNmCurso.getText(), tfDsStatusCurso.getText(),
+							tfDsEscolaridade.getText(), tfFlCurso.getText(), tfDsSemestre.getText()));
+					tfIdFormacaoAcademica.setText("");
+					tfIdRegistroGeral.setText("");
+					tfNmInstituicao.setText("");
+					tfDsAtvExtraCur.setText("");
+					tfDtInicio.setText("");
+					tfDtTermino.setText("");
+					tfNmCurso.setText("");
+					tfDsStatusCurso.setText("");
+					tfDsEscolaridade.setText("");
+					tfDsSemestre.setText("");
+					tfFlCurso.setText("");
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				FormacaoAcademicaController fAcad = new FormacaoAcademicaController();
+				if (tfIdFormacaoAcademica.getText().equals("") || tfIdRegistroGeral.getText().equals("")
+						|| tfNmInstituicao.getText().equals("") || tfDsAtvExtraCur.getText().equals("")
+						|| tfDtInicio.getText().equals("") || tfDtTermino.getText().equals("")
+						|| tfNmCurso.getText().equals("") || tfDsStatusCurso.getText().equals("")
+						|| tfDsEscolaridade.getText().equals("") || tfDsSemestre.getText().equals("")
+						|| tfFlCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID da Formacao Academica");
+				} else {
+					int id = Integer.parseInt(tfIdFormacaoAcademica.getText());
+					JOptionPane.showMessageDialog(null, fAcad.excluirFormacaoAcademica(id));
+					tfIdFormacaoAcademica.setText("");
+					tfIdRegistroGeral.setText("");
+					tfNmInstituicao.setText("");
+					tfDsAtvExtraCur.setText("");
+					tfDtInicio.setText("");
+					tfDtTermino.setText("");
+					tfNmCurso.setText("");
+					tfDsStatusCurso.setText("");
+					tfDsEscolaridade.setText("");
+					tfDsSemestre.setText("");
+					tfFlCurso.setText("");
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				FormacaoAcademicaController fAcad = new FormacaoAcademicaController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdFormacaoAcademica.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID da Formacao Academica");
+					tfIdFormacaoAcademica.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdFormacaoAcademica.getText());
+					dados = fAcad.listaUmaFormacaoAcademica(id);
+					if (dados != null) {
+						tfIdRegistroGeral.setText(dados.get(1));
+						tfNmInstituicao.setText(dados.get(2));
+						tfDsAtvExtraCur.setText(dados.get(3));
+						
+						String aux = dados.get(4);
+						String data = aux.substring(8, 10) + "/";
+						data += aux.substring(5, 7) + "/";
+						data += aux.substring(0, 4);
+						
+						tfDtInicio.setText(data);
+						
+						aux = dados.get(5);
+						data = aux.substring(8, 10) + "/";
+						data += aux.substring(5, 7) + "/";
+						data += aux.substring(0, 4);
+						
+						tfDtTermino.setText(data);
+						tfNmCurso.setText(dados.get(6));
+						tfDsStatusCurso.setText(dados.get(7));
+						tfDsEscolaridade.setText(dados.get(8));
+						tfFlCurso.setText(dados.get(10));
+						tfDsSemestre.setText(dados.get(9));
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				FormacaoAcademicaController fAcad = new FormacaoAcademicaController();
+				String dados = fAcad.listaFormacoesAcademicas();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

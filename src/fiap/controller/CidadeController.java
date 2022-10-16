@@ -43,7 +43,7 @@ public class CidadeController {
 			System.out.println(resultado);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Alteração feita com sucesso!";
+				return "Alteraï¿½ï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -62,7 +62,7 @@ public class CidadeController {
 			resultado = cdao.excluir(cd);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -73,24 +73,24 @@ public class CidadeController {
 	
 	
 	
-	public String listaUmaCidade(int id) {
+	public ArrayList<String> listaUmaCidade(int id) {
 		Connection con = Conexao.abrirConexao();
 		CidadeDAO cdao = new CidadeDAO(con);
 		try {
 			ArrayList<Cidade> lista = cdao.listarUm(id);
-			String dados = "Lista de Cidade:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (Cidade cidade : lista) {
-					dados += "ID Cidade: " + cidade.getIdCidade() + "\n";
-					dados += "ID Registro: " + cidade.getIdRegistroGeral() + "\n";
-					dados += "ID Estado: " + cidade.getIdEstado() + "\n";
-					dados += "Nome Cidade: " + cidade.getNomeCidade() + "\n\n";
+					dados.add("" + cidade.getIdCidade());
+					dados.add("" + cidade.getIdRegistroGeral());
+					dados.add("" + cidade.getIdEstado());
+					dados.add(cidade.getNomeCidade());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

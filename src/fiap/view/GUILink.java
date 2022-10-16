@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import fiap.controller.CursosController;
+import fiap.controller.LinkController;
+
 @SuppressWarnings({ "serial", "unused" })
 public class GUILink extends JPanel{
 
@@ -23,7 +26,7 @@ public class GUILink extends JPanel{
 		setBackground(Color.orange);
 
 		
-		//Instanciando Botıes 
+		//Instanciando Bot√µes 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");		
@@ -54,7 +57,7 @@ public class GUILink extends JPanel{
 		tfDsLink.setBounds(100, 100, 200, 25);
 		tfTpLink.setBounds(100, 135, 200, 25);
 		
-		//set Bounds Botıes
+		//set Bounds Bot√µes
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -83,35 +86,91 @@ public class GUILink extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinkController link = new LinkController();
+				if (tfIdLink.getText().equals("") || tfIdRegistroGeral.getText().equals("")
+						|| tfDsLink.getText().equals("") || tfTpLink.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdLink.getText());
+					int idGeral = Integer.parseInt(tfIdRegistroGeral.getText());
+					JOptionPane.showMessageDialog(null,
+							link.insereLink(id, idGeral, tfDsLink.getText(), tfTpLink.getText()));
+					tfIdLink.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDsLink.setText("");
+					tfTpLink.setText("");
+				}
 				
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinkController link = new LinkController();
+				if (tfIdLink.getText().equals("") || tfIdRegistroGeral.getText().equals("")
+						|| tfDsLink.getText().equals("") || tfTpLink.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdLink.getText());
+					int idGeral = Integer.parseInt(tfIdRegistroGeral.getText());
+					JOptionPane.showMessageDialog(null,
+							link.alteraLink(id, idGeral, tfDsLink.getText(), tfTpLink.getText()));
+					tfIdLink.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDsLink.setText("");
+					tfTpLink.setText("");
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinkController link = new LinkController();
+				if (tfIdLink.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Link");
+				} else {
+					int id = Integer.parseInt(tfIdLink.getText());
+					int idGeral = Integer.parseInt(tfIdRegistroGeral.getText());
+					JOptionPane.showMessageDialog(null,
+							link.excluiLink(id));
+					tfIdLink.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDsLink.setText("");
+					tfTpLink.setText("");
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinkController link = new LinkController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdLink.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Link");
+					tfIdLink.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdLink.getText());
+					dados = link.listaUmLink(id);
+					if (dados != null) {
+						tfIdRegistroGeral.setText(dados.get(1));
+						tfDsLink.setText(dados.get(3));
+						tfTpLink.setText(dados.get(2));
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinkController link = new LinkController();
+				String dados = link.listaLinks();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

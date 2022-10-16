@@ -46,7 +46,7 @@ public class FavoritoController {
 			resultado = fvdao.alterar(fv);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Alteração feita com sucesso!";
+				return "Alteraï¿½ï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -65,7 +65,7 @@ public class FavoritoController {
 			resultado = fvdao.excluir(fv);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -74,25 +74,25 @@ public class FavoritoController {
 		}
 	}
 	
-	public String listaFavorito(int id) {
+	public ArrayList<String> listaFavorito(int id) {
 		Connection con = Conexao.abrirConexao();
 		FavoritoDAO fvdao = new FavoritoDAO(con);
 		try {
 			ArrayList<Favorito> lista = fvdao.listarUm(id);
-			String dados = "Lista de Favorito:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (Favorito favorito : lista) {
-					dados += "ID Favorito: " + favorito.getIdFavorito() + "\n";
-					dados += "ID Registro Recrutador: " + favorito.getIdRecrutador() + "\n";
-					dados += "ID Registro Candidato: " + favorito.getIdCandidato() + "\n";
-					dados += "Data Favoritou: " + favorito.getDataFavoritou() + "\n";
-					dados += "Status Favorito: " + favorito.getStatusFavoritos() + "\n\n";
+					dados.add("" + favorito.getIdFavorito());
+					dados.add("" + favorito.getIdRecrutador());
+					dados.add("" + favorito.getIdCandidato());
+					dados.add("" + favorito.getDataFavoritou());
+					dados.add(favorito.getStatusFavoritos());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

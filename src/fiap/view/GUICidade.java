@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import fiap.controller.CandidatoController;
+import fiap.controller.CidadeController;
+
 @SuppressWarnings({ "serial", "unused" })
 public class GUICidade extends JPanel{
 
@@ -23,7 +26,7 @@ public class GUICidade extends JPanel{
 		setBackground(Color.orange);
 
 		
-		//Instanciando Botıes 
+		//Instanciando Bot√µes 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");		
@@ -58,7 +61,7 @@ public class GUICidade extends JPanel{
 		tfNmCidade.setBounds(130, 135, 200, 25);
 
 		
-		//set Bounds Botıes
+		//set Bounds Bot√µes
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -89,35 +92,91 @@ public class GUICidade extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				CidadeController cidade = new CidadeController();
+				if (tfIdCidade.getText().equals("") || tfIdRegistroGeral.getText().equals("")
+						|| tfIdEstado.getText().equals("") || tfNmCidade.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdCidade.getText());
+					int idGeral = Integer.parseInt(tfIdRegistroGeral.getText());
+					int idEstado = Integer.parseInt(tfIdEstado.getText());
+					JOptionPane.showMessageDialog(null,
+							cidade.insereCidade(id, idGeral, idEstado,tfNmCidade.getText()));
+					tfIdCidade.setText("");
+					tfIdRegistroGeral.setText("");
+					tfIdEstado.setText("");
+					tfNmCidade.setText("");
+				}
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				CidadeController cidade = new CidadeController();
+				if (tfIdCidade.getText().equals("") || tfIdRegistroGeral.getText().equals("")
+						|| tfIdEstado.getText().equals("") || tfNmCidade.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdCidade.getText());
+					int idGeral = Integer.parseInt(tfIdRegistroGeral.getText());
+					int idEstado = Integer.parseInt(tfIdEstado.getText());
+					JOptionPane.showMessageDialog(null,
+							cidade.alteraCidade(id, idGeral, idEstado,tfNmCidade.getText()));
+					tfIdCidade.setText("");
+					tfIdRegistroGeral.setText("");
+					tfIdEstado.setText("");
+					tfNmCidade.setText("");
+				}
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CidadeController cidade = new CidadeController();
+				if (tfIdCidade.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID da Cidade");
+					tfIdCidade.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdCidade.getText());
+					JOptionPane.showMessageDialog(null,
+							cidade.excluiCidade(id));
+					tfIdCidade.setText("");
+					tfIdRegistroGeral.setText("");
+					tfIdEstado.setText("");
+					tfNmCidade.setText("");
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CidadeController cidade = new CidadeController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdCidade.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID da Cidade");
+					tfIdCidade.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdCidade.getText());
+					dados = cidade.listaUmaCidade(id);
+					if (dados != null) {
+						tfIdRegistroGeral.setText(dados.get(1));
+						tfIdEstado.setText(dados.get(2));
+						tfNmCidade.setText(dados.get(3));
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CidadeController cidade = new CidadeController();
+				String dados = cidade.listaCidades();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

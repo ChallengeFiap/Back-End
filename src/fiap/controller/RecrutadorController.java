@@ -54,7 +54,7 @@ public class RecrutadorController {
 			resultado2 = rrd.alterarUsuario(rr);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!" && resultado2 == "Alterado com sucesso!") {
-				return "Alteração feita com sucesso!";
+				return "Alteraï¿½ï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -74,7 +74,7 @@ public class RecrutadorController {
 			resultado2 = rrd.excluirRegistro(rr);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!" && resultado2 == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -83,28 +83,28 @@ public class RecrutadorController {
 		}
 	}
 
-	public String listaRecrutador(int id) {
+	public ArrayList<String> listaRecrutador(int id) {
 		Connection con = Conexao.abrirConexao();
 		RegistroRecrutadorDAO rrd = new RegistroRecrutadorDAO(con);
 		try {
 			ArrayList<RegistroRecrutador> lista = rrd.listarUm(id);
-			String dados = "Lista de Recrutadores:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (RegistroRecrutador registroRecrutador : lista) {
-					dados += "ID Registro Geral: " + registroRecrutador.getIdRegistroGeral() + "\n";
-					dados += "Tipo Usuario: " + registroRecrutador.getTipoUsuario() + "\n";
-					dados += "Nome Completo: " + registroRecrutador.getNomeCompleto() + "\n";
-					dados += "Email: " + registroRecrutador.getEmail() + "\n";
-					dados += "Senha: " + registroRecrutador.getSenha() + "\n";
-					dados += "CPF: " + registroRecrutador.getNumeroCPF() + "\n";
-					dados += "Nome Empresa: " + registroRecrutador.getNomeEmpresa() + "\n";
-					dados += "Cargo: " + registroRecrutador.getCargoRecrutador() + "\n\n";
+					dados.add("" + registroRecrutador.getIdRegistroGeral());
+					dados.add(registroRecrutador.getTipoUsuario());
+					dados.add(registroRecrutador.getNomeCompleto());
+					dados.add(registroRecrutador.getEmail());
+					dados.add(registroRecrutador.getSenha());
+					dados.add(registroRecrutador.getNumeroCPF());
+					dados.add(registroRecrutador.getNomeEmpresa());
+					dados.add(registroRecrutador.getCargoRecrutador());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 
 	}

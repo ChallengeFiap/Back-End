@@ -2,9 +2,12 @@ package fiap.view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
+import fiap.controller.CandidatoCursoController;
 
 @SuppressWarnings({ "serial", "unused" })
 public class GUICursoCandidato extends JPanel{
@@ -23,7 +26,7 @@ public class GUICursoCandidato extends JPanel{
 		setBackground(Color.orange);
 
 		
-		//Instanciando Botões 
+		//Instanciando Botï¿½es 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");		
@@ -58,7 +61,7 @@ public class GUICursoCandidato extends JPanel{
 		tfDtInicio.setBounds(170, 135, 200, 25);
 		tfDtTermino.setBounds(170, 170, 200, 25);
 		
-		//set Bounds Botões
+		//set Bounds Botï¿½es
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -90,35 +93,138 @@ public class GUICursoCandidato extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoCursoController candCurso = new CandidatoCursoController();
+				if (tfIdCandCurso.getText().equals("") || tfIdCurso.getText().equals("")
+						|| tfIdRegistroGeral.getText().equals("") || tfDtInicio.getText().equals("")
+						|| tfDtTermino.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdCandCurso.getText());
+					int idCurso = Integer.parseInt(tfIdCurso.getText());
+					int idRegistro = Integer.parseInt(tfIdCurso.getText());
+					
+					String aux = tfDtInicio.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataI = LocalDate.parse(data);
+					
+					aux = tfDtInicio.getText();
+					data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataT = LocalDate.parse(data);
+					
+					JOptionPane.showMessageDialog(null,
+							candCurso.insereCandidatoCurso(id, idRegistro, idCurso, dataI, dataT));
+					tfIdCandCurso.setText("");
+					tfIdCurso.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDtInicio.setText("");
+					tfDtTermino.setText("");
+				}
 				
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoCursoController candCurso = new CandidatoCursoController();
+				if (tfIdCandCurso.getText().equals("") || tfIdCurso.getText().equals("")
+						|| tfIdRegistroGeral.getText().equals("") || tfDtInicio.getText().equals("")
+						|| tfDtTermino.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdCandCurso.getText());
+					int idCurso = Integer.parseInt(tfIdCurso.getText());
+					int idRegistro = Integer.parseInt(tfIdCurso.getText());
+					
+					String aux = tfDtInicio.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataI = LocalDate.parse(data);
+					
+					aux = tfDtInicio.getText();
+					data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataT = LocalDate.parse(data);
+					
+					JOptionPane.showMessageDialog(null,
+							candCurso.alteraCandidatoCurso(id, idRegistro, idCurso, dataI, dataT));
+					tfIdCandCurso.setText("");
+					tfIdCurso.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDtInicio.setText("");
+					tfDtTermino.setText("");
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoCursoController candCurso = new CandidatoCursoController();
+				if (tfIdCandCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Curso Candidato");
+				} else {
+					int id = Integer.parseInt(tfIdCandCurso.getText());
+					
+					JOptionPane.showMessageDialog(null,
+							candCurso.excluiCandidatoCurso(id));
+					tfIdCandCurso.setText("");
+					tfIdCurso.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDtInicio.setText("");
+					tfDtTermino.setText("");
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoCursoController candCurso = new CandidatoCursoController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdCandCurso.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Curso Candidato");
+					tfIdCandCurso.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdCandCurso.getText());
+					dados = candCurso.listaUmCandidatoCurso(id);
+					if (dados != null) {
+						tfIdCurso.setText(dados.get(1));
+						tfIdRegistroGeral.setText(dados.get(2));
+						
+						String aux = dados.get(3);
+						String data = aux.substring(8, 10) + "/";
+						data += aux.substring(5, 7) + "/";
+						data += aux.substring(0, 4);
+						
+						tfDtInicio.setText(data);
+						
+						aux = dados.get(4);
+						data = aux.substring(8, 10) + "/";
+						data += aux.substring(5, 7) + "/";
+						data += aux.substring(0, 4);
+						
+						tfDtTermino.setText(data);
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoCursoController candCurso = new CandidatoCursoController();
+				String dados = candCurso.listaCandidatoCurso();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

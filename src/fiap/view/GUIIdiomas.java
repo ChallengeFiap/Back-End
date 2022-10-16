@@ -27,7 +27,7 @@ public class GUIIdiomas extends JPanel{
 		setBackground(Color.CYAN);
 
 		
-		//Instanciando Botões 
+		//Instanciando Botï¿½es 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");
@@ -54,7 +54,7 @@ public class GUIIdiomas extends JPanel{
 		tfTpIdiomas.setBounds(130, 65, 200, 25);
 
 		
-		//set Bounds Botões
+		//set Bounds Botï¿½es
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
