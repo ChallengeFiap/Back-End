@@ -24,7 +24,7 @@ public class GUILinguagemProgramacao extends JPanel {
 		setLayout(null);
 		setBackground(Color.CYAN);
 
-		// Instanciando Botões
+		// Instanciando Botï¿½es
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");
@@ -47,7 +47,7 @@ public class GUILinguagemProgramacao extends JPanel {
 		tfIdLinguagemProg.setBounds(200, 30, 200, 25);
 		tfTpLinguagem.setBounds(200, 65, 200, 25);
 
-		// set Bounds Botões
+		// set Bounds Botï¿½es
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -122,7 +122,7 @@ public class GUILinguagemProgramacao extends JPanel {
 				LinguagemController linguagem = new LinguagemController();
 				ArrayList<String> dados = new ArrayList<String>();
 				if (tfIdLinguagemProg.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Preencha a placa");
+					JOptionPane.showMessageDialog(null, "Preencha o ID da Linguagem");
 					tfIdLinguagemProg.requestFocus();
 				} else {
 					int id = Integer.parseInt(tfIdLinguagemProg.getText());

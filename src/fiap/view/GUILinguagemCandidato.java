@@ -2,9 +2,13 @@ package fiap.view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
+import fiap.controller.CandidatoController;
+import fiap.controller.LinguagemCandidatoController;
 
 @SuppressWarnings({ "serial", "unused" })
 public class GUILinguagemCandidato extends JPanel{
@@ -22,7 +26,7 @@ public class GUILinguagemCandidato extends JPanel{
 		setLayout(null);
 		setBackground(Color.orange);
 		
-		//Instanciando Botões 
+		//Instanciando Botï¿½es 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");		
@@ -57,7 +61,7 @@ public class GUILinguagemCandidato extends JPanel{
 		tfDtInicio.setBounds(170, 135, 200, 25);
 		tfFlProficiencia.setBounds(170, 170, 200, 25);
 		
-		//set Bounds Botões
+		//set Bounds Botï¿½es
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -89,35 +93,118 @@ public class GUILinguagemCandidato extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinguagemCandidatoController linCand = new LinguagemCandidatoController();
+				if (tfIdLinguagemCandidato.getText().equals("") || 
+						tfIdLinguagemProg.getText().equals("") || 
+						tfIdRegistroGeral.getText().equals("") ||
+						tfDtInicio.getText().equals("") ||
+						tfFlProficiencia.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdLinguagemCandidato.getText());
+					int idLingProg = Integer.parseInt(tfIdLinguagemProg.getText());
+					int idRegistro = Integer.parseInt(tfIdRegistroGeral.getText());
+					String aux = tfDtInicio.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataI = LocalDate.parse(data);
+					JOptionPane.showMessageDialog(null, linCand.insereLinguagemCandidato(id, idLingProg, 
+							idRegistro, dataI, tfFlProficiencia.getText()));
+					tfIdLinguagemCandidato.setText("");
+					tfIdLinguagemProg.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDtInicio.setText("");
+					tfFlProficiencia.setText("");
+				}
 				
 			}
 		});
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinguagemCandidatoController linCand = new LinguagemCandidatoController();
+				if (tfIdLinguagemCandidato.getText().equals("") || 
+						tfIdLinguagemProg.getText().equals("") || 
+						tfIdRegistroGeral.getText().equals("") ||
+						tfDtInicio.getText().equals("") ||
+						tfFlProficiencia.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfIdLinguagemCandidato.getText());
+					int idLingProg = Integer.parseInt(tfIdLinguagemProg.getText());
+					int idRegistro = Integer.parseInt(tfIdRegistroGeral.getText());
+					String aux = tfDtInicio.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataI = LocalDate.parse(data);
+					JOptionPane.showMessageDialog(null, linCand.alteraLinguagemCandidato(id, idLingProg, 
+							idRegistro, dataI, tfFlProficiencia.getText()));
+					tfIdLinguagemCandidato.setText("");
+					tfIdLinguagemProg.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDtInicio.setText("");
+					tfFlProficiencia.setText("");
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				LinguagemCandidatoController linCand = new LinguagemCandidatoController();
+				if (tfIdLinguagemCandidato.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID da Linguagem do Candidato");
+					tfIdLinguagemCandidato.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdLinguagemCandidato.getText());
+					JOptionPane.showMessageDialog(null, linCand.excluiLinguagemCandidato(id));
+					tfIdLinguagemCandidato.setText("");
+					tfIdLinguagemProg.setText("");
+					tfIdRegistroGeral.setText("");
+					tfDtInicio.setText("");
+					tfFlProficiencia.setText("");
+				}
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinguagemCandidatoController linCand = new LinguagemCandidatoController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfIdLinguagemCandidato.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID da Linguagem do Candidato");
+					tfIdLinguagemCandidato.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfIdLinguagemCandidato.getText());
+					dados = linCand.listaUmaLinguagemCandidato(id);
+					if (dados != null) {
+						tfIdLinguagemProg.setText(dados.get(1));
+						tfIdRegistroGeral.setText(dados.get(2));
+						
+						String aux = dados.get(3);
+						String data = aux.substring(8, 10) + "/";
+						data += aux.substring(5, 7) + "/";
+						data += aux.substring(0, 4);
+						
+						tfDtInicio.setText(data);
+						tfFlProficiencia.setText(dados.get(4));
+						
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 				
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				LinguagemCandidatoController linCand = new LinguagemCandidatoController();
+				String dados = linCand.listaLinguagensCandidatos();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

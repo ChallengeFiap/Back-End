@@ -20,6 +20,7 @@ public class CandidatoCursoController {
 			cc.setDataInicio(dataInicio);
 			cc.setDataFim(dataTermino);
 			resultado = ccdao.inserir(cc);
+			System.out.println(resultado);
 			Conexao.fecharConexao(con);
 			if (resultado == "Inserido com sucesso.") {
 				return "Cadastrado com sucesso!";
@@ -43,6 +44,7 @@ public class CandidatoCursoController {
 			cc.setDataInicio(dataInicio);
 			cc.setDataFim(dataTermino);
 			resultado = ccdao.alterar(cc);
+			System.out.println(resultado);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
 				return "Alteração feita com sucesso!";
@@ -73,25 +75,25 @@ public class CandidatoCursoController {
 		}
 	}
 	
-	public String listaUmCandidatoCurso(int id) {
+	public ArrayList<String> listaUmCandidatoCurso(int id) {
 		Connection con = Conexao.abrirConexao();
 		CandidatoCursoDAO ccdao = new CandidatoCursoDAO(con);
 		try {
 			ArrayList<CandidatoCurso> lista = ccdao.listarUm(id);
-			String dados = "Lista de Linguagem Candidato:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (CandidatoCurso CandidatoCurso : lista) {
-					dados += "ID Candidato Curso: " + CandidatoCurso.getIdCandidatoCurso() + "\n";
-					dados += "ID Curso: " + CandidatoCurso.getIdCurso() + "\n";
-					dados += "ID Registro: " + CandidatoCurso.getIdRegistroGeral() + "\n";
-					dados += "Data Inicio: " + CandidatoCurso.getDataInicio() + "\n";
-					dados += "Data Termino: " + CandidatoCurso.getDataFim() + "\n\n";
+					dados.add("" + CandidatoCurso.getIdCandidatoCurso());
+					dados.add("" + CandidatoCurso.getIdCurso());
+					dados.add("" + CandidatoCurso.getIdRegistroGeral());
+					dados.add("" + CandidatoCurso.getDataInicio());
+					dados.add("" + CandidatoCurso.getDataFim());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

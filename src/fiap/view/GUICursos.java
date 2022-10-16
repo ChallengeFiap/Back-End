@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import fiap.controller.CursosController;
-import fiap.controller.EstadoController;
 
 @SuppressWarnings("serial")
 public class GUICursos extends JPanel{
@@ -31,7 +30,7 @@ public class GUICursos extends JPanel{
 		setBackground(Color.CYAN);
 
 		
-		//Instanciando Botıes 
+		//Instanciando Bot√µes 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");
@@ -63,7 +62,7 @@ public class GUICursos extends JPanel{
 		tfNmCurso.setBounds(130, 135, 200, 25);
 		
 		
-		//set Bounds Botıes
+		//set Bounds Bot√µes
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -94,19 +93,19 @@ public class GUICursos extends JPanel{
 
 		btInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CursosController curso = new CursosController();
-				if (tfIdCurso.getText().equals("") || tfNrCurso.getText().equals("") || 
-						tfSgCurso.getText().equals("") || tfNmCurso.getText().equals("")) {
+				CursosController cursos = new CursosController();
+				if (tfIdCurso.getText().equals("") || tfNrCurso.getText().equals("")
+						|| tfSgCurso.getText().equals("") || tfNmCurso.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
 				} else {
 					int id = Integer.parseInt(tfIdCurso.getText());
 					int nrCurso = Integer.parseInt(tfNrCurso.getText());
-					JOptionPane.showMessageDialog(null, curso.insereCurso(id, nrCurso, tfSgCurso.getText(), tfNmCurso.getText()));
+					JOptionPane.showMessageDialog(null,
+							cursos.insereCurso(id, nrCurso, tfSgCurso.getText(), tfNmCurso.getText()));
 					tfIdCurso.setText("");
 					tfNrCurso.setText("");
 					tfSgCurso.setText("");
 					tfNmCurso.setText("");
-					
 				}
 				
 			}
@@ -114,19 +113,19 @@ public class GUICursos extends JPanel{
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CursosController curso = new CursosController();
-				if (tfIdCurso.getText().equals("") || tfNrCurso.getText().equals("") || 
-						tfSgCurso.getText().equals("") || tfNmCurso.getText().equals("")) {
+				CursosController cursos = new CursosController();
+				if (tfIdCurso.getText().equals("") || tfNrCurso.getText().equals("")
+						|| tfSgCurso.getText().equals("") || tfNmCurso.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
 				} else {
 					int id = Integer.parseInt(tfIdCurso.getText());
 					int nrCurso = Integer.parseInt(tfNrCurso.getText());
-					JOptionPane.showMessageDialog(null, curso.alteraCurso(id, nrCurso, tfSgCurso.getText(), tfNmCurso.getText()));
+					JOptionPane.showMessageDialog(null,
+							cursos.alteraCurso(id, nrCurso, tfSgCurso.getText(), tfNmCurso.getText()));
 					tfIdCurso.setText("");
 					tfNrCurso.setText("");
 					tfSgCurso.setText("");
 					tfNmCurso.setText("");
-					
 				}
 				
 			}
@@ -134,17 +133,17 @@ public class GUICursos extends JPanel{
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CursosController curso = new CursosController();
+				CursosController cursos = new CursosController();
 				if (tfIdCurso.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Preencha o ID do Curso");
 				} else {
 					int id = Integer.parseInt(tfIdCurso.getText());
-					JOptionPane.showMessageDialog(null, curso.excluiCurso(id));
+					JOptionPane.showMessageDialog(null,
+							cursos.excluiCurso(id));
 					tfIdCurso.setText("");
 					tfNrCurso.setText("");
 					tfSgCurso.setText("");
 					tfNmCurso.setText("");
-					
 				}
 				
 			}
@@ -152,14 +151,14 @@ public class GUICursos extends JPanel{
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CursosController curso = new CursosController();
+				CursosController cursos = new CursosController();
 				ArrayList<String> dados = new ArrayList<String>();
 				if (tfIdCurso.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Preencha o ID do Estado");
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Curso");
 					tfIdCurso.requestFocus();
 				} else {
 					int id = Integer.parseInt(tfIdCurso.getText());
-					dados = curso.listaUmCurso(id);
+					dados = cursos.listaUmCurso(id);
 					if (dados != null) {
 						tfNrCurso.setText(dados.get(1));
 						tfSgCurso.setText(dados.get(2));
@@ -175,9 +174,11 @@ public class GUICursos extends JPanel{
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CursosController curso = new CursosController();
-				String dados = curso.listaCurso();
+				CursosController cursos = new CursosController();
+				String dados = cursos.listaCurso();
 				JOptionPane.showMessageDialog(null, dados);
+				
+				
 			}
 		});
 		

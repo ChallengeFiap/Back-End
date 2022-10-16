@@ -45,7 +45,7 @@ public class LinguagemCandidatoController {
 			resultado = lcdao.alterar(lc);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Alteração feita com sucesso!";
+				return "Alteraï¿½ï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -64,7 +64,7 @@ public class LinguagemCandidatoController {
 			resultado = lcdao.excluir(lc);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -73,25 +73,25 @@ public class LinguagemCandidatoController {
 		}
 	}
 	
-	public String listaUmaLinguagemCandidato(int id) {
+	public ArrayList<String> listaUmaLinguagemCandidato(int id) {
 		Connection con = Conexao.abrirConexao();
 		LinguagemCandidatoDAO lcdao = new LinguagemCandidatoDAO(con);
 		try {
 			ArrayList<LinguagemCandidato> lista = lcdao.listarUm(id);
-			String dados = "Lista de Linguagem Candidato:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (LinguagemCandidato linguagemCandidato : lista) {
-					dados += "ID Linguagem Candidato: " + linguagemCandidato.getIdLinguagemCandidato() + "\n";
-					dados += "ID Linguagem Programação: " + linguagemCandidato.getIdLinguagem() + "\n";
-					dados += "ID Registro: " + linguagemCandidato.getIdRegistroGeral() + "\n";
-					dados += "Data Inicio: " + linguagemCandidato.getDataInicio() + "\n";
-					dados += "Proficiencia: " + linguagemCandidato.getProficiencia() + "\n\n";
+					dados.add("" + linguagemCandidato.getIdLinguagemCandidato());
+					dados.add("" + linguagemCandidato.getIdLinguagem());
+					dados.add("" + linguagemCandidato.getIdRegistroGeral());
+					dados.add("" + linguagemCandidato.getDataInicio());
+					dados.add(linguagemCandidato.getProficiencia());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class LinguagemCandidatoController {
 			if (lista != null) {
 				for (LinguagemCandidato linguagemCandidato : lista) {
 					dados += "ID Linguagem Candidato: " + linguagemCandidato.getIdLinguagemCandidato() + "\n";
-					dados += "ID Linguagem Programação: " + linguagemCandidato.getIdLinguagem() + "\n";
+					dados += "ID Linguagem Programaï¿½ï¿½o: " + linguagemCandidato.getIdLinguagem() + "\n";
 					dados += "ID Registro: " + linguagemCandidato.getIdRegistroGeral() + "\n";
 					dados += "Data Inicio: " + linguagemCandidato.getDataInicio() + "\n";
 					dados += "Proficiencia: " + linguagemCandidato.getProficiencia() + "\n\n";

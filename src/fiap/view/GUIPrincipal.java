@@ -49,6 +49,7 @@ public class GUIPrincipal extends JFrame {
 		miIdiomaCandidato = new JMenuItem("Idioma");
 		miCursoCandidato = new JMenuItem("Curso Candidato");
 		miExperiencia = new JMenuItem("Experiencia");
+		miIdiomaCandidato = new JMenuItem("Idioma Candidato");
 		
 		setJMenuBar(mnBarra);
 		mnBarra.add(mnArquivo);

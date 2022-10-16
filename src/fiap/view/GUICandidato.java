@@ -3,6 +3,7 @@ package fiap.view;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class GUICandidato extends JPanel{
 		setLayout(null);
 		setBackground(Color.LIGHT_GRAY);
 		
-		//Instanciando Botões 
+		//Instanciando Botï¿½es 
 		btInserir = new JButton("Inserir");
 		btUpdate = new JButton("Atualizar");
 		btExcluir = new JButton("Excluir");		
@@ -89,7 +90,7 @@ public class GUICandidato extends JPanel{
 		tfEstadoCivicl.setBounds(130, 380, 200, 25);
 		tfCargo.setBounds(130, 415, 200, 25);
 		
-		//set Bounds Botões
+		//set Bounds Botï¿½es
 		btInserir.setBounds(100, 460, 100, 25);
 		btUpdate.setBounds(220, 460, 100, 25);
 		btExcluir.setBounds(340, 460, 100, 25);
@@ -148,7 +149,7 @@ public class GUICandidato extends JPanel{
 					String aux = tfDtNascimento.getText();
 					String data = aux.substring(6, 10) + "-";
 					data += aux.substring(3, 5) + "-";
-					data += aux.substring(0, 2) + "-";
+					data += aux.substring(0, 2);
 					LocalDate dataN = LocalDate.parse(data);
 					JOptionPane.showMessageDialog(null,
 							candidato.insereCandidato(id, tfNomeCompleto.getText(), tfEmail.getText(), tfSenha.getText(),
@@ -174,28 +175,111 @@ public class GUICandidato extends JPanel{
 		
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoController candidato = new CandidatoController();
+				if (tfRegistroGeral.getText().equals("") || tfNomeCompleto.getText().equals("")
+						|| tfSenha.getText().equals("") || tfEmail.getText().equals("")
+						|| tfTpUsuario.getText().equals("") || tfNrCPF.getText().equals("")
+						|| tfNrRG.getText().equals("") || tfDtNascimento.getText().equals("")
+						|| tfSexoBiologico.getText().equals("") || tfTpEscolaridade.getText().equals("")
+						|| tfEstadoCivicl.getText().equals("") || tfCargo.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					int id = Integer.parseInt(tfRegistroGeral.getText());
+					String aux = tfDtNascimento.getText();
+					String data = aux.substring(6, 10) + "-";
+					data += aux.substring(3, 5) + "-";
+					data += aux.substring(0, 2);
+					LocalDate dataN = LocalDate.parse(data);
+					JOptionPane.showMessageDialog(null,
+							candidato.alteraCandidato(id, tfNomeCompleto.getText(), tfEmail.getText(), tfSenha.getText(),
+									tfTpUsuario.getText(), tfNrCPF.getText(), tfNrRG.getText(),
+									dataN, tfSexoBiologico.getText(), tfTpEscolaridade.getText(),
+									tfEstadoCivicl.getText(), tfCargo.getText()));
+					tfRegistroGeral.setText("");
+					tfNomeCompleto.setText("");
+					tfSenha.setText("");
+					tfEmail.setText("");
+					tfTpUsuario.setText("");
+					tfNrCPF.setText("");
+					tfNrRG.setText("");
+					tfDtNascimento.setText("");
+					tfSexoBiologico.setText("");
+					tfTpEscolaridade.setText("");
+					tfEstadoCivicl.setText("");
+					tfCargo.setText("");
+				}
 				
 			}
 		});
 		
 		btExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoController candidato = new CandidatoController();
+				if (tfRegistroGeral.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Candidato");
+					tfRegistroGeral.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfRegistroGeral.getText());
+					JOptionPane.showMessageDialog(null, candidato.excluiCandidato(id));
+					tfRegistroGeral.setText("");
+					tfNomeCompleto.setText("");
+					tfSenha.setText("");
+					tfEmail.setText("");
+					tfTpUsuario.setText("");
+					tfNrCPF.setText("");
+					tfNrRG.setText("");
+					tfDtNascimento.setText("");
+					tfSexoBiologico.setText("");
+					tfTpEscolaridade.setText("");
+					tfEstadoCivicl.setText("");
+					tfCargo.setText("");
+
+				}
 				
 			}
 		});
 		
 		btSelectById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				CandidatoController candidato = new CandidatoController();
+				ArrayList<String> dados = new ArrayList<String>();
+				if (tfRegistroGeral.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o ID do Candidato");
+					tfRegistroGeral.requestFocus();
+				} else {
+					int id = Integer.parseInt(tfRegistroGeral.getText());
+					dados = candidato.listaCandidato(id);
+					if (dados != null) {
+						tfNomeCompleto.setText(dados.get(2));
+						tfSenha.setText(dados.get(4));
+						tfEmail.setText(dados.get(3));
+						tfTpUsuario.setText(dados.get(1));
+						tfNrCPF.setText(dados.get(5));
+						tfNrRG.setText(dados.get(6));
+						
+						String aux = dados.get(7);
+						String data = aux.substring(8, 10) + "/";
+						data += aux.substring(5, 7) + "/";
+						data += aux.substring(0, 4);
+						
+						tfDtNascimento.setText(data);
+						tfSexoBiologico.setText(dados.get(8));
+						tfTpEscolaridade.setText(dados.get(9));
+						tfEstadoCivicl.setText(dados.get(10));
+						tfCargo.setText(dados.get(11));
+					} else {
+						JOptionPane.showMessageDialog(null, "Registro inexistente");
+					}
+					
+				}
 			}
 		});
 		
 		btSelectAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				CandidatoController candidato = new CandidatoController();
+				String dados = candidato.listaCandidatos();
+				JOptionPane.showMessageDialog(null, dados);
 				
 			}
 		});

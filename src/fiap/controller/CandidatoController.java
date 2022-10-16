@@ -66,7 +66,7 @@ public class CandidatoController {
 			resultado2 = rcd.alterarUsuario(rc);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!" && resultado2 == "Alterado com sucesso!") {
-				return "Alteração feita com sucesso!";
+				return "Alteraï¿½ï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -87,7 +87,7 @@ public class CandidatoController {
 			resultado2 = rcd.excluirRegistro(rc);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!" && resultado2 == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -96,32 +96,32 @@ public class CandidatoController {
 		}
 	}
 	
-	public String listaCandidato(int id) {
+	public ArrayList<String> listaCandidato(int id) {
 		Connection con = Conexao.abrirConexao();
 		RegistroCandidatoDAO rcd = new RegistroCandidatoDAO(con);
 		try {
 			ArrayList<RegistroCandidato> lista = rcd.listarUm(id);
-			String dados = "Lista de Candidatos:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (RegistroCandidato registroCandidato : lista) {
-					dados += "ID Registro Geral: " + registroCandidato.getIdRegistroGeral() + "\n";
-					dados += "Tipo Usuario: " + registroCandidato.getTipoUsuario() + "\n";
-					dados += "Nome Completo: " + registroCandidato.getNomeCompleto() + "\n";
-					dados += "Email: " + registroCandidato.getEmail() + "\n";
-					dados += "Senha: " + registroCandidato.getSenha() + "\n";
-					dados += "CPF: " + registroCandidato.getNumeroCPF() + "\n";
-					dados += "RG: " + registroCandidato.getNumeroRG() + "\n";
-					dados += "Data Nascimento: " + registroCandidato.getDataNascimento() + "\n";
-					dados += "Sexo: " + registroCandidato.getSexo() + "\n";
-					dados += "Escolaridade: " + registroCandidato.getEscolaridade() + "\n";
-					dados += "Estado Civil: " + registroCandidato.getEstadoCivil() + "\n";
-					dados += "Cargo: " + registroCandidato.getCargo() + "\n\n";
+					dados.add("" + registroCandidato.getIdRegistroGeral());
+					dados.add(registroCandidato.getTipoUsuario());
+					dados.add(registroCandidato.getNomeCompleto());
+					dados.add(registroCandidato.getEmail());
+					dados.add(registroCandidato.getSenha());
+					dados.add(registroCandidato.getNumeroCPF());
+					dados.add(registroCandidato.getNumeroRG());
+					dados.add("" + registroCandidato.getDataNascimento());
+					dados.add(registroCandidato.getSexo());
+					dados.add(registroCandidato.getEscolaridade());
+					dados.add(registroCandidato.getEstadoCivil());
+					dados.add(registroCandidato.getCargo());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

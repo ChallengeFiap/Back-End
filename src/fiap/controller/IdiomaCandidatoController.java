@@ -46,7 +46,7 @@ public class IdiomaCandidatoController {
 			resultado = icdao.alterar(ic);
 			Conexao.fecharConexao(con);
 			if (resultado == "Alterado com sucesso!") {
-				return "Alteração feita com sucesso!";
+				return "Alteraï¿½ï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao alterar";
 			}
@@ -65,7 +65,7 @@ public class IdiomaCandidatoController {
 			resultado = icdao.excluir(ic);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -74,25 +74,25 @@ public class IdiomaCandidatoController {
 		}
 	}
 	
-	public String listaUmIdiomaCandidato(int id) {
+	public ArrayList<String> listaUmIdiomaCandidato(int id) {
 		Connection con = Conexao.abrirConexao();
 		IdiomaCandidatoDAO icdao = new IdiomaCandidatoDAO(con);
 		try {
 			ArrayList<IdiomaCandidato> lista = icdao.listarUm(id);
-			String dados = "Lista de Idioma Candidato:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (IdiomaCandidato idiomaCandidato : lista) {
-					dados += "ID Idioma Candidato: " + idiomaCandidato.getIdIdiomaCandidato() + "\n";
-					dados += "ID Idioma: " + idiomaCandidato.getIdIdiomas() + "\n";
-					dados += "ID Registro: " + idiomaCandidato.getIdRegistroGeral() + "\n";
-					dados += "Data Inicio: " + idiomaCandidato.getDataInicio() + "\n";
-					dados += "Proficiencia: " + idiomaCandidato.getProficiencia() + "\n\n";
+					dados.add("" + idiomaCandidato.getIdIdiomaCandidato());
+					dados.add("" + idiomaCandidato.getIdIdiomas());
+					dados.add("" + idiomaCandidato.getIdRegistroGeral());
+					dados.add("" + idiomaCandidato.getDataInicio());
+					dados.add(idiomaCandidato.getProficiencia());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	

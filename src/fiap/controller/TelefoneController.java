@@ -64,7 +64,7 @@ public class TelefoneController {
 			resultado = td.excluir(tl);
 			Conexao.fecharConexao(con);
 			if (resultado == "Excluido com sucesso!") {
-				return "Exclusão feita com sucesso!";
+				return "Exclusï¿½o feita com sucesso!";
 			} else {
 				return "Erro ao excluir";
 			}
@@ -74,25 +74,25 @@ public class TelefoneController {
 		}
 	}
 	
-	public String listaUmTelefone(int id) {
+	public ArrayList<String> listaUmTelefone(int id) {
 		Connection con = Conexao.abrirConexao();
 		TelefoneDAO td = new TelefoneDAO(con);
 		try {
 			ArrayList<Telefone> lista = td.listarUm(id);
-			String dados = "Lista de Telefone:\n\n";
+			ArrayList<String> dados = new ArrayList<String>();
 			if (lista != null) {
 				for (Telefone telefone : lista) {
-					dados += "ID Telefone: " + telefone.getIdTelefone() + "\n";
-					dados += "ID Registro: " + telefone.getIdRegistroGeral() + "\n";
-					dados += "DDD: " + telefone.getNumeroDDD() + "\n";
-					dados += "Telefone: " + telefone.getTelefone() + "\n";
-					dados += "Status: " + telefone.getStatusTelefone() + "\n\n";
+					dados.add("" + telefone.getIdTelefone());
+					dados.add("" + telefone.getIdRegistroGeral());
+					dados.add("" + telefone.getNumeroDDD());
+					dados.add("" + telefone.getTelefone());
+					dados.add(telefone.getStatusTelefone());
 				}
 			}
 			Conexao.fecharConexao(con);
 			return dados;
 		} catch (Exception e) {
-			return e.getMessage();
+			return null;
 		}
 	}
 	
